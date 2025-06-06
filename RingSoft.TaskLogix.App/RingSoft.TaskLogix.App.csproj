@@ -8,4 +8,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RingSoft.TaskLogix.Library\RingSoft.TaskLogix.Library.csproj" />
+  </ItemGroup>
+
 </Project>

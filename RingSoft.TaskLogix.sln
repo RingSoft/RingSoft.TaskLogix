@@ -1,9 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingSoft.TaskLogix.App", "RingSoft.TaskLogix.App\RingSoft.TaskLogix.App.csproj", "{55E61085-61CC-4C1D-A1DA-11F41B171151}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingSoft.TaskLogix.DataAccess", "RingSoft.TaskLogix.DataAccess\RingSoft.TaskLogix.DataAccess.csproj", "{1277EB57-D5E8-47AA-8119-4C701849A056}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingSoft.TaskLogix.Library", "RingSoft.TaskLogix.Library\RingSoft.TaskLogix.Library.csproj", "{2BEB862E-BB18-4624-81F3-6D6A0BACAFF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingSoft.TaskLogix.Sqlite", "RingSoft.TaskLogix.Sqlite\RingSoft.TaskLogix.Sqlite.csproj", "{A9DE6640-F163-4604-8C5E-9A1E33E67884}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingSoft.TaskLogix.SqlServer", "RingSoft.TaskLogix.SqlServer\RingSoft.TaskLogix.SqlServer.csproj", "{EDC037E1-EE2B-4892-9A87-231BB45D3B93}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{55E61085-61CC-4C1D-A1DA-11F41B171151}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55E61085-61CC-4C1D-A1DA-11F41B171151}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55E61085-61CC-4C1D-A1DA-11F41B171151}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1277EB57-D5E8-47AA-8119-4C701849A056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1277EB57-D5E8-47AA-8119-4C701849A056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1277EB57-D5E8-47AA-8119-4C701849A056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1277EB57-D5E8-47AA-8119-4C701849A056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BEB862E-BB18-4624-81F3-6D6A0BACAFF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BEB862E-BB18-4624-81F3-6D6A0BACAFF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BEB862E-BB18-4624-81F3-6D6A0BACAFF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BEB862E-BB18-4624-81F3-6D6A0BACAFF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9DE6640-F163-4604-8C5E-9A1E33E67884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9DE6640-F163-4604-8C5E-9A1E33E67884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9DE6640-F163-4604-8C5E-9A1E33E67884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9DE6640-F163-4604-8C5E-9A1E33E67884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDC037E1-EE2B-4892-9A87-231BB45D3B93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDC037E1-EE2B-4892-9A87-231BB45D3B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDC037E1-EE2B-4892-9A87-231BB45D3B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDC037E1-EE2B-4892-9A87-231BB45D3B93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

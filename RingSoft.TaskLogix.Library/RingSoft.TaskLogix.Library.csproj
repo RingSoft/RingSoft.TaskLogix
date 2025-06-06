@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RingSoft.TaskLogix.DataAccess\RingSoft.TaskLogix.DataAccess.csproj" />
+    <ProjectReference Include="..\RingSoft.TaskLogix.Sqlite\RingSoft.TaskLogix.Sqlite.csproj" />
+    <ProjectReference Include="..\RingSoft.TaskLogix.SqlServer\RingSoft.TaskLogix.SqlServer.csproj" />
+  </ItemGroup>
+
+</Project>
