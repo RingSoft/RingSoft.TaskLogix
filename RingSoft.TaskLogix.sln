@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingSoft.TaskLogix.Sqlite",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingSoft.TaskLogix.SqlServer", "RingSoft.TaskLogix.SqlServer\RingSoft.TaskLogix.SqlServer.csproj", "{EDC037E1-EE2B-4892-9A87-231BB45D3B93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RingSoft.TaskLogix.Tests", "RingSoft.TaskLogix.Tests\RingSoft.TaskLogix.Tests.csproj", "{75B595D8-6A01-4440-B952-D7FF4FC43E8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{EDC037E1-EE2B-4892-9A87-231BB45D3B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDC037E1-EE2B-4892-9A87-231BB45D3B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDC037E1-EE2B-4892-9A87-231BB45D3B93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75B595D8-6A01-4440-B952-D7FF4FC43E8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75B595D8-6A01-4440-B952-D7FF4FC43E8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75B595D8-6A01-4440-B952-D7FF4FC43E8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75B595D8-6A01-4440-B952-D7FF4FC43E8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
