@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RingSoft.TaskLogix.DataAccess.Model
 {
-    public class TlTaskRecur_Daily
+    public class TlTaskRecurDaily
     {
         [Required]
         [Key]
