@@ -17,6 +17,7 @@ namespace RingSoft.TaskLogix.DataAccess.Configurations
             builder.Property(p => p.StatusType).HasColumnType(DbConstants.ByteColumnType);
             builder.Property(p => p.PriorityType).HasColumnType(DbConstants.ByteColumnType);
             builder.Property(p => p.PercentComplete).HasColumnType(DbConstants.DecimalColumnType);
+            builder.Property(p => p.RecurType).HasColumnType(DbConstants.ByteColumnType);
         }
     }
 }

@@ -18,12 +18,29 @@ namespace RingSoft.TaskLogix.DataAccess.Model
         Deferred = 5,
     }
 
+    public enum TaskRecurTypes
+    {
+        None = 0,
+        Daily = 2,
+        Weekly = 1,
+        Monthly = 3,
+        Yearly = 4,
+    }
+
     public enum TaskPriorityTypes
     {
         Low = 0,
         Normal = 1,
         High = 3,
     }
+
+    public enum TaskRecurEndingTypes
+    {
+        EndBy = 0,
+        EndAfterOccurTimes = 1,
+        NoEndDate = 2,
+    }
+
     public class TlTask
     {
         [Required]
@@ -53,5 +70,19 @@ namespace RingSoft.TaskLogix.DataAccess.Model
         [Required]
         [DefaultValue(0)]
         public double PercentComplete { get; set; }
+
+        [Required]
+        [DefaultValue(0)]
+        public byte RecurType { get; set; }
+
+        public DateTime? RecurStartDate { get; set; }
+
+        [Required]
+        [DefaultValue(0)]
+        public byte RecurEndType { get; set; }
+
+        public DateTime? RecurEndDate { get; set; }
+
+        public int? EndAfterOccurrences { get; set; }
     }
 }
