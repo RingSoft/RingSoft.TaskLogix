@@ -84,5 +84,12 @@ namespace RingSoft.TaskLogix.DataAccess.Model
         public DateTime? RecurEndDate { get; set; }
 
         public int? EndAfterOccurrences { get; set; }
+
+        public virtual ICollection<TlTaskRecurDaily> RecurDaily { get; set; }
+
+        public TlTask()
+        {
+            RecurDaily = new HashSet<TlTaskRecurDaily>();
+        }
     }
 }
