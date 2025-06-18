@@ -287,6 +287,46 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
                     b.ToTable("TlTaskRecurDaily");
                 });
 
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurWeekly", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool?>("Friday")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Monday")
+                        .HasColumnType("bit");
+
+                    b.Property<byte>("RecurType")
+                        .HasColumnType("smallint");
+
+                    b.Property<int?>("RecurWeeks")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RegenWeeksAfterCompleted")
+                        .HasColumnType("integer");
+
+                    b.Property<bool?>("Saturday")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Sunday")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Thursday")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Tuesday")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Wednesday")
+                        .HasColumnType("bit");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("TlTaskRecurWeekly");
+                });
+
             modelBuilder.Entity("RingSoft.DbLookup.AdvancedFind.AdvancedFindColumn", b =>
                 {
                     b.HasOne("RingSoft.DbLookup.AdvancedFind.AdvancedFind", "AdvancedFind")
@@ -327,6 +367,17 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
                     b.Navigation("Task");
                 });
 
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurWeekly", b =>
+                {
+                    b.HasOne("RingSoft.TaskLogix.DataAccess.Model.TlTask", "Task")
+                        .WithMany("RecurWeekly")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("RingSoft.DbLookup.AdvancedFind.AdvancedFind", b =>
                 {
                     b.Navigation("Columns");
@@ -339,6 +390,8 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTask", b =>
                 {
                     b.Navigation("RecurDaily");
+
+                    b.Navigation("RecurWeekly");
                 });
 #pragma warning restore 612, 618
         }

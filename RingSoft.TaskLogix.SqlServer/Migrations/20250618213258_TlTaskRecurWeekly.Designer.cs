@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RingSoft.TaskLogix.SqlServer;
 
@@ -11,9 +12,11 @@ using RingSoft.TaskLogix.SqlServer;
 namespace RingSoft.TaskLogix.SqlServer.Migrations
 {
     [DbContext(typeof(TaskLogixSqlServerDbContext))]
-    partial class TaskLogixSqlServerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250618213258_TlTaskRecurWeekly")]
+    partial class TlTaskRecurWeekly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
