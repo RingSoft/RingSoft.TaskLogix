@@ -223,6 +223,79 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                     b.ToTable("RecordLocks");
                 });
 
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("EndAfterOccurrences")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("PercentComplete")
+                        .HasColumnType("numeric");
+
+                    b.Property<byte>("PriorityType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime?>("RecurEndDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<byte>("RecurEndType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime?>("RecurStartDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<byte>("RecurType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime?>("ReminderDateTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("SnoozeDateTime")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<byte>("StatusType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TlTask");
+                });
+
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurDaily", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("RecurDays")
+                        .HasColumnType("integer");
+
+                    b.Property<byte>("RecurType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int?>("RegenDaysAfterCompleted")
+                        .HasColumnType("integer");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("TlTaskRecurDaily");
+                });
+
             modelBuilder.Entity("RingSoft.DbLookup.AdvancedFind.AdvancedFindColumn", b =>
                 {
                     b.HasOne("RingSoft.DbLookup.AdvancedFind.AdvancedFind", "AdvancedFind")
@@ -252,6 +325,17 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                     b.Navigation("SearchForAdvancedFind");
                 });
 
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurDaily", b =>
+                {
+                    b.HasOne("RingSoft.TaskLogix.DataAccess.Model.TlTask", "Task")
+                        .WithMany("RecurDaily")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("RingSoft.DbLookup.AdvancedFind.AdvancedFind", b =>
                 {
                     b.Navigation("Columns");
@@ -259,6 +343,11 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                     b.Navigation("Filters");
 
                     b.Navigation("SearchForAdvancedFindFilters");
+                });
+
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTask", b =>
+                {
+                    b.Navigation("RecurDaily");
                 });
 #pragma warning restore 612, 618
         }

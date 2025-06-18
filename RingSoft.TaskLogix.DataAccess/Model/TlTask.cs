@@ -59,6 +59,8 @@ namespace RingSoft.TaskLogix.DataAccess.Model
 
         public DateTime? ReminderDateTime { get; set; }
 
+        public DateTime? SnoozeDateTime { get; set; }
+
         [Required]
         [DefaultValue(0)]
         public byte StatusType { get; set; }

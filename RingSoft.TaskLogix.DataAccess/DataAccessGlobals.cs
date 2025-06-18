@@ -8,6 +8,7 @@ namespace RingSoft.TaskLogix.DataAccess
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TlTaskConfiguration());
+            modelBuilder.ApplyConfiguration(new TlTaskRecurDailyConfiguration());
         }
     }
 }
