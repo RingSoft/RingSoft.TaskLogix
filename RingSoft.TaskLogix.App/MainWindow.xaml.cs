@@ -31,11 +31,5 @@ namespace RingSoft.TaskLogix.App
             LookupControlsGlobals.SetTabSwitcherWindow(this, TabControl);
             TabControl.SetDestionationAsFirstTab = false;
         }
-
-        public void LaunchAdvancedFind()
-        {
-            TabControl.ShowTableControl(AppGlobals.LookupContext.AdvancedFinds, false);
-        }
-
     }
 }

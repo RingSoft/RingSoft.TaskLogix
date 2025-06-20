@@ -12,7 +12,7 @@
         xmlns:local="clr-namespace:RingSoft.TaskLogix.App"
         xmlns:viewModels="clr-namespace:RingSoft.TaskLogix.Library.ViewModels;assembly=RingSoft.TaskLogix.Library"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" CloseOnEscape="False">
 
     <Window.DataContext>
         <viewModels:MainViewModel x:Name="ViewModel"/>
@@ -28,7 +28,7 @@
                 </LinearGradientBrush>
             </StackPanel.Background>
 
-            <ac:DbMaintenanceButton x:Name="AdvancedFindButton" Content="_Advanced Find" ImageSource="{StaticResource FindImage}" Command="{Binding AdvFindCommand }"/>
+            <ac:DbMaintenanceButton x:Name="AdvancedFindButton" Content="_Advanced Find" ImageSource="{StaticResource FindImage}" Command="{Binding ShowAdvFindTabCommand }"/>
         </StackPanel>
 
         <lc:DbMaintenanceTabControl x:Name="TabControl" VerticalAlignment="Stretch"/>
