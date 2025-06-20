@@ -2,25 +2,23 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RingSoft.TaskLogix.SqlServer;
+using RingSoft.TaskLogix.Sqlite;
 
 #nullable disable
 
-namespace RingSoft.TaskLogix.SqlServer.Migrations
+namespace RingSoft.TaskLogix.Sqlite.Migrations
 {
-    [DbContext(typeof(TaskLogixSqlServerDbContext))]
-    partial class TaskLogixSqlServerDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(TaskLogixSqliteDbContext))]
+    [Migration("20250620175034_0620Update")]
+    partial class _0620Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.5")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.5");
 
             modelBuilder.Entity("RingSoft.CustomTemplate.Library.SystemMaster", b =>
                 {
@@ -44,8 +42,6 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<bool?>("Disabled")
                         .HasColumnType("bit");
 
@@ -61,10 +57,10 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .HasColumnType("integer");
 
                     b.Property<byte?>("RefreshCondition")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<byte?>("RefreshRate")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<int?>("RefreshValue")
                         .HasColumnType("integer");
@@ -95,10 +91,10 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .HasColumnType("nvarchar");
 
                     b.Property<byte>("DecimalFormatType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<byte>("FieldDataType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<string>("FieldName")
                         .HasMaxLength(50)
@@ -111,7 +107,7 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar");
 
-                    b.Property<decimal>("PercentWidth")
+                    b.Property<double>("PercentWidth")
                         .HasColumnType("numeric");
 
                     b.Property<string>("PrimaryFieldName")
@@ -143,10 +139,10 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<byte>("DateFilterType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<byte>("EndLogic")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<string>("FieldName")
                         .HasMaxLength(50)
@@ -156,17 +152,17 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .HasColumnType("ntext");
 
                     b.Property<byte>("FormulaDataType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<string>("FormulaDisplayValue")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar");
 
                     b.Property<byte>("LeftParentheses")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<byte>("Operand")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Path")
                         .HasMaxLength(1000)
@@ -181,7 +177,7 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .HasColumnType("nvarchar");
 
                     b.Property<byte>("RightParentheses")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<int?>("SearchForAdvancedFindId")
                         .HasColumnType("integer");
@@ -229,31 +225,29 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime");
 
                     b.Property<int?>("EndAfterOccurrences")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("PercentComplete")
+                    b.Property<double>("PercentComplete")
                         .HasColumnType("numeric");
 
                     b.Property<byte>("PriorityType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<DateTime?>("RecurEndDate")
                         .HasColumnType("datetime");
 
                     b.Property<byte>("RecurEndType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<DateTime?>("RecurStartDate")
                         .HasColumnType("datetime");
 
                     b.Property<byte>("RecurType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<DateTime?>("ReminderDateTime")
                         .HasColumnType("datetime");
@@ -265,7 +259,7 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<byte>("StatusType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Subject")
                         .IsRequired()
@@ -286,7 +280,7 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .HasColumnType("integer");
 
                     b.Property<byte>("RecurType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<int?>("RegenDaysAfterCompleted")
                         .HasColumnType("integer");
@@ -308,7 +302,7 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<byte>("RecurType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<int?>("RecurWeeks")
                         .HasColumnType("integer");

@@ -18,7 +18,20 @@
         <viewModels:MainViewModel x:Name="ViewModel"/>
     </Window.DataContext>
 
-    <Grid>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <StackPanel.Background>
+                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                    <GradientStop Color="AliceBlue" Offset="0.15"/>
+                    <GradientStop Color="SkyBlue" Offset="0.5"/>
+                    <GradientStop Color="AliceBlue" Offset="0.85"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
 
-    </Grid>
+            <ac:DbMaintenanceButton x:Name="AdvancedFindButton" Content="_Advanced Find" ImageSource="{StaticResource FindImage}" Command="{Binding AdvFindCommand }"/>
+        </StackPanel>
+
+        <lc:DbMaintenanceTabControl x:Name="TabControl" VerticalAlignment="Stretch"/>
+
+    </DockPanel>
 </ct:TemplateMainWindow>

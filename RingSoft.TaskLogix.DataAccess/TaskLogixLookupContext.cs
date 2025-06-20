@@ -9,7 +9,15 @@ namespace RingSoft.TaskLogix.DataAccess
     {
         public TableDefinition<TlTask> Tasks { get; set; }
 
+        public TableDefinition<TlTaskRecurDaily> TaskRecurDailys { get; set; }
+
+        public TableDefinition<TlTaskRecurWeekly> TaskRecurWeeklys { get; set; }
+
         public LookupDefinition<TaskLookup, TlTask> TaskLookupDefinition { get; set; }
+
+        public LookupDefinition<TaskRecurDailyLookup, TlTaskRecurDaily> TaskRecurDailyLookupDefinition { get; set; }
+
+        public LookupDefinition<TaskRecurWeeklyLookup, TlTaskRecurWeekly> TaskRecurWeeklyLookupDefinition { get; set; }
 
         protected override void SetupTemplateLookupDefinitions()
         {
@@ -26,11 +34,49 @@ namespace RingSoft.TaskLogix.DataAccess
                 , p => p.DueDate, 30);
 
             Tasks.HasLookupDefinition(TaskLookupDefinition);
+
+            TaskRecurDailyLookupDefinition =
+                new LookupDefinition<TaskRecurDailyLookup, TlTaskRecurDaily>(TaskRecurDailys);
+
+            TaskRecurDailyLookupDefinition.Include(p => p.Task)
+                .AddVisibleColumnDefinition(
+                    p => p.Task
+                    , "Task"
+                    , p => p.Subject, 50);
+
+            TaskRecurDailyLookupDefinition.AddVisibleColumnDefinition(
+                p => p.RecurType
+                , "Recur Type"
+                , p => p.RecurType, 20);
+
+            TaskRecurDailys.HasLookupDefinition(TaskRecurDailyLookupDefinition);
+
+            TaskRecurWeeklyLookupDefinition =
+                new LookupDefinition<TaskRecurWeeklyLookup, TlTaskRecurWeekly>(TaskRecurWeeklys);
+
+            TaskRecurWeeklyLookupDefinition.Include(p => p.Task)
+                .AddVisibleColumnDefinition(
+                    p => p.Task
+                    , "Task"
+                    , p => p.Subject, 50);
+
+            TaskRecurWeeklyLookupDefinition.AddVisibleColumnDefinition(
+                p => p.RecurType
+                , "Recur Type"
+                , p => p.RecurType, 20);
+
+            TaskRecurWeeklys.HasLookupDefinition(TaskRecurWeeklyLookupDefinition);
+
         }
 
         protected override void SetupTemplateModel()
         {
             Tasks.HasDescription("Tasks").HasRecordDescription("Task");
+
+            TaskRecurDailys.HasDescription("Task Recur Dailys").HasRecordDescription("Recur Daily");
+
+            TaskRecurDailys.GetFieldDefinition(p => p.RecurType)
+                .IsEnum<DailyRecurTypes>();
         }
     }
 }

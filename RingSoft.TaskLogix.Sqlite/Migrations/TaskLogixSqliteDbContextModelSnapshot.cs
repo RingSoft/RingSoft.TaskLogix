@@ -265,7 +265,7 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TlTask");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurDaily", b =>
@@ -284,7 +284,7 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
 
                     b.HasKey("TaskId");
 
-                    b.ToTable("TlTaskRecurDaily");
+                    b.ToTable("TaskRecurDailys");
                 });
 
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurWeekly", b =>
@@ -324,7 +324,7 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
 
                     b.HasKey("TaskId");
 
-                    b.ToTable("TlTaskRecurWeekly");
+                    b.ToTable("TaskRecurWeeklys");
                 });
 
             modelBuilder.Entity("RingSoft.DbLookup.AdvancedFind.AdvancedFindColumn", b =>

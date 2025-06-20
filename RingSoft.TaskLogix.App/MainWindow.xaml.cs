@@ -9,6 +9,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RingSoft.CustomTemplate.Library.ViewModels;
+using RingSoft.DataEntryControls.Engine;
+using RingSoft.DbLookup.Controls.WPF;
+using RingSoft.TaskLogix.Library;
 
 namespace RingSoft.TaskLogix.App
 {
@@ -20,9 +23,19 @@ namespace RingSoft.TaskLogix.App
         public override TemplateMainViewModel TemplateMainViewModel => ViewModel;
         public override ITemplateMainView View => this;
 
+        
+
         public MainWindow()
         {
             InitializeComponent();
+            LookupControlsGlobals.SetTabSwitcherWindow(this, TabControl);
+            TabControl.SetDestionationAsFirstTab = false;
         }
+
+        public void LaunchAdvancedFind()
+        {
+            TabControl.ShowTableControl(AppGlobals.LookupContext.AdvancedFinds, false);
+        }
+
     }
 }
