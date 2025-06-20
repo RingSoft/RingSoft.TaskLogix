@@ -25,7 +25,7 @@ namespace RingSoft.TaskLogix.Library
             return result;
         }
 
-        public static TaskLogixLookupContext LookupContext { get; private set; }
+        public static TaskLogixLookupContext LookupContext { get; set; }
 
         public override CustomTemplateLookupContext GetNewLookupContext()
         {
