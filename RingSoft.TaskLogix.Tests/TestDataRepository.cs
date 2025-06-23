@@ -5,11 +5,16 @@ using RingSoft.DbLookup.Testing;
 using RingSoft.TaskLogix.DataAccess;
 using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library;
+using RingSoft.TaskLogix.Library.Processors;
 using RingSoft.TaskLogix.Sqlite;
 using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace RingSoft.TaskLogix.Tests
 {
+    public enum TaskIds
+    {
+        DefaultWeeklyRecur = 1,
+    }
     public class TestDataRegistry : DataRepositoryRegistry
     {
     }
@@ -22,6 +27,12 @@ namespace RingSoft.TaskLogix.Tests
         {
             DataContext = context;
             DataContext.AddEntity(new DataRepositoryRegistryItem<TlTask>());
+
+            var taskProc = new TaskProcessor()
+            {
+                Subject = "Default Recur Weekly",
+                StartDate = DateTime.Today
+            };
         }
 
         public void Initialize()

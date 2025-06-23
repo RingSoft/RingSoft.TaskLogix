@@ -1,15 +1,13 @@
 ﻿namespace RingSoft.TaskLogix.Library.Processors
 {
-    public abstract class TaskRecurBaseProcessor<TEntity> where TEntity : class, new()
+    public abstract class TaskRecurProcessorBase
     {
-        public TaskRecurBaseProcessor()
+        public TaskProcessor TaskProcessor { get; private set; }
+
+        public TaskRecurProcessorBase(TaskProcessor taskProcessor)
         {
-
+            TaskProcessor = taskProcessor;
         }
-
-        public abstract TEntity GetEntityData();
-
-        public abstract void SetPropsFromEntity(TEntity entity);
 
         public abstract bool DoMarkComplete();
     }

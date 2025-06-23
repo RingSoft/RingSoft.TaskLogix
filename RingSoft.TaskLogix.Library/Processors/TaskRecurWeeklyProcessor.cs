@@ -2,9 +2,23 @@
 
 namespace RingSoft.TaskLogix.Library.Processors
 {
-    public class TaskRecurWeeklyProcessor : TaskRecurBaseProcessor<TlTaskRecurWeekly>
+    public class TaskRecurWeeklyProcessor : TaskRecurProcessorBase
     {
-        public override TlTaskRecurWeekly GetEntityData()
+        public TaskRecurWeeklyProcessor(TaskProcessor taskProcessor) : base(taskProcessor)
+        {
+        }
+
+        public TlTaskRecurWeekly GetEntityData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPropsFromEntity(TlTaskRecurWeekly entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool DoMarkComplete()
         {
             throw new NotImplementedException();
         }

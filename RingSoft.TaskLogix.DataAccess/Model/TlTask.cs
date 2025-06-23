@@ -36,9 +36,12 @@ namespace RingSoft.TaskLogix.DataAccess.Model
 
     public enum TaskRecurEndingTypes
     {
-        EndBy = 0,
-        EndAfterOccurTimes = 1,
-        NoEndDate = 2,
+        [Description("No End Date")]
+        NoEndDate = 0,
+        [Description("End By")]
+        EndBy = 1,
+        [Description("End After Occur X Times")]
+        EndAfterOccurXTimes = 2,
     }
 
     public class TlTask
