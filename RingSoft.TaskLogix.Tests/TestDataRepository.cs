@@ -27,12 +27,6 @@ namespace RingSoft.TaskLogix.Tests
         {
             DataContext = context;
             DataContext.AddEntity(new DataRepositoryRegistryItem<TlTask>());
-
-            var taskProc = new TaskProcessor()
-            {
-                Subject = "Default Recur Weekly",
-                StartDate = DateTime.Today
-            };
         }
 
         public void Initialize()
@@ -45,7 +39,6 @@ namespace RingSoft.TaskLogix.Tests
             };
             AppGlobals.LookupContext.SetDbContext(sqliteContext);
             AppGlobals.LookupContext.Initialize();
-
         }
     }
 }

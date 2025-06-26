@@ -80,8 +80,6 @@ namespace RingSoft.TaskLogix.DataAccess.Model
         [DefaultValue(0)]
         public byte RecurType { get; set; }
 
-        public DateTime? RecurStartDate { get; set; }
-
         [Required]
         [DefaultValue(0)]
         public byte RecurEndType { get; set; }

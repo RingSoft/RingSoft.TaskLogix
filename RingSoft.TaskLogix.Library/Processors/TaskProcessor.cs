@@ -9,23 +9,13 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public TaskRecurWeeklyProcessor WeeklyProcessor { get; private set; }
 
-        public int Id { get; set; }
-
-        public string Subject { get; set; }
+        public int TaskId { get; set; }
 
         public DateTime StartDate { get; set; }
-
-        public DateTime DueDate { get; set; }
 
         public DateTime? ReminderDateTime { get; set; }
 
         public DateTime? SnoozeDateTime { get; set; }
-
-        public TaskStatusTypes StatusType { get; set; }
-
-        public TaskPriorityTypes PriorityType { get; set; }
-
-        public double PercentComplete { get; set; }
 
         private TaskRecurTypes _recurType;
         public TaskRecurTypes RecurType
@@ -63,8 +53,6 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
         }
 
-        public DateTime? RecurStartDate { get; set; }
-
         public TaskRecurEndingTypes RecurEndType { get; set; }
 
         public DateTime? RecurEndDate { get; set; }
@@ -78,45 +66,16 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public void DoMarkComplete()
         {
+            var origStartDate = StartDate;
             if (ActiveRecurProcessor != null)
             {
                 ActiveRecurProcessor.DoMarkComplete();
             }
         }
 
-        public bool DoSave()
+        public void SetPropsFromEntity(TlTask task)
         {
-            var context = SystemGlobals.DataRepository.GetDataContext();
-            var task = GetEntityData();
-            if (!context.SaveEntity(task, "Saving Task"))
-            {
-                return false;
-            }
 
-            var primaryKey = AppGlobals.LookupContext.Tasks.GetPrimaryKeyValueFromEntity(task);
-            if (primaryKey != null)
-            {
-                if (!primaryKey.CreateRecordLock())
-                {
-                    return false;
-                }
-            }
-
-            if (WeeklyProcessor != null)
-            {
-
-            }
-
-            return true;
-        }
-
-        private TlTask GetEntityData()
-        {
-            var result = new TlTask()
-            {
-
-            };
-            return result;
         }
     }
 }
