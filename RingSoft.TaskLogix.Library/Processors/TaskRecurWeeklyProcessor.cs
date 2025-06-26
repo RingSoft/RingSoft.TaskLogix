@@ -64,7 +64,17 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public override bool DoMarkComplete()
         {
-            TaskProcessor.StartDate = GetNextDate(TaskProcessor.StartDate);
+            switch (RecurType)
+            {
+                case WeeklyRecurTypes.EveryXWeeks:
+                    TaskProcessor.StartDate = GetNextDate(TaskProcessor.StartDate);
+                    break;
+                case WeeklyRecurTypes.RegenerateXWeeksAfterCompleted:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
             return true;
         }
 
@@ -82,6 +92,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             if (nextWeekday <= (int)startDate.DayOfWeek)
             {
                 result = (int)startDate.DayOfWeek + (7 - nextWeekday);
+                result += (7 * (RecurWeeks - 1));
             }
             else
             {

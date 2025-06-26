@@ -26,8 +26,6 @@ namespace RingSoft.TaskLogix.Tests
                 RecurType = TaskRecurTypes.Weekly,
             };
 
-            taskProc.ReminderDateTime = taskProc.StartDate.AddHours(-4);
-            
             taskProc.DoMarkComplete();
 
             var expectedDate = new DateTime(2025, 7, 1);
@@ -44,12 +42,29 @@ namespace RingSoft.TaskLogix.Tests
             };
 
             taskProc.WeeklyProcessor.Thursday = true;
-            taskProc.ReminderDateTime = taskProc.StartDate.AddHours(-4);
 
             taskProc.DoMarkComplete();
 
             var expectedDate = new DateTime(2025, 6, 26);
             Assert.AreEqual(expectedDate, taskProc.StartDate);
         }
+
+        [TestMethod]
+        public void TestTaskWeekly_1WeekdayEvery2Weeks()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 6, 24),
+                RecurType = TaskRecurTypes.Weekly,
+            };
+
+            taskProc.WeeklyProcessor.RecurWeeks = 2;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 7, 8);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
+
     }
 }
