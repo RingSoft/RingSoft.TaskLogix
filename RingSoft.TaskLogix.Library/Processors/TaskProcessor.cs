@@ -71,19 +71,32 @@ namespace RingSoft.TaskLogix.Library.Processors
             {
                 ActiveRecurProcessor.DoMarkComplete();
             }
+            AdjustReminderDate(origStartDate);
         }
 
         public void AdjustStartDate()
         {
+            var origStartDate = StartDate;
             if (ActiveRecurProcessor != null)
             {
                 ActiveRecurProcessor.AdjustStartDate();
             }
+            AdjustReminderDate(origStartDate);
         }
 
         public void SetPropsFromEntity(TlTask task)
         {
 
+        }
+
+        public void AdjustReminderDate(DateTime origStartDate)
+        {
+            if (ReminderDateTime != null)
+            {
+                var dateDif = origStartDate - ReminderDateTime;
+                var daysDif = dateDif.GetValueOrDefault().Days;
+                ReminderDateTime = ReminderDateTime.GetValueOrDefault().AddDays(daysDif);
+            }
         }
     }
 }

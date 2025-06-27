@@ -92,5 +92,20 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
             Assert.AreEqual(expectedDate, taskProc.StartDate);
         }
 
+        [TestMethod]
+        public void TestWeekly_DifInStartDate_ReminderDate()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 6, 26),
+                RecurType = TaskRecurTypes.Weekly,
+                ReminderDateTime = new DateTime(2025,6,24,7, 0, 0),
+            };
+
+            taskProc.DoMarkComplete();
+
+            var expectedReminderDateTime = new DateTime(2025, 7, 1, 7, 0, 0);
+            Assert.AreEqual(expectedReminderDateTime, taskProc.ReminderDateTime);
+        }
     }
 }
