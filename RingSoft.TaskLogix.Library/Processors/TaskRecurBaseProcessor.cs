@@ -9,6 +9,8 @@
             TaskProcessor = taskProcessor;
         }
 
-        public abstract bool DoMarkComplete();
+        public abstract void DoMarkComplete();
+
+        public abstract void AdjustStartDate();
     }
 }

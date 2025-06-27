@@ -73,6 +73,14 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
         }
 
+        public void AdjustStartDate()
+        {
+            if (ActiveRecurProcessor != null)
+            {
+                ActiveRecurProcessor.AdjustStartDate();
+            }
+        }
+
         public void SetPropsFromEntity(TlTask task)
         {
 

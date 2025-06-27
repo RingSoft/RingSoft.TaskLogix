@@ -62,7 +62,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             throw new NotImplementedException();
         }
 
-        public override bool DoMarkComplete()
+        public override void DoMarkComplete()
         {
             switch (RecurType)
             {
@@ -70,12 +70,27 @@ namespace RingSoft.TaskLogix.Library.Processors
                     TaskProcessor.StartDate = GetNextDate(TaskProcessor.StartDate);
                     break;
                 case WeeklyRecurTypes.RegenerateXWeeksAfterCompleted:
+                    TaskProcessor.StartDate = GetNextDateAfterCompleted(DateTime.Today);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
-            return true;
+        }
+
+        public override void AdjustStartDate()
+        {
+            switch (RecurType)
+            {
+                case WeeklyRecurTypes.EveryXWeeks:
+                    TaskProcessor.StartDate = GetNextDate(TaskProcessor.StartDate.AddDays(-1));
+                    break;
+            }
+        }
+
+        private DateTime GetNextDateAfterCompleted(DateTime startDate)
+        {
+            var daysToAdd = RegenWeeksAfterCompleted * 7;
+            return startDate.AddDays(daysToAdd);
         }
 
         private DateTime GetNextDate(DateTime startDate)
@@ -91,7 +106,8 @@ namespace RingSoft.TaskLogix.Library.Processors
             var result = 0;
             if (nextWeekday <= (int)startDate.DayOfWeek)
             {
-                result = (int)startDate.DayOfWeek + (7 - nextWeekday);
+                result = (int)DayOfWeek.Saturday - (int)startDate.DayOfWeek;
+                result += nextWeekday + 1;
                 result += (7 * (RecurWeeks - 1));
             }
             else
