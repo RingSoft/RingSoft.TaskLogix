@@ -93,7 +93,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             return startDate.AddDays(daysToAdd);
         }
 
-        private DateTime GetNextDate(DateTime startDate)
+        internal DateTime GetNextDate(DateTime startDate)
         {
             var daysToAdd = GetDaysToAdd(startDate);
 

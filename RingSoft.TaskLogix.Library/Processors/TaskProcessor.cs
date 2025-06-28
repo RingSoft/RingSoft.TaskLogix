@@ -7,6 +7,8 @@ namespace RingSoft.TaskLogix.Library.Processors
     {
         public TaskRecurProcessorBase ActiveRecurProcessor { get; private set; }
 
+        public TaskRecurDailyProcessor DailyProcessor { get; private set; }
+
         public TaskRecurWeeklyProcessor WeeklyProcessor { get; private set; }
 
         public int TaskId { get; set; }
@@ -29,6 +31,7 @@ namespace RingSoft.TaskLogix.Library.Processors
                 }
                 _recurType = value;
 
+                DailyProcessor = null;
                 WeeklyProcessor = null;
                 ActiveRecurProcessor = null;
 
@@ -38,6 +41,8 @@ namespace RingSoft.TaskLogix.Library.Processors
                         ActiveRecurProcessor = null;
                         break;
                     case TaskRecurTypes.Daily:
+                        DailyProcessor = new TaskRecurDailyProcessor(this);
+                        ActiveRecurProcessor = DailyProcessor;
                         break;
                     case TaskRecurTypes.Weekly:
                         WeeklyProcessor = new TaskRecurWeeklyProcessor(this);
