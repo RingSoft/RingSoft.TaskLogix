@@ -88,14 +88,21 @@ namespace RingSoft.TaskLogix.DataAccess.Model
 
         public int? EndAfterOccurrences { get; set; }
 
+        [Required]
+        public bool IsDismissed { get; set; }
+
+        public string? Notes { get; set; }
+
         public virtual ICollection<TlTaskRecurDaily> RecurDaily { get; set; }
 
         public virtual ICollection<TlTaskRecurWeekly> RecurWeekly { get; set; }
 
+        public virtual ICollection<TlTaskRecurMonthly> RecurMonthly { get; set; }
         public TlTask()
         {
             RecurDaily = new HashSet<TlTaskRecurDaily>();
             RecurWeekly = new HashSet<TlTaskRecurWeekly>();
+            RecurMonthly = new HashSet<TlTaskRecurMonthly>();
         }
     }
 }

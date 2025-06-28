@@ -228,6 +228,12 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
                     b.Property<int?>("EndAfterOccurrences")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsDismissed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("ntext");
+
                     b.Property<double>("PercentComplete")
                         .HasColumnType("numeric");
 
@@ -239,9 +245,6 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
 
                     b.Property<byte>("RecurEndType")
                         .HasColumnType("smallint");
-
-                    b.Property<DateTime?>("RecurStartDate")
-                        .HasColumnType("datetime");
 
                     b.Property<byte>("RecurType")
                         .HasColumnType("smallint");
@@ -285,6 +288,37 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
                     b.HasKey("TaskId");
 
                     b.ToTable("TaskRecurDailys");
+                });
+
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurMonthly", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .HasColumnType("integer");
+
+                    b.Property<byte?>("DayType")
+                        .HasColumnType("smallint");
+
+                    b.Property<int?>("DayXOfEvery")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("OfEveryWeekTypeMonths")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("OfEveryYMonths")
+                        .HasColumnType("integer");
+
+                    b.Property<byte>("RecurType")
+                        .HasColumnType("smallint");
+
+                    b.Property<int?>("RegenMonthsAfterCompleted")
+                        .HasColumnType("integer");
+
+                    b.Property<byte?>("WeekType")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("TlTaskRecurMonthly");
                 });
 
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurWeekly", b =>
@@ -367,6 +401,17 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
                     b.Navigation("Task");
                 });
 
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurMonthly", b =>
+                {
+                    b.HasOne("RingSoft.TaskLogix.DataAccess.Model.TlTask", "Task")
+                        .WithMany("RecurMonthly")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurWeekly", b =>
                 {
                     b.HasOne("RingSoft.TaskLogix.DataAccess.Model.TlTask", "Task")
@@ -390,6 +435,8 @@ namespace RingSoft.TaskLogix.Sqlite.Migrations
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTask", b =>
                 {
                     b.Navigation("RecurDaily");
+
+                    b.Navigation("RecurMonthly");
 
                     b.Navigation("RecurWeekly");
                 });

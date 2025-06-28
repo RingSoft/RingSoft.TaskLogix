@@ -22,6 +22,8 @@ namespace RingSoft.TaskLogix.DataAccess.Configurations
             builder.Property(p => p.RecurEndType).HasColumnType(DbConstants.ByteColumnType);
             builder.Property(p => p.RecurEndDate).HasColumnType(DbConstants.DateColumnType);
             builder.Property(p => p.EndAfterOccurrences).HasColumnType(DbConstants.IntegerColumnType);
+            builder.Property(p => p.IsDismissed).HasColumnType(DbConstants.BoolColumnType);
+            builder.Property(p => p.Notes).HasColumnType(DbConstants.MemoColumnType);
         }
     }
 }
