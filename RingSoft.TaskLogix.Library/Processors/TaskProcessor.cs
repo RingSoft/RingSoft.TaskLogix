@@ -94,8 +94,8 @@ namespace RingSoft.TaskLogix.Library.Processors
             if (ReminderDateTime != null)
             {
                 var dateDif = origStartDate - ReminderDateTime;
-                var daysDif = dateDif.GetValueOrDefault().Days;
-                ReminderDateTime = ReminderDateTime.GetValueOrDefault().AddDays(daysDif);
+                var ticksDif = dateDif.GetValueOrDefault().Ticks;
+                ReminderDateTime = StartDate.AddTicks(-ticksDif);
             }
         }
     }
