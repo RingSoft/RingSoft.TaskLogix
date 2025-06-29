@@ -42,5 +42,14 @@ namespace RingSoft.TaskLogix.Library
         {
             return new TaskLogixSqlServerDbContext();
         }
+
+        public static int GetLastDayOfMonth(DateTime date)
+        {
+            var lastDayOfMonth = new DateTime(date.Year, date.Month, 1);
+            lastDayOfMonth = lastDayOfMonth.AddMonths(1)
+                .AddDays(-1);
+
+            return lastDayOfMonth.Day;
+        }
     }
 }

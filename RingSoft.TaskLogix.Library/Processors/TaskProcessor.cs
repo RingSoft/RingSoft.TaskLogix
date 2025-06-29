@@ -11,13 +11,13 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public TaskRecurWeeklyProcessor WeeklyProcessor { get; private set; }
 
+        public TaskRecurMonthlyProcessor MonthlyProcessor { get; private set; }
+
         public int TaskId { get; set; }
 
         public DateTime StartDate { get; set; }
 
         public DateTime? ReminderDateTime { get; set; }
-
-        public DateTime? SnoozeDateTime { get; set; }
 
         private TaskRecurTypes _recurType;
         public TaskRecurTypes RecurType
@@ -49,6 +49,8 @@ namespace RingSoft.TaskLogix.Library.Processors
                         ActiveRecurProcessor = WeeklyProcessor;
                         break;
                     case TaskRecurTypes.Monthly:
+                        MonthlyProcessor = new TaskRecurMonthlyProcessor(this);
+                        ActiveRecurProcessor = MonthlyProcessor;
                         break;
                     case TaskRecurTypes.Yearly:
                         break;
