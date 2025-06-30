@@ -28,7 +28,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             switch (RecurType)
             {
                 case MonthlyRecurTypes.DayXOfEveryYMonths:
-                    TaskProcessor.StartDate = GetDayXOfEvery(TaskProcessor.StartDate);
+                    TaskProcessor.StartDate = GetDayXOfEvery(TaskProcessor.StartDate, OfEveryYMonths);
                     break;
                 case MonthlyRecurTypes.XthWeekdayOfEveryYMonths:
                     break;
@@ -44,9 +44,19 @@ namespace RingSoft.TaskLogix.Library.Processors
             throw new NotImplementedException();
         }
 
-        private DateTime GetDayXOfEvery(DateTime startDate)
+        private DateTime GetDayXOfEvery(DateTime startDate, int addMonths)
         {
             startDate = new DateTime(startDate.Year, startDate.Month, 1);
+            startDate = startDate.AddMonths(addMonths);
+            var lastDayOfMonth = startDate.GetLastDayOfMonth();
+            var newDay = DayXOfEvery;
+
+            if (DayXOfEvery > lastDayOfMonth)
+            {
+                newDay = lastDayOfMonth;
+            }
+
+            return new DateTime(startDate.Year, startDate.Month, newDay);
         }
     }
 }

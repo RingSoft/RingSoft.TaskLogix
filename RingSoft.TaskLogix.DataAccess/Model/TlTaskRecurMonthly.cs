@@ -25,24 +25,26 @@ namespace RingSoft.TaskLogix.DataAccess.Model
 
     public enum DayTypes
     {
+        [Description("Day")]
+        Day = 0,
         [Description("Weekday")]
-        Weekday = 0,
+        Weekday = 1,
         [Description("Weekend Day")]
-        WeekendDay = 1,
+        WeekendDay = 2,
         [Description("Sunday")]
-        Sunday = 2,
+        Sunday = 3,
         [Description("Monday")]
-        Monday = 3,
+        Monday = 4,
         [Description("Tuesday")]
-        Tuesday = 4,
+        Tuesday = 5,
         [Description("Wednesday")]
-        Wednesday = 5,
+        Wednesday = 6,
         [Description("Thursday")]
-        Thursday = 6,
+        Thursday = 7,
         [Description("Friday")]
-        Friday = 7,
+        Friday = 8,
         [Description("Saturday")]
-        Saturday = 8,
+        Saturday = 9,
     }
     public class TlTaskRecurMonthly
     {
