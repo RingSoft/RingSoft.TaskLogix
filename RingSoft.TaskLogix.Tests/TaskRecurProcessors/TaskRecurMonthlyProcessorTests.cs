@@ -23,5 +23,59 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
             var expectedDate = new DateTime(2025, 6, 30);
             Assert.AreEqual(expectedDate, taskProc.StartDate);
         }
+
+        [TestMethod]
+        public void TestTaskMonthlyFirstDay()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 5, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.DayType = DayTypes.Day;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.First;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 6, 1);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
+
+        [TestMethod]
+        public void TestTaskMonthlySecondDay()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 5, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.DayType = DayTypes.Day;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.Second;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 6, 2);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
+
+        [TestMethod]
+        public void TestTaskMonthlyFourthDay()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 5, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.DayType = DayTypes.Day;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.Fourth;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 6, 4);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
     }
 }

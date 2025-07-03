@@ -9,13 +9,13 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public int DayXOfEvery { get; set; }
 
-        public int OfEveryYMonths { get; set; }
+        public int OfEveryYMonths { get; set; } = 1;
 
         public WeekTypes WeekType { get; set; }
 
         public DayTypes DayType { get; set; }
 
-        public int OfEveryWeekTypeMonths { get; set; }
+        public int OfEveryWeekTypeMonths { get; set; } = 1;
 
         public int RegenMonthsAfterCompleted { get; set; }
 
@@ -144,7 +144,21 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         private DateTime GetNthDayTypeDay(DateTime startDate)
         {
-            throw new Exception();
+            var day = (int)WeekType + 1;
+            //switch (WeekType)
+            //{
+            //    case WeekTypes.Second:
+            //        day = 2;
+            //        break;
+            //    case WeekTypes.Third:
+            //        day = 3;
+            //        break;
+            //    case WeekTypes.Fourth:
+            //        day = 4;
+            //        break;
+            //}
+
+            return new DateTime(startDate.Year, startDate.Month, day);
         }
         private DateTime GetNthWeekDayDay(DateTime startDate)
         {
