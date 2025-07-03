@@ -145,18 +145,6 @@ namespace RingSoft.TaskLogix.Library.Processors
         private DateTime GetNthDayTypeDay(DateTime startDate)
         {
             var day = (int)WeekType + 1;
-            //switch (WeekType)
-            //{
-            //    case WeekTypes.Second:
-            //        day = 2;
-            //        break;
-            //    case WeekTypes.Third:
-            //        day = 3;
-            //        break;
-            //    case WeekTypes.Fourth:
-            //        day = 4;
-            //        break;
-            //}
 
             return new DateTime(startDate.Year, startDate.Month, day);
         }
@@ -167,7 +155,41 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         private DateTime GetNthWeekTypeWeekDay(DateTime startDate)
         {
-            throw new Exception();
+            var goal = (int)WeekType + 1;
+            var index = 0;
+            while (index < goal)
+            {
+                var dayTypeGroup = GetDayTypeGroupFromDate(startDate);
+                if (dayTypeGroup == DayTypes.Weekday)
+                {
+                    index++;
+                }
+
+                if (index < goal)
+                {
+                    startDate = startDate.AddDays(1);
+                }
+            }
+
+            return startDate;
+        }
+
+        private DayTypes GetDayTypeGroupFromDate(DateTime date)
+        {
+            switch (date.DayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                case DayOfWeek.Tuesday:
+                case DayOfWeek.Wednesday:
+                case DayOfWeek.Thursday:
+                case DayOfWeek.Friday:
+                    return DayTypes.Weekday;
+                case DayOfWeek.Saturday:
+                case DayOfWeek.Sunday:
+                    return DayTypes.WeekendDay;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private DateTime GetNthWeekTypeWeekendDay(DateTime startDate)
