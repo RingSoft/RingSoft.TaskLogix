@@ -149,5 +149,41 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
             var expectedDate = new DateTime(2025, 6, 1);
             Assert.AreEqual(expectedDate, taskProc.StartDate);
         }
+
+        [TestMethod]
+        public void TestTaskMonthlyLastWeekday_May2025()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 4, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.DayType = DayTypes.Weekday;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.Last;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 5, 30);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
+
+        [TestMethod]
+        public void TestTaskMonthlyLastWeekendDay_July2025()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 6, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.DayType = DayTypes.WeekendDay;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.Last;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 7, 27);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
     }
 }

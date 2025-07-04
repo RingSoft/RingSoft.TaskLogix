@@ -129,12 +129,39 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         private DateTime GetLastWeekTypeWeekDay(DateTime startDate)
         {
-            throw new Exception();
+            return GetLastWeekTypeGroupWeekType(startDate, DayTypes.Weekday);
+        }
+
+        private DateTime GetLastWeekTypeGroupWeekType(DateTime startDate, DayTypes dayType)
+        {
+            startDate = new DateTime(startDate.Year, startDate.Month, startDate.GetLastDayOfMonth());
+            var goal = 1;
+            var index = 0;
+            while (index < goal)
+            {
+                var dayTypeGroup = GetDayTypeGroupFromDate(startDate);
+                if (dayTypeGroup == dayType)
+                {
+                    index++;
+                }
+
+                if (index < goal)
+                {
+                    startDate = startDate.AddDays(-1);
+                }
+            }
+
+            return startDate;
+        }
+
+        private DateTime GetLastWeek(DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.GetLastDayOfMonth() - 6);
         }
 
         private DateTime GetLastWeeklyTypeWeekendDay(DateTime startDate)
         {
-            throw new Exception();
+            return GetLastWeekTypeGroupWeekType(startDate, DayTypes.WeekendDay);
         }
 
         private DateTime GetLastWeekDayDay(DateTime startDate)
