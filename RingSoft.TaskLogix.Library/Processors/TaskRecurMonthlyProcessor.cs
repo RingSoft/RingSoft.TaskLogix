@@ -155,12 +155,17 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         private DateTime GetNthWeekTypeWeekDay(DateTime startDate)
         {
+            return GetNthDayTypeGroupDay(startDate, DayTypes.Weekday);
+        }
+
+        private DateTime GetNthDayTypeGroupDay(DateTime startDate, DayTypes dayType)
+        {
             var goal = (int)WeekType + 1;
             var index = 0;
             while (index < goal)
             {
                 var dayTypeGroup = GetDayTypeGroupFromDate(startDate);
-                if (dayTypeGroup == DayTypes.Weekday)
+                if (dayTypeGroup == dayType)
                 {
                     index++;
                 }
@@ -194,7 +199,7 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         private DateTime GetNthWeekTypeWeekendDay(DateTime startDate)
         {
-            throw new Exception();
+            return GetNthDayTypeGroupDay(startDate, DayTypes.WeekendDay);
         }
     }
 }

@@ -95,5 +95,59 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
             var expectedDate = new DateTime(2025, 6, 2);
             Assert.AreEqual(expectedDate, taskProc.StartDate);
         }
+
+        [TestMethod]
+        public void TestTaskMonthlyFourthWeekday_May2025()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 4, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.DayType = DayTypes.Weekday;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.Fourth;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 5, 6);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
+
+        [TestMethod]
+        public void TestTaskMonthlyFourthWeekendDay_May2025()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 4, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.DayType = DayTypes.WeekendDay;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.Fourth;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 5, 11);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
+
+        [TestMethod]
+        public void TestTaskMonthlyFirstWeekendDay_June2025()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 5, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.DayType = DayTypes.WeekendDay;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.First;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 6, 1);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
     }
 }
