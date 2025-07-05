@@ -34,6 +34,8 @@ namespace RingSoft.TaskLogix.Library.Processors
                     TaskProcessor.StartDate = GetNthWeekdayOfEveryMonth(TaskProcessor.StartDate, OfEveryWeekTypeMonths);
                     break;
                 case MonthlyRecurTypes.RegenerateXMonthsAfterCompleted:
+                    var monthsToAdd = RegenMonthsAfterCompleted;
+                    TaskProcessor.StartDate = DateTime.Today.AddMonths(monthsToAdd);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -166,7 +168,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             return startDate;
         }
 
-        private DateTime GetLastWeek(DateTime date)
+        private DateTime GetLast7Days(DateTime date)
         {
             return new DateTime(date.Year, date.Month, date.GetLastDayOfMonth() - 6);
         }
@@ -178,7 +180,16 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         private DateTime GetLastWeekDayDay(DateTime startDate)
         {
-            throw new Exception();
+            startDate = GetLast7Days(startDate);
+
+            var taskProcessor = new TaskProcessor();
+            taskProcessor.StartDate = startDate;
+            taskProcessor.RecurType = TaskRecurTypes.Weekly;
+
+            PopulateWeeklyProcessor(taskProcessor.WeeklyProcessor);
+
+            var result = taskProcessor.WeeklyProcessor.GetNextDate(startDate.AddDays(-1));
+            return result;
         }
 
         private DateTime GetNthDayTypeDay(DateTime startDate)

@@ -239,5 +239,59 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
             var expectedDate = new DateTime(2025, 7, 9);
             Assert.AreEqual(expectedDate, taskProc.StartDate);
         }
+
+        [TestMethod]
+        public void TestTaskMonthlyLastWednesday_July2025()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 6, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.Last;
+            taskProc.MonthlyProcessor.DayType = DayTypes.Wednesday;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 7, 30);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
+
+        [TestMethod]
+        public void TestTaskMonthlyLastWednesday_July2025_OfEvery2Months()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 6, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.XthWeekdayOfEveryYMonths;
+            taskProc.MonthlyProcessor.WeekType = WeekTypes.Last;
+            taskProc.MonthlyProcessor.DayType = DayTypes.Wednesday;
+            taskProc.MonthlyProcessor.OfEveryWeekTypeMonths = 2;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 8, 27);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
+
+        [TestMethod]
+        public void TestTaskMonthlyRegenerate2MonthsAfterCompleted()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2025, 6, 1),
+                RecurType = TaskRecurTypes.Monthly,
+            };
+            taskProc.MonthlyProcessor.RecurType = MonthlyRecurTypes.RegenerateXMonthsAfterCompleted;
+            taskProc.MonthlyProcessor.RegenMonthsAfterCompleted = 2;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = DateTime.Today.AddMonths(2);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
     }
 }
