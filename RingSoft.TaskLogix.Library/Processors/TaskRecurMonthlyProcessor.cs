@@ -42,7 +42,19 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public override void AdjustStartDate()
         {
-            throw new NotImplementedException();
+            switch (RecurType)
+            {
+                case MonthlyRecurTypes.DayXOfEveryYMonths:
+                    TaskProcessor.StartDate = GetDayXOfEvery(TaskProcessor.StartDate, 0);
+                    break;
+                case MonthlyRecurTypes.XthWeekdayOfEveryYMonths:
+                    TaskProcessor.StartDate = GetNthWeekdayOfEveryMonth(TaskProcessor.StartDate, 0);
+                    break;
+                case MonthlyRecurTypes.RegenerateXMonthsAfterCompleted:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private DateTime GetDayXOfEvery(DateTime startDate, int addMonths)
@@ -177,7 +189,53 @@ namespace RingSoft.TaskLogix.Library.Processors
         }
         private DateTime GetNthWeekDayDay(DateTime startDate)
         {
-            throw new Exception();
+            var taskProcessor = new TaskProcessor();
+            taskProcessor.StartDate = startDate;
+            taskProcessor.RecurType = TaskRecurTypes.Weekly;
+
+            PopulateWeeklyProcessor(taskProcessor.WeeklyProcessor);
+
+            var result = taskProcessor.WeeklyProcessor.GetNextDate(startDate.AddDays(-1));
+            result = result.AddDays(7 * (int)(WeekType));
+            return result;
+        }
+
+        private void PopulateWeeklyProcessor(TaskRecurWeeklyProcessor weeklyProcessor)
+        {
+            weeklyProcessor.Sunday = false;
+            weeklyProcessor.Monday = false;
+            weeklyProcessor.Tuesday = false;
+            weeklyProcessor.Wednesday = false;
+            weeklyProcessor.Thursday = false;
+            weeklyProcessor.Friday = false;
+            weeklyProcessor.Saturday = false;
+
+            switch (DayType)
+            {
+                case DayTypes.Sunday:
+                    weeklyProcessor.Sunday = true;
+                    break;
+                case DayTypes.Monday:
+                    weeklyProcessor.Monday = true;
+                    break;
+                case DayTypes.Tuesday:
+                    weeklyProcessor.Tuesday = true;
+                    break;
+                case DayTypes.Wednesday:
+                    weeklyProcessor.Wednesday = true;
+                    break;
+                case DayTypes.Thursday:
+                    weeklyProcessor.Thursday = true;
+                    break;
+                case DayTypes.Friday:
+                    weeklyProcessor.Friday = true;
+                    break;
+                case DayTypes.Saturday:
+                    weeklyProcessor.Saturday = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private DateTime GetNthWeekTypeWeekDay(DateTime startDate)
