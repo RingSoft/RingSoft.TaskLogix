@@ -13,6 +13,8 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public TaskRecurMonthlyProcessor MonthlyProcessor { get; private set; }
 
+        public TaskRecurYearlyProcessor YearlyProcessor { get; private set; }
+
         public int TaskId { get; set; }
 
         public DateTime StartDate { get; set; }
@@ -33,6 +35,9 @@ namespace RingSoft.TaskLogix.Library.Processors
 
                 DailyProcessor = null;
                 WeeklyProcessor = null;
+                MonthlyProcessor = null;
+                YearlyProcessor = null;
+
                 ActiveRecurProcessor = null;
 
                 switch (_recurType)
@@ -53,6 +58,8 @@ namespace RingSoft.TaskLogix.Library.Processors
                         ActiveRecurProcessor = MonthlyProcessor;
                         break;
                     case TaskRecurTypes.Yearly:
+                        YearlyProcessor = new TaskRecurYearlyProcessor(this);
+                        ActiveRecurProcessor = YearlyProcessor;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
