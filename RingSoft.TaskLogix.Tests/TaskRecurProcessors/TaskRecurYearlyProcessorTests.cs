@@ -23,5 +23,43 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
             var expectedDate = new DateTime(2026, 6, 30);
             Assert.AreEqual(expectedDate, taskProc.StartDate);
         }
+
+        [TestMethod]
+        public void TestTaskYearlyJuneFirstDay()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2024, 6, 1),
+                RecurType = TaskRecurTypes.Yearly,
+            };
+            taskProc.YearlyProcessor.RecurType = YearlylyRecurTypes.TheNthWeekdayTypeOfMonth;
+            taskProc.YearlyProcessor.DayType = DayTypes.Day;
+            taskProc.YearlyProcessor.WeekType = WeekTypes.First;
+            taskProc.YearlyProcessor.WeekMonthType = MonthsInYear.June;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 6, 1);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
+
+        [TestMethod]
+        public void TestTaskYearlyJuneFirstWeekday()
+        {
+            var taskProc = new TaskProcessor
+            {
+                StartDate = new DateTime(2024, 6, 1),
+                RecurType = TaskRecurTypes.Yearly,
+            };
+            taskProc.YearlyProcessor.RecurType = YearlylyRecurTypes.TheNthWeekdayTypeOfMonth;
+            taskProc.YearlyProcessor.DayType = DayTypes.Weekday;
+            taskProc.YearlyProcessor.WeekType = WeekTypes.First;
+            taskProc.YearlyProcessor.WeekMonthType = MonthsInYear.June;
+
+            taskProc.DoMarkComplete();
+
+            var expectedDate = new DateTime(2025, 6, 2);
+            Assert.AreEqual(expectedDate, taskProc.StartDate);
+        }
     }
 }
