@@ -33,6 +33,8 @@ namespace RingSoft.TaskLogix.Library.Processors
                     TaskProcessor.StartDate = GetWeekTypeDayTypeMonthType(TaskProcessor.StartDate);
                     break;
                 case YearlylyRecurTypes.RegenerateXYearsAfterCompleted:
+                    var yearsToAdd = RegenYearsAfterCompleted;
+                    TaskProcessor.StartDate = DateTime.Today.AddYears(yearsToAdd);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

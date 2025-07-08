@@ -103,6 +103,11 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         }
 
+        public void SaveProcessor()
+        {
+
+        }
+
         public void AdjustReminderDate(DateTime origStartDate)
         {
             if (ReminderDateTime != null)
