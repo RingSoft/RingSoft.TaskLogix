@@ -1,4 +1,5 @@
-﻿using RingSoft.App.Library;
+﻿using Microsoft.EntityFrameworkCore;
+using RingSoft.App.Library;
 using RingSoft.CustomTemplate.Library;
 using RingSoft.DbLookup;
 using RingSoft.DbLookup.Testing;
@@ -49,8 +50,26 @@ namespace RingSoft.TaskLogix.Tests
         {
             task.Subject = "Test";
             task.DueDate = taskProcessor.StartDate;
+            if (taskProcessor.ReminderDateTime.HasValue)
+            {
+                task.SnoozeDateTime = taskProcessor.ReminderDateTime.Value;
+            }
 
             taskProcessor.SaveProcessor(task);
+        }
+
+        public void LoadFromTlTask(int taskId, TaskProcessor taskProcessor)
+        {
+            var context = SystemGlobals.DataRepository.GetDataContext();
+
+            var tlTask = context.GetTable<TlTask>()
+                .Include(p => p.RecurDaily)
+                .Include(p => p.RecurWeekly)
+                .Include(p => p.RecurMonthly)
+                .Include(p => p.RecurYearly)
+                .FirstOrDefault(p => p.Id == taskId);
+
+            taskProcessor.LoadProcessor(tlTask);
         }
     }
 }

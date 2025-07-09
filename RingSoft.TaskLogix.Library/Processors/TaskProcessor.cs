@@ -182,6 +182,29 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
         }
 
+        public void LoadProcessor(TlTask task)
+        {
+            TaskId = task.Id;
+            RecurType = (TaskRecurTypes)task.RecurType;
+            this.StartDate = task.StartDate;
+            this.ReminderDateTime = task.ReminderDateTime;
+            
+            this.RecurEndType = (TaskRecurEndingTypes)task.RecurEndType;
+            switch (this.RecurEndType)
+            {
+                case TaskRecurEndingTypes.NoEndDate:
+                    break;
+                case TaskRecurEndingTypes.EndBy:
+                    this.RecurEndDate = task.RecurEndDate;
+                    break;
+                case TaskRecurEndingTypes.EndAfterOccurXTimes:
+                    this.EndAfterOccurrences = task.EndAfterOccurrences;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public void AdjustReminderDate(DateTime origStartDate)
         {
             if (ReminderDateTime != null)
