@@ -103,9 +103,83 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         }
 
-        public void SaveProcessor()
+        public bool SaveProcessor(TlTask task)
         {
+            var result = true;
 
+            var context = SystemGlobals.DataRepository.GetDataContext();
+            
+            SaveEntity(task);
+
+            result = context.SaveEntity(task, "Saving Task");
+            if (!result)
+            {
+                return result;
+            }
+            TaskId = task.Id;
+
+            var tlRecurDailyRec = context.GetTable<TlTaskRecurDaily>()
+                .FirstOrDefault(p => p.TaskId == TaskId);
+            if (tlRecurDailyRec != null)
+            {
+                result = context.DeleteEntity(tlRecurDailyRec, "Deleting Existing Daily Recurring");
+                if (!result)
+                {
+                    return result;
+                }
+            }
+
+            switch (RecurType)
+            {
+                case TaskRecurTypes.None:
+                    break;
+                case TaskRecurTypes.Daily:
+                    var tlTaskRecurDaily = new TlTaskRecurDaily
+                    {
+                        TaskId = TaskId,
+                    };
+                    DailyProcessor.SaveEntity(tlTaskRecurDaily);
+                    result = context.SaveEntity(tlTaskRecurDaily, "Saving Task Daily Recurring");
+                    if (!result)
+                    {
+                        return result;
+                    }
+                    break;
+                case TaskRecurTypes.Weekly:
+                    break;
+                case TaskRecurTypes.Monthly:
+                    break;
+                case TaskRecurTypes.Yearly:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return result;
+        }
+
+        private void SaveEntity(TlTask tlTask)
+        {
+            tlTask.StartDate = StartDate;
+            tlTask.ReminderDateTime = ReminderDateTime;
+            tlTask.RecurType = (byte)RecurType;
+            tlTask.RecurEndType = (byte)RecurEndType;
+            tlTask.RecurEndDate = null;
+            tlTask.EndAfterOccurrences = null;
+
+            switch (RecurEndType)
+            {
+                case TaskRecurEndingTypes.NoEndDate:
+                    break;
+                case TaskRecurEndingTypes.EndBy:
+                    tlTask.RecurEndDate = RecurEndDate;
+                    break;
+                case TaskRecurEndingTypes.EndAfterOccurXTimes:
+                    tlTask.EndAfterOccurrences = EndAfterOccurrences;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public void AdjustReminderDate(DateTime origStartDate)

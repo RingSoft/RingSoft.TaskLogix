@@ -27,6 +27,10 @@ namespace RingSoft.TaskLogix.Tests
         {
             DataContext = context;
             DataContext.AddEntity(new DataRepositoryRegistryItem<TlTask>());
+            DataContext.AddEntity(new DataRepositoryRegistryItem<TlTaskRecurDaily>());
+            DataContext.AddEntity(new DataRepositoryRegistryItem<TlTaskRecurWeekly>());
+            DataContext.AddEntity(new DataRepositoryRegistryItem<TlTaskRecurMonthly>());
+            DataContext.AddEntity(new DataRepositoryRegistryItem<TlTaskRecurYearly>());
         }
 
         public void Initialize()
@@ -39,6 +43,14 @@ namespace RingSoft.TaskLogix.Tests
             };
             AppGlobals.LookupContext.SetDbContext(sqliteContext);
             AppGlobals.LookupContext.Initialize();
+        }
+
+        public void SaveTlTask(TlTask task, TaskProcessor taskProcessor)
+        {
+            task.Subject = "Test";
+            task.DueDate = taskProcessor.StartDate;
+
+            taskProcessor.SaveProcessor(task);
         }
     }
 }

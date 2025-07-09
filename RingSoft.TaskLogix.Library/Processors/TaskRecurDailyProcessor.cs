@@ -60,5 +60,23 @@ namespace RingSoft.TaskLogix.Library.Processors
 
             return taskProcessor.WeeklyProcessor.GetNextDate(startDate);
         }
+
+        public void SaveEntity(TlTaskRecurDaily entity)
+        {
+            entity.RecurType = (byte)RecurType;
+            switch (RecurType)
+            {
+                case DailyRecurTypes.EveryXDays:
+                    entity.RecurDays = RecurDays;
+                    break;
+                case DailyRecurTypes.EveryWeekday:
+                    break;
+                case DailyRecurTypes.RegenerateXDaysAfterCompleted:
+                    entity.RegenDaysAfterCompleted = RegenDaysAfterCompleted;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }
