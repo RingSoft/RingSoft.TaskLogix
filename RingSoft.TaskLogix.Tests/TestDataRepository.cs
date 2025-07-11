@@ -46,30 +46,20 @@ namespace RingSoft.TaskLogix.Tests
             AppGlobals.LookupContext.Initialize();
         }
 
-        public void SaveTlTask(TlTask task, TaskProcessor taskProcessor)
-        {
-            task.Subject = "Test";
-            task.DueDate = taskProcessor.StartDate;
-            if (taskProcessor.ReminderDateTime.HasValue)
-            {
-                task.SnoozeDateTime = taskProcessor.ReminderDateTime.Value;
-            }
+        //public void SaveTlTask(TaskProcessor taskProcessor)
+        //{
+        //    var task = new TlTask();
+        //    task.Subject = "Test";
+        //    task.DueDate = taskProcessor.StartDate;
+        //    if (taskProcessor.ReminderDateTime.HasValue)
+        //    {
+        //        task.SnoozeDateTime = taskProcessor.ReminderDateTime.Value;
+        //    }
 
-            taskProcessor.SaveProcessor(task);
-        }
+        //    var context = SystemGlobals.DataRepository.GetDataContext();
+        //    context.SaveEntity(task, "");
 
-        public void LoadFromTlTask(int taskId, TaskProcessor taskProcessor)
-        {
-            var context = SystemGlobals.DataRepository.GetDataContext();
-
-            var tlTask = context.GetTable<TlTask>()
-                .Include(p => p.RecurDaily)
-                .Include(p => p.RecurWeekly)
-                .Include(p => p.RecurMonthly)
-                .Include(p => p.RecurYearly)
-                .FirstOrDefault(p => p.Id == taskId);
-
-            taskProcessor.LoadProcessor(tlTask);
-        }
+        //    taskProcessor.SaveProcessor(task.Id);
+        //}
     }
 }

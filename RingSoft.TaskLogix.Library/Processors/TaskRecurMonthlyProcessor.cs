@@ -59,6 +59,11 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
         }
 
+        public override void LoadRecurProcessor(TlTask task)
+        {
+            throw new NotImplementedException();
+        }
+
         private DateTime GetDayXOfEvery(DateTime startDate, int addMonths)
         {
             startDate = new DateTime(startDate.Year, startDate.Month, 1);

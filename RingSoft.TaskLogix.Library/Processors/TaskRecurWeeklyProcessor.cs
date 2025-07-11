@@ -87,6 +87,11 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
         }
 
+        public override void LoadRecurProcessor(TlTask task)
+        {
+            throw new NotImplementedException();
+        }
+
         private DateTime GetNextDateAfterCompleted(DateTime startDate)
         {
             var daysToAdd = RegenWeeksAfterCompleted * 7;

@@ -1,4 +1,5 @@
-﻿using RingSoft.DbLookup;
+﻿using Microsoft.EntityFrameworkCore;
+using RingSoft.DbLookup;
 using RingSoft.TaskLogix.DataAccess.Model;
 
 namespace RingSoft.TaskLogix.Library.Processors
@@ -15,7 +16,7 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public TaskRecurYearlyProcessor YearlyProcessor { get; private set; }
 
-        public int TaskId { get; set; }
+        public int TaskId { get; private set; }
 
         public DateTime StartDate { get; set; }
 
@@ -103,12 +104,18 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         }
 
-        public bool SaveProcessor(TlTask task)
+        public bool SaveProcessor(int taskId)
         {
             var result = true;
 
             var context = SystemGlobals.DataRepository.GetDataContext();
-            
+
+            var task = context.GetTable<TlTask>()
+                .FirstOrDefault(p => p.Id == taskId);
+
+            if (task == null)
+                task = new TlTask();
+
             SaveEntity(task);
 
             result = context.SaveEntity(task, "Saving Task");
@@ -182,7 +189,23 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
         }
 
-        public void LoadProcessor(TlTask task)
+        public static TaskProcessor LoadProcessor(int taskId)
+        {
+            var result = new TaskProcessor();
+            var context = SystemGlobals.DataRepository.GetDataContext();
+
+            var tlTask = context.GetTable<TlTask>()
+                .Include(p => p.RecurDaily)
+                .Include(p => p.RecurWeekly)
+                .Include(p => p.RecurMonthly)
+                .Include(p => p.RecurYearly)
+                .FirstOrDefault(p => p.Id == taskId);
+
+            result.LoadProcessor(tlTask, context);
+            return result;
+        }
+
+        private void LoadProcessor(TlTask task, IDbContext context)
         {
             TaskId = task.Id;
             RecurType = (TaskRecurTypes)task.RecurType;
@@ -203,6 +226,7 @@ namespace RingSoft.TaskLogix.Library.Processors
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            ActiveRecurProcessor.LoadRecurProcessor(task);
         }
 
         public void AdjustReminderDate(DateTime origStartDate)

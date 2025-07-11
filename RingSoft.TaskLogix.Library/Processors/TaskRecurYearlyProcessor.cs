@@ -1,4 +1,5 @@
-﻿using RingSoft.TaskLogix.DataAccess.Model;
+﻿using RingSoft.DbLookup;
+using RingSoft.TaskLogix.DataAccess.Model;
 
 namespace RingSoft.TaskLogix.Library.Processors
 {
@@ -56,6 +57,11 @@ namespace RingSoft.TaskLogix.Library.Processors
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public override void LoadRecurProcessor(TlTask task)
+        {
+            throw new NotImplementedException();
         }
 
         private DateTime GetDayXOfEvery(DateTime startDate, int addYears = 1)

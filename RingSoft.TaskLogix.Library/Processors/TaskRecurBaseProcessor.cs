@@ -1,4 +1,7 @@
-﻿namespace RingSoft.TaskLogix.Library.Processors
+﻿using RingSoft.DbLookup;
+using RingSoft.TaskLogix.DataAccess.Model;
+
+namespace RingSoft.TaskLogix.Library.Processors
 {
     public abstract class TaskRecurProcessorBase
     {
@@ -12,5 +15,7 @@
         public abstract void DoMarkComplete();
 
         public abstract void AdjustStartDate();
+
+        public abstract void LoadRecurProcessor(TlTask task);
     }
 }

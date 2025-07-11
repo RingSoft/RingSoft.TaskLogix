@@ -6,15 +6,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
     [TestClass]
     public class TaskRecurDailyProcessorTests
     {
-        public static TaskLogixTestDataRepository Globals { get; } =
-            new TaskLogixTestDataRepository(new TestDataRegistry());
-
-        [ClassInitialize]
-        public static void Setup(TestContext testContext)
-        {
-            Globals.Initialize();
-        }
-
+ 
         [TestMethod]
         public void TestTaskDailyEvery2Days_Friday()
         {
@@ -25,10 +17,6 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
             };
             taskProc.DailyProcessor.RecurType = DailyRecurTypes.EveryXDays;
             taskProc.DailyProcessor.RecurDays = 2;
-
-            Globals.ClearData();
-            var task = new TlTask();
-            Globals.SaveTlTask(task, taskProc);
 
             taskProc.DoMarkComplete();
 

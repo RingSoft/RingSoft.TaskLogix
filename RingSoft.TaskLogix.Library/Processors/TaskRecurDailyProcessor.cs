@@ -1,4 +1,5 @@
-﻿using RingSoft.TaskLogix.DataAccess.Model;
+﻿using RingSoft.DbLookup;
+using RingSoft.TaskLogix.DataAccess.Model;
 
 namespace RingSoft.TaskLogix.Library.Processors
 {
@@ -40,6 +41,20 @@ namespace RingSoft.TaskLogix.Library.Processors
                 case DailyRecurTypes.EveryWeekday:
                     TaskProcessor.StartDate = GetNextWeekdayDate(TaskProcessor.StartDate.AddDays(-1));
                     break;
+            }
+        }
+
+        public override void LoadRecurProcessor(TlTask task)
+        {
+            if (task.RecurDaily.Any())
+            {
+                var taskRecurDaily = task.RecurDaily.FirstOrDefault();
+                if (taskRecurDaily != null)
+                {
+                    this.RecurType = (DailyRecurTypes)taskRecurDaily.RecurType;
+                    this.RecurDays = taskRecurDaily.RecurDays.GetValueOrDefault();
+                    this.RegenDaysAfterCompleted = taskRecurDaily.RegenDaysAfterCompleted.GetValueOrDefault();
+                }
             }
         }
 

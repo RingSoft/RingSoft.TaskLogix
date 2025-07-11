@@ -370,6 +370,37 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                     b.ToTable("TaskRecurWeeklys");
                 });
 
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurYearly", b =>
+                {
+                    b.Property<int>("TaskId")
+                        .HasColumnType("integer");
+
+                    b.Property<byte?>("DayType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("EveryMonthType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int?>("MonthDay")
+                        .HasColumnType("integer");
+
+                    b.Property<byte>("RecurType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int?>("RegenYearsAfterCompleted")
+                        .HasColumnType("integer");
+
+                    b.Property<byte?>("WeekMonthType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte?>("WeekType")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("TaskId");
+
+                    b.ToTable("TlTaskRecurYearly");
+                });
+
             modelBuilder.Entity("RingSoft.DbLookup.AdvancedFind.AdvancedFindColumn", b =>
                 {
                     b.HasOne("RingSoft.DbLookup.AdvancedFind.AdvancedFind", "AdvancedFind")
@@ -432,6 +463,17 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                     b.Navigation("Task");
                 });
 
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurYearly", b =>
+                {
+                    b.HasOne("RingSoft.TaskLogix.DataAccess.Model.TlTask", "Task")
+                        .WithMany("RecurYearly")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("RingSoft.DbLookup.AdvancedFind.AdvancedFind", b =>
                 {
                     b.Navigation("Columns");
@@ -448,6 +490,8 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                     b.Navigation("RecurMonthly");
 
                     b.Navigation("RecurWeekly");
+
+                    b.Navigation("RecurYearly");
                 });
 #pragma warning restore 612, 618
         }
