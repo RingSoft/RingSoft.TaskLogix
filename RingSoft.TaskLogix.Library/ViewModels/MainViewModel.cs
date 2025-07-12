@@ -1,16 +1,19 @@
 ﻿using RingSoft.CustomTemplate.Library.ViewModels;
 using RingSoft.DataEntryControls.Engine;
-using RingSoft.DbLookup;
-using RingSoft.DbLookup.ModelDefinition;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
 {
     public class MainViewModel : TemplateMainViewModel
     {
+        public RelayCommand ManageTasksCommand { get; }
         public RelayCommand ShowAdvFindTabCommand { get; }
 
         public MainViewModel()
         {
+            ManageTasksCommand = new RelayCommand((() =>
+            {
+                View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);
+            }));
             ShowAdvFindTabCommand = new RelayCommand(ShowAdvFindTab);
         }
 

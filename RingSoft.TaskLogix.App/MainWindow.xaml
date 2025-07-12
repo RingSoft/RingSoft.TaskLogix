@@ -28,6 +28,8 @@
                 </LinearGradientBrush>
             </StackPanel.Background>
 
+            <ac:DbMaintenanceButton x:Name="TaskMaintButton" Content="_Manage Tasks" ImageSource="{StaticResource AfUpImage}" Command="{Binding ManageTasksCommand }"/>
+
             <ac:DbMaintenanceButton x:Name="AdvancedFindButton" Content="_Advanced Find" ImageSource="{StaticResource FindImage}" Command="{Binding ShowAdvFindTabCommand }"/>
         </StackPanel>
 
