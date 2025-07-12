@@ -131,6 +131,23 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             set { PriorityComboBoxItem = PriorityComboBoxSetup.GetItem((byte)value); }
         }
 
+        private double _percentComplete;
+
+        public double PercentComplete
+        {
+            get { return _percentComplete; }
+            set
+            {
+                if (_percentComplete == value)
+                    return;
+
+                _percentComplete = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        #endregion
 
         public TaskMaintenanceViewModel()
         {
@@ -141,7 +158,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             PriorityComboBoxSetup.LoadFromEnum<TaskPriorityTypes>();
         }
 
-        #endregion
         protected override void PopulatePrimaryKeyControls(TlTask newEntity, PrimaryKeyValue primaryKeyValue)
         {
             Id = newEntity.Id;
@@ -153,6 +169,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             StatusType = (TaskStatusTypes)entity.StatusType;
             DueDate = entity.DueDate;
             PriorityType = (TaskPriorityTypes)entity.PriorityType;
+            PercentComplete = entity.PercentComplete;
         }
 
         protected override TlTask GetEntityData()
@@ -165,6 +182,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 StatusType = (byte)StatusType,
                 DueDate = DueDate,
                 PriorityType = (byte)PriorityType,
+                PercentComplete = PercentComplete,
             };
         }
 
@@ -174,6 +192,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             StartDate = DueDate = DateTime.Today;
             StatusType = TaskStatusTypes.NotStarted;
             PriorityType = TaskPriorityTypes.Normal;
+            PercentComplete = 0;
         }
     }
 }
