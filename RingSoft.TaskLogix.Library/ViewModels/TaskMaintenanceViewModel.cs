@@ -78,10 +78,67 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             set { StatusComboBoxItem = StatusComboBoxSetup.GetItem((byte)value); }
         }
 
+        private DateTime _dueDate;
+
+        public DateTime DueDate
+        {
+            get { return _dueDate; }
+            set
+            {
+                if (_dueDate == value)
+                    return;
+
+                _dueDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextComboBoxControlSetup _priorityComboBoxSetup;
+
+        public TextComboBoxControlSetup PriorityComboBoxSetup
+        {
+            get { return _priorityComboBoxSetup; }
+            set
+            {
+                if (_priorityComboBoxSetup == value)
+                    return;
+
+                _priorityComboBoxSetup = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextComboBoxItem _priorityComboBoxItem;
+
+        public TextComboBoxItem PriorityComboBoxItem
+        {
+            get { return _priorityComboBoxItem; }
+            set
+            {
+                if (_priorityComboBoxItem == value)
+                    return;
+
+                _priorityComboBoxItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TaskPriorityTypes _priorityType;
+
+        public TaskPriorityTypes PriorityType
+        {
+            get { return (TaskPriorityTypes)PriorityComboBoxItem.NumericValue; }
+            set { PriorityComboBoxItem = PriorityComboBoxSetup.GetItem((byte)value); }
+        }
+
+
         public TaskMaintenanceViewModel()
         {
             StatusComboBoxSetup = new TextComboBoxControlSetup();
             StatusComboBoxSetup.LoadFromEnum<TaskStatusTypes>();
+
+            PriorityComboBoxSetup = new TextComboBoxControlSetup();
+            PriorityComboBoxSetup.LoadFromEnum<TaskPriorityTypes>();
         }
 
         #endregion
@@ -94,6 +151,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         {
             StartDate = entity.StartDate;
             StatusType = (TaskStatusTypes)entity.StatusType;
+            DueDate = entity.DueDate;
+            PriorityType = (TaskPriorityTypes)entity.PriorityType;
         }
 
         protected override TlTask GetEntityData()
@@ -104,14 +163,17 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 Subject = KeyAutoFillValue.Text,
                 StartDate = StartDate,
                 StatusType = (byte)StatusType,
+                DueDate = DueDate,
+                PriorityType = (byte)PriorityType,
             };
         }
 
         protected override void ClearData()
         {
             Id = 0;
-            StartDate = DateTime.Today;
+            StartDate = DueDate = DateTime.Today;
             StatusType = TaskStatusTypes.NotStarted;
+            PriorityType = TaskPriorityTypes.Normal;
         }
     }
 }
