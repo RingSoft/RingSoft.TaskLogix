@@ -53,6 +53,8 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -62,6 +64,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0" Content="Starting Date"/>
@@ -79,6 +82,27 @@
                         <Label Grid.Row="1" Grid.Column="2" Content="Priority"/>
 
                         <dec:TextComboBoxControl Grid.Row="1" Grid.Column="3" Setup="{Binding PriorityComboBoxSetup}" SelectedItem="{Binding PriorityComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Label Grid.Row="1" Grid.Column="4" Content="Percent Complete"/>
+
+                        <dec:DecimalEditControl Grid.Row="1" Grid.Column="5" FormatType="Percent" Width="75" Value="{Binding PercentComplete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <CheckBox Grid.Row="2" Grid.Column="0" Content="Reminder" HorizontalAlignment="Right" VerticalAlignment="Center" IsChecked="{Binding DoReminder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <dec:DateEditControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Left"  DateFormatType="DateTime" Width="175" Value="{Binding ReminderDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding ReminderUiCommand}"/>
+
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0" Content="Notes" HorizontalAlignment="Left"/>
+
+                            <dec:DataEntryMemoEditor Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        </Grid>
 
                     </Grid>
 

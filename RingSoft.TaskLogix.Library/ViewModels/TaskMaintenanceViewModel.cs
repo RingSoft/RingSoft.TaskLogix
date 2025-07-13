@@ -146,8 +146,59 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private bool _doReminder;
+
+        public bool DoReminder
+        {
+            get { return _doReminder; }
+            set
+            {
+                if (_doReminder == value)
+                    return;
+
+                _doReminder = value;
+
+                ReminderUiCommand.IsEnabled = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _reminderDateTime;
+
+        public DateTime ReminderDateTime
+        {
+            get { return _reminderDateTime; }
+            set
+            {
+                if (_reminderDateTime == value)
+                    return;
+
+                _reminderDateTime = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        private string? _notes;
+
+        public string? Notes
+        {
+            get { return _notes; }
+            set
+            {
+                if (_notes == value)
+                    return;
+
+                _notes = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         #endregion
+
+        public UiCommand ReminderUiCommand { get; }
 
         public TaskMaintenanceViewModel()
         {
@@ -156,6 +207,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             PriorityComboBoxSetup = new TextComboBoxControlSetup();
             PriorityComboBoxSetup.LoadFromEnum<TaskPriorityTypes>();
+
+            ReminderUiCommand = new UiCommand();
         }
 
         protected override void PopulatePrimaryKeyControls(TlTask newEntity, PrimaryKeyValue primaryKeyValue)
@@ -170,11 +223,23 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             DueDate = entity.DueDate;
             PriorityType = (TaskPriorityTypes)entity.PriorityType;
             PercentComplete = entity.PercentComplete;
+            if (entity.ReminderDateTime == null)
+            {
+                DoReminder = false;
+                ReminderDateTime = StartDate;
+            }
+            else
+            {
+                DoReminder = true;
+                ReminderDateTime = entity.ReminderDateTime.GetValueOrDefault();
+            }
+
+            Notes = entity.Notes;
         }
 
         protected override TlTask GetEntityData()
         {
-            return new TlTask()
+            var result = new TlTask()
             {
                 Id = Id,
                 Subject = KeyAutoFillValue.Text,
@@ -183,7 +248,13 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 DueDate = DueDate,
                 PriorityType = (byte)PriorityType,
                 PercentComplete = PercentComplete,
+                Notes = Notes,
             };
+            if (DoReminder)
+            {
+                result.ReminderDateTime = ReminderDateTime;
+            }
+            return result;
         }
 
         protected override void ClearData()
@@ -193,6 +264,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             StatusType = TaskStatusTypes.NotStarted;
             PriorityType = TaskPriorityTypes.Normal;
             PercentComplete = 0;
+            DoReminder = false;
+            ReminderUiCommand.IsEnabled = false;
+            ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, 8, 0, 0);
+            Notes = null;
         }
     }
 }
