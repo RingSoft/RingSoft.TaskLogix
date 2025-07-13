@@ -200,6 +200,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public UiCommand ReminderUiCommand { get; }
 
+        public RelayCommand MarkCompleteCommand { get; }
+
+        public RelayCommand RecurrenceCommand { get; }
+
         public TaskMaintenanceViewModel()
         {
             StatusComboBoxSetup = new TextComboBoxControlSetup();
@@ -209,6 +213,18 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             PriorityComboBoxSetup.LoadFromEnum<TaskPriorityTypes>();
 
             ReminderUiCommand = new UiCommand();
+
+            MarkCompleteCommand = new RelayCommand((() =>
+            {
+                ControlsGlobals.UserInterface.ShowMessageBox("Mark Complete"
+                    , "Nub", RsMessageBoxIcons.Information);
+            }));
+
+            RecurrenceCommand = new RelayCommand((() =>
+            {
+                ControlsGlobals.UserInterface.ShowMessageBox("Recurrence"
+                    , "Nub", RsMessageBoxIcons.Information);
+            }));
         }
 
         protected override void PopulatePrimaryKeyControls(TlTask newEntity, PrimaryKeyValue primaryKeyValue)
