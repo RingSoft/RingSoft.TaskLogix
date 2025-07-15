@@ -7,6 +7,7 @@ using RingSoft.TaskLogix.Library;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.App.TaskMaintenance
 {
@@ -33,7 +34,7 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
     /// <summary>
     /// Interaction logic for TaskMaintenanceUserControl.xaml
     /// </summary>
-    public partial class TaskMaintenanceUserControl
+    public partial class TaskMaintenanceUserControl : ITaskMaintenanceView
     {
         public TaskMaintenanceUserControl()
         {
@@ -67,6 +68,8 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
             hotKey.AddKey(Key.T);
             hotKey.AddKey(Key.R);
             AddHotKey(hotKey);
+
+            LocalViewModel.Init(this);
         }
 
         protected override DbMaintenanceViewModelBase OnGetViewModel()
@@ -87,6 +90,13 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
         protected override string GetTitle()
         {
             return "Tasks";
+        }
+
+        public bool ShowTaskRecurrenceWindow()
+        {
+            var win = new TaskRecurWindow(LocalViewModel.TaskProcessor);
+            LookupControlsGlobals.WindowRegistry.ShowDialog(win);
+            return win.DialogResult;
         }
     }
 }

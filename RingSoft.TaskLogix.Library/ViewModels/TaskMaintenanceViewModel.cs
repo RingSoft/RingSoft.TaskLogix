@@ -2,9 +2,14 @@
 using RingSoft.DbLookup;
 using RingSoft.DbMaintenance;
 using RingSoft.TaskLogix.DataAccess.Model;
+using RingSoft.TaskLogix.Library.Processors;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
 {
+    public interface ITaskMaintenanceView
+    {
+        bool ShowTaskRecurrenceWindow();
+    }
     public class TaskMaintenanceViewModel : DbMaintenanceViewModel<TlTask>
     {
         #region Properties
@@ -198,11 +203,15 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         #endregion
 
+        public ITaskMaintenanceView View { get; private set; }
+
         public UiCommand ReminderUiCommand { get; }
 
         public RelayCommand MarkCompleteCommand { get; }
 
         public RelayCommand RecurrenceCommand { get; }
+
+        public TaskProcessor TaskProcessor { get; }
 
         public TaskMaintenanceViewModel()
         {
@@ -222,9 +231,14 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             RecurrenceCommand = new RelayCommand((() =>
             {
-                ControlsGlobals.UserInterface.ShowMessageBox("Recurrence"
-                    , "Nub", RsMessageBoxIcons.Information);
+                View.ShowTaskRecurrenceWindow();
             }));
+            TaskProcessor = new TaskProcessor();
+        }
+
+        public void Init(ITaskMaintenanceView view)
+        {
+            View = view;
         }
 
         protected override void PopulatePrimaryKeyControls(TlTask newEntity, PrimaryKeyValue primaryKeyValue)
