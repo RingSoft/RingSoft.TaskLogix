@@ -81,6 +81,10 @@
 
                         <dec:TextComboBoxControl Grid.Row="1" Grid.Column="3" Setup="{Binding PriorityComboBoxSetup}" SelectedItem="{Binding PriorityComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
+                        <Label Grid.Row="1" Grid.Column="4" Content="% Complete"/>
+
+                        <dec:DecimalEditControl Grid.Row="1" Grid.Column="5" FormatType="Percent" Width="75" Value="{Binding PercentComplete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
                     </Grid>
 
                 </TabItem>
