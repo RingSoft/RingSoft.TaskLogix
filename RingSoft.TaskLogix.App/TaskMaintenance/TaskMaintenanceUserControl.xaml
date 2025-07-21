@@ -53,6 +53,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
@@ -94,6 +95,9 @@
 
                         </StackPanel>
 
+                        <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="7" HorizontalAlignment="Left" Content="Notes"/>
+
+                        <dec:DataEntryMemoEditor Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="7" HorizontalAlignment="Stretch" Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
 
                 </TabItem>
