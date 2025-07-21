@@ -52,6 +52,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
@@ -84,6 +85,14 @@
                         <Label Grid.Row="1" Grid.Column="4" Content="% Complete"/>
 
                         <dec:DecimalEditControl Grid.Row="1" Grid.Column="5" FormatType="Percent" Width="75" Value="{Binding PercentComplete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="7" Orientation="Horizontal">
+
+                            <CheckBox Content="Reminder" VerticalAlignment="Center" Margin="0,0,5,0" IsChecked="{Binding DoReminder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <dec:DateEditControl DateFormatType="DateTime" Width="175" Value="{Binding ReminderDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding ReminderUiCommand}"/>
+
+                        </StackPanel>
 
                     </Grid>
 
