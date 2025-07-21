@@ -106,7 +106,9 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
 
         public bool ShowTaskRecurrenceWindow()
         {
-            throw new NotImplementedException();
+            var win = new TaskRecurWindow(LocalViewModel.TaskProcessor);
+            LookupControlsGlobals.WindowRegistry.ShowDialog(win);
+            return win.DialogResult;
         }
     }
 }
