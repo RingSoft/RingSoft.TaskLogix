@@ -12,12 +12,33 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RingSoft.App.Controls;
 using RingSoft.DbLookup.Controls.WPF;
 using RingSoft.DbMaintenance;
 using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.App.TaskMaintenance
 {
+    public class TaskHeaderControl : DbMaintenanceCustomPanel
+    {
+        public DbMaintenanceButton MarkCompleteButton { get; set; }
+
+        public DbMaintenanceButton RecurrenceButton { get; set; }
+
+        static TaskHeaderControl()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TaskHeaderControl), new FrameworkPropertyMetadata(typeof(TaskHeaderControl)));
+        }
+
+        public override void OnApplyTemplate()
+        {
+            MarkCompleteButton = GetTemplateChild(nameof(MarkCompleteButton)) as DbMaintenanceButton;
+            RecurrenceButton = GetTemplateChild(nameof(RecurrenceButton)) as DbMaintenanceButton;
+
+            base.OnApplyTemplate();
+        }
+    }
+
     /// <summary>
     /// Interaction logic for TaskMaintenanceUserControl.xaml
     /// </summary>
