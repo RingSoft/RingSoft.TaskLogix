@@ -13,8 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RingSoft.App.Controls;
+using RingSoft.DataEntryControls.WPF;
+using RingSoft.DbLookup;
 using RingSoft.DbLookup.Controls.WPF;
 using RingSoft.DbMaintenance;
+using RingSoft.TaskLogix.Library;
 using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.App.TaskMaintenance
@@ -48,6 +51,37 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
         {
             InitializeComponent();
             RegisterFormKeyControl(SubjectControl);
+
+            TopHeaderControl.Loaded += (sender, args) =>
+            {
+                if (TopHeaderControl.CustomPanel is TaskHeaderControl taskHeaderControl)
+                {
+                    taskHeaderControl.MarkCompleteButton.Command =
+                        LocalViewModel.MarkCompleteCommand;
+                    taskHeaderControl.RecurrenceButton.Command =
+                        LocalViewModel.RecurrenceCommand;
+
+                    taskHeaderControl.MarkCompleteButton.ToolTip.HeaderText = "Mark Complete (Ctrl + T, Ctrl + M)";
+                    taskHeaderControl.MarkCompleteButton.ToolTip.DescriptionText = "Mark this Task as complete. ";
+
+                    taskHeaderControl.RecurrenceButton.ToolTip.HeaderText = "Setup Recurrence (Ctrl + T, Ctrl + R)";
+                    taskHeaderControl.RecurrenceButton.ToolTip.DescriptionText =
+                        "Setup recurrence for this Task.";
+
+                }
+            };
+
+            LocalViewModel.Init(this);
+
+            var hotKey = new HotKey(LocalViewModel.MarkCompleteCommand);
+            hotKey.AddKey(Key.T);
+            hotKey.AddKey(Key.M);
+            AddHotKey(hotKey);
+
+            hotKey = new HotKey(LocalViewModel.RecurrenceCommand);
+            hotKey.AddKey(Key.T);
+            hotKey.AddKey(Key.R);
+            AddHotKey(hotKey);
         }
 
         protected override DbMaintenanceViewModelBase OnGetViewModel()
