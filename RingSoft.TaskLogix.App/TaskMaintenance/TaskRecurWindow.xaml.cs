@@ -1,9 +1,38 @@
-﻿using RingSoft.TaskLogix.DataAccess.Model;
+﻿using System.Windows.Controls;
+using System.Windows.Input;
+using RingSoft.DataEntryControls.WPF;
+using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.Processors;
 using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.App.TaskMaintenance
 {
+    public class RecurRadioButton : RadioButton
+    {
+        public TaskRecurWindow RecurWindow { get; private set; }
+
+        public RecurRadioButton()
+        {
+            Loaded += (sender, args) =>
+            {
+                RecurWindow = this.GetParentOfType<TaskRecurWindow>();
+            };
+        }
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
+            {
+                if (RecurWindow.ActiveRecurUserControl != null)
+                {
+                    RecurWindow.ActiveRecurUserControl.SetInitialFocus();
+                    e.Handled = true;
+                    return;
+                }
+            }
+
+            base.OnKeyDown(e);
+        }
+    }
     /// <summary>
     /// Interaction logic for TaskRecurWindow.xaml
     /// </summary>

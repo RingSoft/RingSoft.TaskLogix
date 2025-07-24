@@ -16,5 +16,10 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
         {
             return LocalViewModel;
         }
+
+        public override void SetInitialFocus()
+        {
+            TextBox.Focus();
+        }
     }
 }

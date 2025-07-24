@@ -38,13 +38,13 @@
 
                 <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
 
-                    <RadioButton x:Name="DailyRadio" Margin="5" Content="Daily" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurTypes.Daily}, Mode=TwoWay}"/>
+                    <local:RecurRadioButton x:Name="DailyRadio" Margin="5" Content="Daily" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurTypes.Daily}, Mode=TwoWay}"/>
 
-                    <RadioButton x:Name="WeeklyRadio" Margin="5" Content="Weekly" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurTypes.Weekly}, Mode=TwoWay}"/>
+                    <local:RecurRadioButton x:Name="WeeklyRadio" Margin="5" Content="Weekly" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurTypes.Weekly}, Mode=TwoWay}"/>
 
-                    <RadioButton x:Name="MonthlyRadio" Margin="5" Content="Monthly" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurTypes.Monthly}, Mode=TwoWay}"/>
+                    <local:RecurRadioButton x:Name="MonthlyRadio" Margin="5" Content="Monthly" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurTypes.Monthly}, Mode=TwoWay}"/>
 
-                    <RadioButton x:Name="YearlyRadio" Margin="5" Content="Yearly" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurTypes.Yearly}, Mode=TwoWay}"/>
+                    <local:RecurRadioButton x:Name="YearlyRadio" Margin="5" Content="Yearly" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurTypes.Yearly}, Mode=TwoWay}"/>
 
                 </StackPanel>
 

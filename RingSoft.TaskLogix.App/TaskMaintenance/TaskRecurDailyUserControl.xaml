@@ -16,6 +16,6 @@
     </UserControl.DataContext>
 
     <Grid>
-        <TextBox Width="100"/>
+        <TextBox x:Name="TextBox" Width="100"/>
     </Grid>
 </local:TaskRecurUserControlBase>
