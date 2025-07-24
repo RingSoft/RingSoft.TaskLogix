@@ -12,6 +12,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
     }
     public class TaskRecurWindowViewModel : INotifyPropertyChanged
     {
+        public TaskRecurViewModelBase ActiveRecurViewModel { get; set; }
+
         private TaskRecurTypes _recurType;
 
         public TaskRecurTypes RecurType

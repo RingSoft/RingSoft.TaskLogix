@@ -10,13 +10,17 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
     public partial class TaskRecurWindow : IRecurWindowView
     {
         public TaskProcessor TaskProcessor { get; set; }
+
+        public TaskRecurUserControlBase ActiveRecurUserControl { get; private set; }
         public void UpdateRecurType()
         {
+            ActiveRecurUserControl = null;
             switch (LocalViewModel.RecurType)
             {
                 case TaskRecurTypes.None:
                     break;
                 case TaskRecurTypes.Daily:
+                    ActiveRecurUserControl = new TaskRecurDailyUserControl();
                     DailyRadio.Focus();
                     break;
                 case TaskRecurTypes.Weekly:
@@ -31,6 +35,13 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            RecurPanel.Children.Clear();
+            if (ActiveRecurUserControl != null)
+            {
+                RecurPanel.Children.Add(ActiveRecurUserControl);
+            }
+            RecurPanel.UpdateLayout();
         }
 
         public bool DialogResult { get; private set; }
