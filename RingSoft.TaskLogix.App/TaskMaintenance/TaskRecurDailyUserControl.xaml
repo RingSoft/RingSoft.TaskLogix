@@ -26,19 +26,29 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5, 0, 0, 0">
-            <RadioButton Content="Every" VerticalAlignment="Center"/>
+
+            <RadioButton x:Name="EveryXDaysRadio" Content="Every" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.EveryXDays}, Mode=TwoWay}"/>
+
             <dec:IntegerEditControl Width="20" HorizontalAlignment="Left"/>
+
             <Label HorizontalAlignment="Left" Content="day(s)"/>
+
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5, 5, 0, 0">
-            <RadioButton Content="Every weekday" VerticalAlignment="Center"/>
+
+            <RadioButton x:Name="EveryWeekdayRadio" Content="Every weekday" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.EveryWeekday}, Mode=TwoWay}"/>
+
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5, 5, 0, 0">
-            <RadioButton Content="Regenerate new task" VerticalAlignment="Center"/>
+
+            <RadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.RegenerateXDaysAfterCompleted}, Mode=TwoWay}"/>
+
             <dec:IntegerEditControl Width="20" HorizontalAlignment="Left"/>
+
             <Label HorizontalAlignment="Left" Content="day(s) after each task is completed" VerticalAlignment="Center"/>
+
         </StackPanel>
     </Grid>
 </local:TaskRecurUserControlBase>
