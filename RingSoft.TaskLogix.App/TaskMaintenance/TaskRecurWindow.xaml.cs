@@ -69,6 +69,7 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
             if (ActiveRecurUserControl != null)
             {
                 RecurPanel.Children.Add(ActiveRecurUserControl);
+                LocalViewModel.ActiveRecurViewModel = ActiveRecurUserControl.GetRecurViewModel();
             }
             RecurPanel.UpdateLayout();
         }

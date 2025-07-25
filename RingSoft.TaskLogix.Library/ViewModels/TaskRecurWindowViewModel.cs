@@ -44,6 +44,15 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 recurType = TaskRecurTypes.Weekly;
             }
             RecurType = recurType;
+
+            if (view.TaskProcessor.RecurType != TaskRecurTypes.None)
+            {
+                if (ActiveRecurViewModel != null)
+                {
+                    ActiveRecurViewModel.LoadFromTaskProcessor(view.TaskProcessor);
+                }
+            }
+
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

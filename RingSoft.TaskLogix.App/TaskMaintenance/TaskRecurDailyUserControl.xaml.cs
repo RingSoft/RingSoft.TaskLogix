@@ -19,7 +19,7 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
 
         public override void SetInitialFocus()
         {
-            TextBox.Focus();
+            
         }
     }
 }

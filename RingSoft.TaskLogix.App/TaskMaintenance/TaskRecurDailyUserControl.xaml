@@ -16,6 +16,29 @@
     </UserControl.DataContext>
 
     <Grid>
-        <TextBox x:Name="TextBox" Width="100"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5, 0, 0, 0">
+            <RadioButton Content="Every" VerticalAlignment="Center"/>
+            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left"/>
+            <Label HorizontalAlignment="Left" Content="day(s)"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5, 5, 0, 0">
+            <RadioButton Content="Every weekday" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5, 5, 0, 0">
+            <RadioButton Content="Regenerate new task" VerticalAlignment="Center"/>
+            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left"/>
+            <Label HorizontalAlignment="Left" Content="day(s) after each task is completed" VerticalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </local:TaskRecurUserControlBase>

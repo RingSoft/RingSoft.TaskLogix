@@ -50,7 +50,7 @@
 
                 <Border Grid.Row="0" Grid.Column="1" BorderThickness="1" BorderBrush="White"/>
 
-                <StackPanel x:Name="RecurPanel" Grid.Row="0" Grid.Column="2" Width="300" Height="300"/>
+                <StackPanel x:Name="RecurPanel" Grid.Row="0" Grid.Column="2" Width="400" Height="150"/>
             </Grid>
         </GroupBox>
     </Grid>
