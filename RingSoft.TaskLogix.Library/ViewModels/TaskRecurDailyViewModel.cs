@@ -1,4 +1,5 @@
-﻿using RingSoft.TaskLogix.DataAccess.Model;
+﻿using RingSoft.DataEntryControls.Engine;
+using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.Processors;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
@@ -17,6 +18,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     return;
                 }
                 _recurType = value;
+                SetEnabled();
                 OnPropertyChanged();
             }
         }
@@ -51,11 +53,16 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        public UiCommand RecurDaysUiCommand { get; }
 
+        public UiCommand RegenDaysUiCommand { get; }
 
         public TaskRecurDailyViewModel()
         {
-            RecurType = DailyRecurTypes.EveryWeekday;
+            RecurDaysUiCommand = new UiCommand();
+            RegenDaysUiCommand = new UiCommand();
+
+            RecurType = DailyRecurTypes.EveryXDays;
             RecurDays = 1;
             RegenDaysAfterCompleted = 1;
         }
@@ -68,6 +75,26 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public override void SaveToTaskProcessor(TaskProcessor taskProcessor)
         {
             
+        }
+
+        public void SetEnabled()
+        {
+            RecurDaysUiCommand.IsEnabled = false;
+            RegenDaysUiCommand.IsEnabled = false;
+
+            switch (RecurType)
+            {
+                case DailyRecurTypes.EveryXDays:
+                    RecurDaysUiCommand.IsEnabled = true;
+                    break;
+                case DailyRecurTypes.EveryWeekday:
+                    break;
+                case DailyRecurTypes.RegenerateXDaysAfterCompleted:
+                    RegenDaysUiCommand.IsEnabled = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

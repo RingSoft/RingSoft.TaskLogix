@@ -29,7 +29,7 @@
 
             <RadioButton x:Name="EveryXDaysRadio" Content="Every" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.EveryXDays}, Mode=TwoWay}"/>
 
-            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left"/>
+            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RecurDays, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RecurDaysUiCommand}"/>
 
             <Label HorizontalAlignment="Left" Content="day(s)"/>
 
@@ -45,7 +45,7 @@
 
             <RadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.RegenerateXDaysAfterCompleted}, Mode=TwoWay}"/>
 
-            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left"/>
+            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RegenDaysAfterCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RegenDaysUiCommand}"/>
 
             <Label HorizontalAlignment="Left" Content="day(s) after each task is completed" VerticalAlignment="Center"/>
 
