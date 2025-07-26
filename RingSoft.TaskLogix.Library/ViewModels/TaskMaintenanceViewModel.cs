@@ -299,6 +299,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
 
             Notes = entity.Notes;
+            TaskProcessor.LoadProcessor(entity);
         }
 
         protected override TlTask GetEntityData()
@@ -318,6 +319,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 result.ReminderDateTime = ReminderDateTime;
             }
+
+            TaskProcessor.SaveEntityFromTaskMaint(result);
             return result;
         }
 

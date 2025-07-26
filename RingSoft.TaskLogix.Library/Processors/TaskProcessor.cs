@@ -165,10 +165,19 @@ namespace RingSoft.TaskLogix.Library.Processors
             return result;
         }
 
-        private void SaveEntity(TlTask tlTask)
+        public void SaveEntityFromTaskMaint(TlTask tlTask)
+        {
+            SaveProcessorProps(tlTask);
+        }
+        public void SaveEntity(TlTask tlTask)
         {
             tlTask.StartDate = StartDate;
             tlTask.ReminderDateTime = ReminderDateTime;
+            SaveProcessorProps(tlTask);
+        }
+
+        private void SaveProcessorProps(TlTask tlTask)
+        {
             tlTask.RecurType = (byte)RecurType;
             tlTask.RecurEndType = (byte)RecurEndType;
             tlTask.RecurEndDate = null;
@@ -201,11 +210,11 @@ namespace RingSoft.TaskLogix.Library.Processors
                 .Include(p => p.RecurYearly)
                 .FirstOrDefault(p => p.Id == taskId);
 
-            result.LoadProcessor(tlTask, context);
+            result.LoadProcessor(tlTask);
             return result;
         }
 
-        private void LoadProcessor(TlTask task, IDbContext context)
+        public void LoadProcessor(TlTask task)
         {
             TaskId = task.Id;
             RecurType = (TaskRecurTypes)task.RecurType;
@@ -226,7 +235,9 @@ namespace RingSoft.TaskLogix.Library.Processors
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            ActiveRecurProcessor.LoadRecurProcessor(task);
+
+            if (ActiveRecurProcessor != null) 
+                ActiveRecurProcessor.LoadRecurProcessor(task);
         }
 
         public void AdjustReminderDate(DateTime origStartDate)
