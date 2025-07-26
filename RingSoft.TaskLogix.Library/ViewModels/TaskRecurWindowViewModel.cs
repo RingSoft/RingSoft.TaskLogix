@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using RingSoft.DataEntryControls.Engine;
 using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.Processors;
 
@@ -9,6 +10,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
     {
         TaskProcessor TaskProcessor { get; set; }
         void UpdateRecurType();
+
+        void CloseWindow(bool result);
     }
     public class TaskRecurWindowViewModel : INotifyPropertyChanged
     {
@@ -50,6 +53,19 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public TaskRecurViewModelBase ActiveRecurViewModel { get; set; }
 
+        public RelayCommand OkCommand { get; }
+
+        public RelayCommand CancelCommand { get; }
+
+        public RelayCommand RemoveRecurrenceCommand { get; }
+
+        public TaskRecurWindowViewModel()
+        {
+            OkCommand = new RelayCommand(OnOk);
+            CancelCommand = new RelayCommand(OnCancel);
+            RemoveRecurrenceCommand = new RelayCommand(OnRemoveRecurrence);
+        }
+
         public void Init(IRecurWindowView view)
         {
             View = view;
@@ -71,6 +87,21 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             StartDate = view.TaskProcessor.StartDate;
 
+        }
+
+        private void OnOk()
+        {
+            View.CloseWindow(true);
+        }
+
+        private void OnCancel()
+        {
+            View.CloseWindow(false);
+        }
+
+        private void OnRemoveRecurrence()
+        {
+            ControlsGlobals.UserInterface.ShowMessageBox("Remove Recurrence", "Nub", RsMessageBoxIcons.Information);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

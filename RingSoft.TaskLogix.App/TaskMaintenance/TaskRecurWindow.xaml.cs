@@ -74,6 +74,12 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
             RecurPanel.UpdateLayout();
         }
 
+        public void CloseWindow(bool result)
+        {
+            DialogResult = result;
+            Close();
+        }
+
         public bool DialogResult { get; private set; }
 
         public TaskRecurWindow(TaskProcessor taskProcessor)

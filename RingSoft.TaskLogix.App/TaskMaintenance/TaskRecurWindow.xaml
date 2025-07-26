@@ -10,13 +10,14 @@
         xmlns:local="clr-namespace:RingSoft.TaskLogix.App.TaskMaintenance"
         mc:Ignorable="d"
         Title="TaskRecurWindow" Height="450" Width="800"
-        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" CloseOnEscape="False">
 
     <Window.DataContext>
         <vm:TaskRecurWindowViewModel x:Name="LocalViewModel"/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -77,5 +78,14 @@
 
         </GroupBox>
 
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+
+            <Button Content="_OK" Margin="5" Width="100" Height="25" Command="{Binding OkCommand}" IsDefault="True"/>
+
+            <Button Content="_Cancel" Margin="5" Width="100" Height="25" Command="{Binding CancelCommand}" IsCancel="True"/>
+
+            <Button Content="_Remove Recurrence" Margin="5" Height="25" Command="{Binding RemoveRecurrenceCommand}"/>
+
+        </StackPanel>
     </Grid>
 </dec:BaseWindow>
