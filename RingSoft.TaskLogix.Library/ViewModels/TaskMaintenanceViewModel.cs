@@ -321,6 +321,92 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             return result;
         }
 
+        protected override bool SaveEntity(TlTask entity)
+        {
+            var result = base.SaveEntity(entity);
+
+            if (result)
+            {
+                var context = SystemGlobals.DataRepository.GetDataContext();
+
+                result = PurgeDaily(entity, context);
+
+                if (result)
+                {
+                    result = PurgeWeekly(entity, context);
+                }
+
+                if (result)
+                {
+                    result = PurgeMonthly(entity, context);
+                }
+
+                if (result)
+                {
+                    result = PurgeYearly(entity, context);
+                }
+
+                if (result)
+                {
+                    if (TaskProcessor.ActiveRecurProcessor != null)
+                        result = TaskProcessor.ActiveRecurProcessor.SaveRecurProcessor(entity, context);
+                }
+            }
+            return result;
+        }
+
+        private static bool PurgeDaily(TlTask entity, IDbContext context)
+        {
+            var result = true;
+            var rec = context.GetTable<TlTaskRecurDaily>()
+                .FirstOrDefault(p => p.TaskId == entity.Id);
+            if (rec != null)
+            {
+                result = context.DeleteEntity(rec, "");
+            }
+
+            return result;
+        }
+
+        private static bool PurgeWeekly(TlTask entity, IDbContext context)
+        {
+            var result = true;
+            var rec = context.GetTable<TlTaskRecurWeekly>()
+                .FirstOrDefault(p => p.TaskId == entity.Id);
+            if (rec != null)
+            {
+                result = context.DeleteEntity(rec, "");
+            }
+
+            return result;
+        }
+
+        private static bool PurgeMonthly(TlTask entity, IDbContext context)
+        {
+            var result = true;
+            var rec = context.GetTable<TlTaskRecurMonthly>()
+                .FirstOrDefault(p => p.TaskId == entity.Id);
+            if (rec != null)
+            {
+                result = context.DeleteEntity(rec, "");
+            }
+
+            return result;
+        }
+
+        private static bool PurgeYearly(TlTask entity, IDbContext context)
+        {
+            var result = true;
+            var rec = context.GetTable<TlTaskRecurYearly>()
+                .FirstOrDefault(p => p.TaskId == entity.Id);
+            if (rec != null)
+            {
+                result = context.DeleteEntity(rec, "");
+            }
+
+            return result;
+        }
+
         protected override void ClearData()
         {
             Id = 0;

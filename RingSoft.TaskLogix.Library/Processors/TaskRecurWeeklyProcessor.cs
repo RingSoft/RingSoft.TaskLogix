@@ -92,6 +92,11 @@ namespace RingSoft.TaskLogix.Library.Processors
             throw new NotImplementedException();
         }
 
+        public override bool SaveRecurProcessor(TlTask task, IDbContext context)
+        {
+            throw new NotImplementedException();
+        }
+
         private DateTime GetNextDateAfterCompleted(DateTime startDate)
         {
             var daysToAdd = RegenWeeksAfterCompleted * 7;

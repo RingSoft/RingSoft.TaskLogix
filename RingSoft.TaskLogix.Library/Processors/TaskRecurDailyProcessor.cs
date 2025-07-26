@@ -58,6 +58,19 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
         }
 
+        public override bool SaveRecurProcessor(TlTask task, IDbContext context)
+        {
+            var tlTaskRecurDaily = new TlTaskRecurDaily()
+            {
+                TaskId = task.Id,
+                RecurType = (byte)RecurType,
+                RecurDays = RecurDays,
+                RegenDaysAfterCompleted = RegenDaysAfterCompleted,
+            };
+
+            return context.AddSaveEntity(tlTaskRecurDaily, "");
+        }
+
         private DateTime GetNextWeekdayDate(DateTime startDate)
         {
             var taskProcessor = new TaskProcessor();

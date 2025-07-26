@@ -17,5 +17,7 @@ namespace RingSoft.TaskLogix.Library.Processors
         public abstract void AdjustStartDate();
 
         public abstract void LoadRecurProcessor(TlTask task);
+
+        public abstract bool SaveRecurProcessor(TlTask task, IDbContext context);
     }
 }
