@@ -249,7 +249,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 StartDate = TaskProcessor.StartDate;
                 if (DoReminder)
                 {
-                    ReminderDateTime 
+                    ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
                 }
             }
         }
