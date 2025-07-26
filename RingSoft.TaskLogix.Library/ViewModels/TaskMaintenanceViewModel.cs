@@ -1,4 +1,5 @@
-﻿using RingSoft.DataEntryControls.Engine;
+﻿using Microsoft.EntityFrameworkCore;
+using RingSoft.DataEntryControls.Engine;
 using RingSoft.DbLookup;
 using RingSoft.DbMaintenance;
 using RingSoft.TaskLogix.DataAccess.Model;
@@ -258,6 +259,20 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public void Init(ITaskMaintenanceView view)
         {
             View = view;
+        }
+
+        protected override TlTask GetEntityFromDb(TlTask newEntity, PrimaryKeyValue primaryKeyValue)
+        {
+            var context = SystemGlobals.DataRepository.GetDataContext();
+            var table = context.GetTable<TlTask>();
+
+            var result = table
+                .Include(p => p.RecurDaily)
+                .Include(p => p.RecurWeekly)
+                .Include(p => p.RecurMonthly)
+                .Include(p => p.RecurYearly)
+                .FirstOrDefault(p => p.Id == newEntity.Id);
+            return result;
         }
 
         protected override void PopulatePrimaryKeyControls(TlTask newEntity, PrimaryKeyValue primaryKeyValue)
