@@ -251,6 +251,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 {
                     ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
                 }
+                RecordDirty = true;
             }
         }
 

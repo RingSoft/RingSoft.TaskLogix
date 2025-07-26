@@ -76,6 +76,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 recurType = TaskRecurTypes.Weekly;
             }
             RecurType = recurType;
+            StartDate = view.TaskProcessor.StartDate;
 
             if (view.TaskProcessor.RecurType != TaskRecurTypes.None)
             {
@@ -84,9 +85,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     ActiveRecurViewModel.LoadFromTaskProcessor(view.TaskProcessor);
                 }
             }
-
-            StartDate = view.TaskProcessor.StartDate;
-
         }
 
         private void OnOk()
@@ -94,7 +92,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             View.TaskProcessor.RecurType = RecurType;
             View.TaskProcessor.StartDate = StartDate;
             View.TaskProcessor.AdjustStartDate();
-            
+
+            if (ActiveRecurViewModel != null)
+            {
+                ActiveRecurViewModel.SaveToTaskProcessor(View.TaskProcessor);
+            }
             View.CloseWindow(true);
         }
 

@@ -69,12 +69,16 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
         {
-            
+            RecurType = taskProcessor.DailyProcessor.RecurType;
+            RecurDays = taskProcessor.DailyProcessor.RecurDays;
+            RegenDaysAfterCompleted = taskProcessor.DailyProcessor.RegenDaysAfterCompleted;
         }
 
         public override void SaveToTaskProcessor(TaskProcessor taskProcessor)
         {
-            
+            taskProcessor.DailyProcessor.RecurType = RecurType;
+            taskProcessor.DailyProcessor.RecurDays = RecurDays;
+            taskProcessor.DailyProcessor.RegenDaysAfterCompleted = RegenDaysAfterCompleted;
         }
 
         public void SetEnabled()
