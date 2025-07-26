@@ -231,10 +231,27 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             RecurrenceCommand = new RelayCommand((() =>
             {
-                TaskProcessor.StartDate = StartDate;
-                View.ShowTaskRecurrenceWindow();
+                OnRecurrence();
             }));
             TaskProcessor = new TaskProcessor();
+        }
+
+        private void OnRecurrence()
+        {
+            TaskProcessor.StartDate = StartDate;
+            if (DoReminder)
+            {
+                TaskProcessor.ReminderDateTime = ReminderDateTime;
+            }
+
+            if (View.ShowTaskRecurrenceWindow())
+            {
+                StartDate = TaskProcessor.StartDate;
+                if (DoReminder)
+                {
+                    ReminderDateTime 
+                }
+            }
         }
 
         public void Init(ITaskMaintenanceView view)

@@ -91,6 +91,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         private void OnOk()
         {
+            View.TaskProcessor.RecurType = RecurType;
+            View.TaskProcessor.StartDate = StartDate;
+            View.TaskProcessor.AdjustStartDate();
+            
             View.CloseWindow(true);
         }
 
