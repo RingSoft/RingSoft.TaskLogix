@@ -12,8 +12,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
     }
     public class TaskRecurWindowViewModel : INotifyPropertyChanged
     {
-        public TaskRecurViewModelBase ActiveRecurViewModel { get; set; }
-
         private TaskRecurTypes _recurType;
 
         public TaskRecurTypes RecurType
@@ -32,7 +30,25 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private DateTime _startDate;
+
+        public DateTime StartDate
+        {
+            get { return _startDate; }
+            set
+            {
+                if (_startDate == value)
+                    return;
+
+                _startDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public IRecurWindowView View { get; private set; }
+
+        public TaskRecurViewModelBase ActiveRecurViewModel { get; set; }
 
         public void Init(IRecurWindowView view)
         {
@@ -52,6 +68,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     ActiveRecurViewModel.LoadFromTaskProcessor(view.TaskProcessor);
                 }
             }
+
+            StartDate = view.TaskProcessor.StartDate;
 
         }
 

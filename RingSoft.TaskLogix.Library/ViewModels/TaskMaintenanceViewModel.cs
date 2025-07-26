@@ -211,7 +211,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public RelayCommand RecurrenceCommand { get; }
 
-        public TaskProcessor TaskProcessor { get; }
+        public TaskProcessor TaskProcessor { get; private set; }
 
         public TaskMaintenanceViewModel()
         {
@@ -231,6 +231,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             RecurrenceCommand = new RelayCommand((() =>
             {
+                TaskProcessor.StartDate = StartDate;
                 View.ShowTaskRecurrenceWindow();
             }));
             TaskProcessor = new TaskProcessor();
@@ -298,6 +299,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             ReminderUiCommand.IsEnabled = false;
             ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, 8, 0, 0);
             Notes = null;
+            TaskProcessor = new TaskProcessor();
         }
     }
 }

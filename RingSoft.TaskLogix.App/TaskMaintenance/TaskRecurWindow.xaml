@@ -18,6 +18,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -53,5 +54,28 @@
                 <StackPanel x:Name="RecurPanel" Grid.Row="0" Grid.Column="2" Width="400" Height="150"/>
             </Grid>
         </GroupBox>
+
+        <GroupBox Grid.Row="1" Header="Range of recurrence">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Start"/>
+
+                <dec:DateEditControl Grid.Row="0" Grid.Column="1" DateFormatType="DateOnly" Width="100" HorizontalAlignment="Left" Value="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+
+        </GroupBox>
+
     </Grid>
 </dec:BaseWindow>
