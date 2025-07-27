@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dec="clr-namespace:RingSoft.DataEntryControls.WPF;assembly=RingSoft.DataEntryControls.WPF"
-             xmlns:ac="clr-namespace:RingSoft.App.Controls;assembly=RingSoft.App.Controls"
              xmlns:da="clr-namespace:RingSoft.TaskLogix.DataAccess.Model;assembly=RingSoft.TaskLogix.DataAccess"
              xmlns:vm="clr-namespace:RingSoft.TaskLogix.Library.ViewModels;assembly=RingSoft.TaskLogix.Library"
              xmlns:local="clr-namespace:RingSoft.TaskLogix.App.TaskMaintenance"

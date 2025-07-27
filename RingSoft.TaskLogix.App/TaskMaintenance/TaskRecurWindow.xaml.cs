@@ -53,6 +53,7 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
                     DailyRadio.Focus();
                     break;
                 case TaskRecurTypes.Weekly:
+                    ActiveRecurUserControl = new TaskRecurWeeklyUserControl();
                     WeeklyRadio.Focus();
                     break;
                 case TaskRecurTypes.Monthly:
