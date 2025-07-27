@@ -23,15 +23,31 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5, 0, 0, 0">
+        <Grid Grid.Row="0" Grid.Column="0" Margin="5, 0, 0, 0">
 
-            <RadioButton x:Name="EveryXWeeksRadio" Content="Every" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:WeeklyRecurTypes.EveryXWeeks}, Mode=TwoWay}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RecurWeeks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RecurWeeksUiCommand}"/>
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                <RadioButton x:Name="EveryXWeeksRadio" Content="Every" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:WeeklyRecurTypes.EveryXWeeks}, Mode=TwoWay}"/>
 
-            <Label HorizontalAlignment="Left" Content="week(s) on"/>
+                <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RecurWeeks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RecurWeeksUiCommand}"/>
 
-        </StackPanel>
+                <Label HorizontalAlignment="Left" Content="week(s) on"/>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Grid.Column="0" Margin="20,0,0,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <CheckBox Content="Test"/>
+            </Grid>
+        </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5, 5, 0, 0">
 

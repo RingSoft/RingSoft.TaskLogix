@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.App.TaskMaintenance
@@ -20,7 +21,17 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
 
         public override void SetInitialFocus()
         {
-            
+            switch (LocalViewModel.RecurType)
+            {
+                case WeeklyRecurTypes.EveryXWeeks:
+                    EveryXWeeksRadio.Focus();
+                    break;
+                case WeeklyRecurTypes.RegenerateXWeeksAfterCompleted:
+                    RegenRadio.Focus();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
