@@ -15,6 +15,33 @@
     </UserControl.DataContext>
 
     <Grid>
-            <Label Content="Weekly"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5, 0, 0, 0">
+
+            <RadioButton x:Name="EveryXWeeksRadio" Content="Every" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:WeeklyRecurTypes.EveryXWeeks}, Mode=TwoWay}"/>
+
+            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RecurWeeks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RecurWeeksUiCommand}"/>
+
+            <Label HorizontalAlignment="Left" Content="week(s) on"/>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5, 5, 0, 0">
+
+            <RadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:WeeklyRecurTypes.RegenerateXWeeksAfterCompleted}, Mode=TwoWay}"/>
+
+            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RegenWeeksAfterCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RegenWeeksUiCommand}"/>
+
+            <Label HorizontalAlignment="Left" Content="week(s) after each task is completed" VerticalAlignment="Center"/>
+
+        </StackPanel>
+
     </Grid>
 </local:TaskRecurUserControlBase>
