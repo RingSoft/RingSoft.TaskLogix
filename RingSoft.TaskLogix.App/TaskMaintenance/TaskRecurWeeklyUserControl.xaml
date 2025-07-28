@@ -38,14 +38,35 @@
                 <Label HorizontalAlignment="Left" Content="week(s) on"/>
             </StackPanel>
 
-            <Grid Grid.Row="1" Grid.Column="0" Margin="20,0,0,0">
+            <Grid Grid.Row="1" Grid.Column="0" Margin="20,5,0,0">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
 
-                <CheckBox Content="Test"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80"/>
+
+                </Grid.ColumnDefinitions>
+
+                <CheckBox x:Name="SunCheck" Grid.Row="0" Grid.Column="0" Content="Sunday" IsChecked="{Binding Sun}"/>
+
+                <CheckBox x:Name="MonCheck" Grid.Row="0" Grid.Column="1" Content="Monday" IsChecked="{Binding Mon}"/>
+
+                <CheckBox x:Name="TueCheck" Grid.Row="0" Grid.Column="2" Content="Tuesday" IsChecked="{Binding Tue}"/>
+
+                <CheckBox x:Name="WedCheck" Grid.Row="0" Grid.Column="3" Content="Wednesday" IsChecked="{Binding Wed}"/>
+
+                <CheckBox x:Name="ThuCheck" Grid.Row="1" Grid.Column="0" Content="Thursday" IsChecked="{Binding Thu}"/>
+
+                <CheckBox x:Name="FriCheck" Grid.Row="1" Grid.Column="1" Content="Friday" IsChecked="{Binding Fri}"/>
+
+                <CheckBox x:Name="SatCheck" Grid.Row="1" Grid.Column="2" Content="Saturday" IsChecked="{Binding Sat}"/>
+
             </Grid>
         </Grid>
 

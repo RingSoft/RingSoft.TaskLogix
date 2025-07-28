@@ -89,12 +89,44 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public override void LoadRecurProcessor(TlTask task)
         {
-            throw new NotImplementedException();
+            if (task.RecurWeekly.Any())
+            {
+                var recurWeekly = task.RecurWeekly.FirstOrDefault();
+                if (recurWeekly != null)
+                {
+                    this.RecurType = (WeeklyRecurTypes)recurWeekly.RecurType;
+                    this.RecurWeeks = recurWeekly.RecurWeeks.GetValueOrDefault();
+                    this.RegenWeeksAfterCompleted = recurWeekly.RegenWeeksAfterCompleted.GetValueOrDefault();
+
+                    this.Sunday = recurWeekly.Sunday.GetValueOrDefault();
+                    this.Monday = recurWeekly.Monday.GetValueOrDefault();
+                    this.Tuesday = recurWeekly.Tuesday.GetValueOrDefault();
+                    this.Wednesday = recurWeekly.Wednesday.GetValueOrDefault();
+                    this.Thursday = recurWeekly.Thursday.GetValueOrDefault();
+                    this.Friday  = recurWeekly.Friday.GetValueOrDefault();
+                    this.Saturday = recurWeekly.Saturday.GetValueOrDefault();
+                }
+            }
         }
 
         public override bool SaveRecurProcessor(TlTask task, IDbContext context)
         {
-            throw new NotImplementedException();
+            var tlTaskRecurWeekly = new TlTaskRecurWeekly
+            {
+                TaskId = task.Id,
+                RecurType = (byte)RecurType,
+                RecurWeeks = RecurWeeks,
+                RegenWeeksAfterCompleted = RegenWeeksAfterCompleted,
+                Sunday = Sunday,
+                Monday = Monday,
+                Tuesday = Tuesday,
+                Wednesday = Wednesday,
+                Thursday = Thursday,
+                Friday = Friday,
+                Saturday = Saturday,
+            };
+
+            return context.AddSaveEntity(tlTaskRecurWeekly, "");
         }
 
         private DateTime GetNextDateAfterCompleted(DateTime startDate)
