@@ -54,5 +54,15 @@
 
         </StackPanel>
 
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5, 5, 0, 0">
+
+            <RadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.RegenerateXMonthsAfterCompleted}, Mode=TwoWay}"/>
+
+            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RegenMonthsAfterCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RegenMonthsAfterCompletedUiCommand}"/>
+
+            <Label HorizontalAlignment="Left" Content="month(s) after each task is completed" VerticalAlignment="Center"/>
+
+        </StackPanel>
+
     </Grid>
 </local:TaskRecurUserControlBase>

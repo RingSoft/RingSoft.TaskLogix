@@ -141,6 +141,21 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private int _regenMonthsAfterCompleted;
+
+        public int RegenMonthsAfterCompleted
+        {
+            get { return _regenMonthsAfterCompleted; }
+            set
+            {
+                if (_regenMonthsAfterCompleted == value)
+                    return;
+
+                _regenMonthsAfterCompleted = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public UiCommand DayXOfEveryUiCommand { get; }
 
@@ -152,6 +167,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public UiCommand OfEveryWeekTypeMonthsUiCommand { get; }
 
+        public UiCommand RegenMonthsAfterCompletedUiCommand { get; }
+
         public TaskRecurMonthlyViewModel()
         {
             DayXOfEveryUiCommand = new UiCommand();
@@ -159,6 +176,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             WeekTypeUiCommand = new UiCommand();
             DayTypeUiCommand = new UiCommand();
             OfEveryWeekTypeMonthsUiCommand = new UiCommand();
+            RegenMonthsAfterCompletedUiCommand = new UiCommand();
 
             WeekTypeComboBoxSetup = new TextComboBoxControlSetup();
             WeekTypeComboBoxSetup.LoadFromEnum<WeekTypes>();
@@ -174,6 +192,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             //WeekTypeUiCommand.IsEnabled = false;
             //DayTypeUiCommand.IsEnabled = false;
             //OfEveryWeekTypeMonthsUiCommand.IsEnabled = false;
+            //RegenMonthsAfterCompletedUiCommand.IsEnabled = false;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
