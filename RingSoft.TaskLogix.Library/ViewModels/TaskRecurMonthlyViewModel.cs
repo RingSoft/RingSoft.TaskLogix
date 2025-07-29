@@ -126,6 +126,22 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             set { DayTypeComboBoxItem = DayTypeComboBoxSetup.GetItem((int)value); }
         }
 
+        private int _ofEveryWeekTypeMonths;
+
+        public int OfEveryWeekTypeMonths
+        {
+            get { return _ofEveryWeekTypeMonths; }
+            set
+            {
+                if (_ofEveryWeekTypeMonths == value)
+                    return;
+
+                _ofEveryWeekTypeMonths = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public UiCommand DayXOfEveryUiCommand { get; }
 
         public UiCommand OfEveryYMonthsUiCommand { get; }
@@ -134,12 +150,15 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public UiCommand DayTypeUiCommand { get; }
 
+        public UiCommand OfEveryWeekTypeMonthsUiCommand { get; }
+
         public TaskRecurMonthlyViewModel()
         {
             DayXOfEveryUiCommand = new UiCommand();
             OfEveryYMonthsUiCommand = new UiCommand();
             WeekTypeUiCommand = new UiCommand();
             DayTypeUiCommand = new UiCommand();
+            OfEveryWeekTypeMonthsUiCommand = new UiCommand();
 
             WeekTypeComboBoxSetup = new TextComboBoxControlSetup();
             WeekTypeComboBoxSetup.LoadFromEnum<WeekTypes>();
@@ -154,6 +173,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             //OfEveryYMonthsUiCommand.IsEnabled = false;
             //WeekTypeUiCommand.IsEnabled = false;
             //DayTypeUiCommand.IsEnabled = false;
+            //OfEveryWeekTypeMonthsUiCommand.IsEnabled = false;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
