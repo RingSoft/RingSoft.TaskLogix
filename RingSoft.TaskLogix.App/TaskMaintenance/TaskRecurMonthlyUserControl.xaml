@@ -38,5 +38,13 @@
 
         </StackPanel>
 
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5, 5, 0, 0">
+
+            <RadioButton x:Name="XthWeekdayOfEveryYMonthsRadio" Content="The" Width="50" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.XthWeekdayOfEveryYMonths}, Mode=TwoWay}"/>
+
+            <dec:TextComboBoxControl Setup="{Binding WeekTypeComboBoxSetup}" SelectedItem="{Binding WeekTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        </StackPanel>
+
     </Grid>
 </local:TaskRecurUserControlBase>

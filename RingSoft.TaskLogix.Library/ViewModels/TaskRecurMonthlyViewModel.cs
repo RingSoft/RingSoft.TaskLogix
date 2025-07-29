@@ -54,21 +54,66 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private TextComboBoxControlSetup _weekTypeComboBoxSetup;
+
+        public TextComboBoxControlSetup WeekTypeComboBoxSetup
+        {
+            get { return _weekTypeComboBoxSetup; }
+            set
+            {
+                if (_weekTypeComboBoxSetup == value)
+                    return;
+
+                _weekTypeComboBoxSetup = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextComboBoxItem _weekTypeComboBoxItem;
+
+        public TextComboBoxItem WeekTypeComboBoxItem
+        {
+            get { return _weekTypeComboBoxItem; }
+            set
+            {
+                if (_weekTypeComboBoxItem == value)
+                    return;
+
+                _weekTypeComboBoxItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private WeekTypes _weekType;
+
+        public WeekTypes WeekType
+        {
+            get { return (WeekTypes)WeekTypeComboBoxItem.NumericValue;}
+            set { WeekTypeComboBoxItem = WeekTypeComboBoxSetup.GetItem((int)value); }
+        }
+
+
         public UiCommand DayXOfEveryUiCommand { get; }
 
         public UiCommand OfEveryYMonthsUiCommand { get; }
 
+        public UiCommand WeekTypeUiCommand { get; }
+
         public TaskRecurMonthlyViewModel()
         {
             DayXOfEveryUiCommand = new UiCommand();
-
             OfEveryYMonthsUiCommand = new UiCommand();
+            WeekTypeUiCommand = new UiCommand();
+
+            WeekTypeComboBoxSetup = new TextComboBoxControlSetup();
+            WeekTypeComboBoxSetup.LoadFromEnum<WeekTypes>();
         }
 
         public void SetEnabled()
         {
-            DayXOfEveryUiCommand.IsEnabled = false;
-            OfEveryYMonthsUiCommand.IsEnabled = false;
+            //DayXOfEveryUiCommand.IsEnabled = false;
+            //OfEveryYMonthsUiCommand.IsEnabled = false;
+            //WeekTypeUiCommand.IsEnabled = false;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
