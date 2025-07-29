@@ -42,7 +42,9 @@
 
             <RadioButton x:Name="XthWeekdayOfEveryYMonthsRadio" Content="The" Width="50" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.XthWeekdayOfEveryYMonths}, Mode=TwoWay}"/>
 
-            <dec:TextComboBoxControl Setup="{Binding WeekTypeComboBoxSetup}" SelectedItem="{Binding WeekTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <dec:TextComboBoxControl Setup="{Binding WeekTypeComboBoxSetup}" SelectedItem="{Binding WeekTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding WeekTypeUiCommand}"/>
+
+            <dec:TextComboBoxControl Margin="5,0,0,0" Setup="{Binding DayTypeComboBoxSetup}" SelectedItem="{Binding DayTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DayTypeUiCommand}" />
 
         </StackPanel>
 

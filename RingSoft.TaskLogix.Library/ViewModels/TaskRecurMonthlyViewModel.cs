@@ -84,14 +84,47 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
-        private WeekTypes _weekType;
-
         public WeekTypes WeekType
         {
             get { return (WeekTypes)WeekTypeComboBoxItem.NumericValue;}
             set { WeekTypeComboBoxItem = WeekTypeComboBoxSetup.GetItem((int)value); }
         }
 
+        private TextComboBoxControlSetup _dayTypeComboBoxSetup;
+
+        public TextComboBoxControlSetup DayTypeComboBoxSetup
+        {
+            get { return _dayTypeComboBoxSetup; }
+            set
+            {
+                if (_dayTypeComboBoxSetup == value)
+                    return;
+
+                _dayTypeComboBoxSetup = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextComboBoxItem _dayTypeComboBoxItem;
+
+        public TextComboBoxItem DayTypeComboBoxItem
+        {
+            get { return _dayTypeComboBoxItem; }
+            set
+            {
+                if (_dayTypeComboBoxItem == value)
+                    return;
+
+                _dayTypeComboBoxItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DayTypes DayType
+        {
+            get { return (DayTypes)DayTypeComboBoxItem.NumericValue; }
+            set { DayTypeComboBoxItem = DayTypeComboBoxSetup.GetItem((int)value); }
+        }
 
         public UiCommand DayXOfEveryUiCommand { get; }
 
@@ -99,14 +132,20 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public UiCommand WeekTypeUiCommand { get; }
 
+        public UiCommand DayTypeUiCommand { get; }
+
         public TaskRecurMonthlyViewModel()
         {
             DayXOfEveryUiCommand = new UiCommand();
             OfEveryYMonthsUiCommand = new UiCommand();
             WeekTypeUiCommand = new UiCommand();
+            DayTypeUiCommand = new UiCommand();
 
             WeekTypeComboBoxSetup = new TextComboBoxControlSetup();
             WeekTypeComboBoxSetup.LoadFromEnum<WeekTypes>();
+
+            DayTypeComboBoxSetup = new TextComboBoxControlSetup();
+            DayTypeComboBoxSetup.LoadFromEnum<DayTypes>();
         }
 
         public void SetEnabled()
@@ -114,6 +153,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             //DayXOfEveryUiCommand.IsEnabled = false;
             //OfEveryYMonthsUiCommand.IsEnabled = false;
             //WeekTypeUiCommand.IsEnabled = false;
+            //DayTypeUiCommand.IsEnabled = false;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
