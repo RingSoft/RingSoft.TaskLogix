@@ -15,6 +15,28 @@
     </UserControl.DataContext>
 
     <Grid>
-        <Label Content="Monthly"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5, 0, 0, 0">
+
+            <RadioButton x:Name="DayXOfEveryYMonthsRadio" Content="Day" Width="50" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.DayXOfEveryYMonths}, Mode=TwoWay}"/>
+
+            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding DayXOfEvery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DayXOfEveryUiCommand}"/>
+
+            <Label HorizontalAlignment="Left" Content="of every"/>
+
+            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding OfEveryYMonths, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding OfEveryYMonthsUiCommand}"/>
+
+            <Label HorizontalAlignment="Left" Content="month(s)"/>
+
+        </StackPanel>
+
     </Grid>
 </local:TaskRecurUserControlBase>

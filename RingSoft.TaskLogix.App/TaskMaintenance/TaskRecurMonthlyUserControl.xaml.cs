@@ -11,6 +11,10 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
         public TaskRecurMonthlyUserControl()
         {
             InitializeComponent();
+            Loaded += (sender, args) =>
+            {
+                LocalViewModel.SetEnabled();
+            };
         }
 
         public override TaskRecurViewModelBase GetRecurViewModel()
