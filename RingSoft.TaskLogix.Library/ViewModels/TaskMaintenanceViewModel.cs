@@ -319,6 +319,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 result.ReminderDateTime = ReminderDateTime;
             }
+            else
+            {
+                result.ReminderDateTime = null;
+            }
 
             TaskProcessor.SaveEntityFromTaskMaint(result);
             return result;

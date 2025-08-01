@@ -1,12 +1,15 @@
-﻿using RingSoft.CustomTemplate.Library.ViewModels;
+﻿using System.Collections.ObjectModel;
+using RingSoft.CustomTemplate.Library.ViewModels;
 using RingSoft.DbLookup.Controls.WPF;
+using RingSoft.TaskLogix.Library;
+using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.App
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : IMainView
     {
         public override TemplateMainViewModel TemplateMainViewModel => ViewModel;
         public override ITemplateMainView View => this;
@@ -18,6 +21,11 @@ namespace RingSoft.TaskLogix.App
             InitializeComponent();
             LookupControlsGlobals.SetTabSwitcherWindow(this, TabControl);
             TabControl.SetDestionationAsFirstTab = false;
+        }
+
+        public void ShowReminders(List<Reminder> ReminderList)
+        {
+            
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using RingSoft.App.Library;
 using RingSoft.CustomTemplate.Library;
 using RingSoft.TaskLogix.DataAccess;
+using RingSoft.TaskLogix.Library.ViewModels;
 using RingSoft.TaskLogix.Sqlite;
 using RingSoft.TaskLogix.SqlServer;
 
@@ -26,6 +27,8 @@ namespace RingSoft.TaskLogix.Library
         }
 
         public static TaskLogixLookupContext LookupContext { get; set; }
+
+        public static new MainViewModel MainViewModel { get; set; }
 
         public override CustomTemplateLookupContext GetNewLookupContext()
         {
