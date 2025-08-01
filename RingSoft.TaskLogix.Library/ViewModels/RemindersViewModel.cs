@@ -27,7 +27,28 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private Reminder _selectedReminder;
+
+        public Reminder SelectedReminder
+        {
+            get { return _selectedReminder; }
+            set
+            {
+                if (_selectedReminder == value)
+                    return;
+
+                _selectedReminder = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public IReminderView View { get; private set; }
+
+        public RemindersViewModel()
+        {
+            Reminders = new ObservableCollection<Reminder>();
+        }
 
         public void Initialize(IReminderView view, List<Reminder> remindersList)
         {

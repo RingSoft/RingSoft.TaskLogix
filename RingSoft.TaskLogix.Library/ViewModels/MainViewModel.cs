@@ -77,7 +77,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                             }
                         }
 
-                        if (remindersList.Any() && MainView != null)
+                        if (MainView != null)
                         {
                             MainView.ShowReminders(remindersList);
                         }

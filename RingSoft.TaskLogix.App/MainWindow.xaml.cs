@@ -14,7 +14,7 @@ namespace RingSoft.TaskLogix.App
         public override TemplateMainViewModel TemplateMainViewModel => ViewModel;
         public override ITemplateMainView View => this;
 
-        
+        private RemindersWindow _remindersWindow;
 
         public MainWindow()
         {
@@ -23,9 +23,17 @@ namespace RingSoft.TaskLogix.App
             TabControl.SetDestionationAsFirstTab = false;
         }
 
-        public void ShowReminders(List<Reminder> ReminderList)
+        public void ShowReminders(List<Reminder> reminderList)
         {
-            
+            if (_remindersWindow == null)
+            {
+                _remindersWindow = new RemindersWindow(reminderList);
+                _remindersWindow.ShowDialog();
+            }
+            else
+            {
+                _remindersWindow.LocalViewModel.ProcessNewReminders(reminderList);
+            }
         }
     }
 }
