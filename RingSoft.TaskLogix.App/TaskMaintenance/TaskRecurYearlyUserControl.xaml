@@ -45,6 +45,8 @@
 
             <Label HorizontalAlignment="Left" Content="of"/>
 
+            <dec:TextComboBoxControl Setup="{Binding WeekMonthTypeComboBoxSetup}" SelectedItem="{Binding WeekMonthTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding WeekMonthTypeUiCommand}"/>
+
         </StackPanel>
 
     </Grid>

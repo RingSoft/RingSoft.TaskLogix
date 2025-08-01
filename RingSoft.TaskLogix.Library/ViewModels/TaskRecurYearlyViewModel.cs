@@ -145,6 +145,43 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             set { DayTypeComboBoxItem = DayTypeComboBoxSetup.GetItem((int)value); }
         }
 
+        private TextComboBoxControlSetup _weekMonthTypeComboBoxSetup;
+
+        public TextComboBoxControlSetup WeekMonthTypeComboBoxSetup
+        {
+            get { return _weekMonthTypeComboBoxSetup; }
+            set
+            {
+                if (_weekMonthTypeComboBoxSetup == value)
+                    return;
+
+                _weekMonthTypeComboBoxSetup = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextComboBoxItem _weekMonthTypeComboBoxItem;
+
+        public TextComboBoxItem WeekMonthTypeComboBoxItem
+        {
+            get { return _weekMonthTypeComboBoxItem; }
+            set
+            {
+                if (_weekMonthTypeComboBoxItem == value)
+                    return;
+
+                _weekMonthTypeComboBoxItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public MonthsInYear WeekMonthType
+        {
+            get { return (MonthsInYear)WeekMonthTypeComboBoxItem.NumericValue; }
+            set { WeekMonthTypeComboBoxItem = WeekMonthTypeComboBoxSetup.GetItem((int)value); }
+        }
+
+
         public UiCommand EveryMonthTypeUiCommand { get; }
 
         public UiCommand MonthDayUiCommand { get; }
@@ -153,6 +190,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public UiCommand DayTypeUiCommand { get; }
 
+        public UiCommand WeekMonthTypeUiCommand { get; }
+
 
         public TaskRecurYearlyViewModel()
         {
@@ -160,6 +199,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             MonthDayUiCommand = new UiCommand();
             WeekTypeUiCommand = new UiCommand();
             DayTypeUiCommand = new UiCommand();
+            WeekMonthTypeUiCommand = new UiCommand();
 
             EveryMonthTypeComboBoxSetup = new TextComboBoxControlSetup();
             EveryMonthTypeComboBoxSetup.LoadFromEnum<MonthsInYear>();
@@ -170,10 +210,14 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             DayTypeComboBoxSetup = new TextComboBoxControlSetup();
             DayTypeComboBoxSetup.LoadFromEnum<DayTypes>();
 
+            WeekMonthTypeComboBoxSetup = new TextComboBoxControlSetup();
+            WeekMonthTypeComboBoxSetup.LoadFromEnum<MonthsInYear>();
+
             EveryMonthType = MonthsInYear.January;
             MonthDay = 1;
             this.WeekType = WeekTypes.First;
             this.DayType = DayTypes.Day;
+            WeekMonthType = MonthsInYear.January;
 
         }
 
@@ -183,6 +227,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             //MonthDayUiCommand.IsEnabled = false;
             //WeekTypeUiCommand.IsEnabled = false;
             //DayTypeUiCommand.IsEnabled = false;
+            //WeekMonthTypeUiCommand.IsEnabled = false;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
