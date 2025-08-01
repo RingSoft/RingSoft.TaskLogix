@@ -269,12 +269,24 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
         {
-            
+            RecurType = taskProcessor.YearlyProcessor.RecurType;
+            EveryMonthType = taskProcessor.YearlyProcessor.EveryMonthType;
+            MonthDay = taskProcessor.YearlyProcessor.MonthDay;
+            WeekType = taskProcessor.YearlyProcessor.WeekType;
+            DayType = taskProcessor.YearlyProcessor.DayType;
+            WeekMonthType = taskProcessor.YearlyProcessor.WeekMonthType;
+            RegenYearsAfterCompleted = taskProcessor.YearlyProcessor.RegenYearsAfterCompleted;
         }
 
         public override void SaveToTaskProcessor(TaskProcessor taskProcessor)
         {
-            
+            taskProcessor.YearlyProcessor.RecurType = RecurType;
+            taskProcessor.YearlyProcessor.EveryMonthType = EveryMonthType;
+            taskProcessor.YearlyProcessor.MonthDay = MonthDay;
+            taskProcessor.YearlyProcessor.WeekType = WeekType;
+            taskProcessor.YearlyProcessor.DayType = DayType;
+            taskProcessor.YearlyProcessor.WeekMonthType = WeekMonthType;
+            taskProcessor.YearlyProcessor.RegenYearsAfterCompleted = RegenYearsAfterCompleted;
         }
     }
 }
