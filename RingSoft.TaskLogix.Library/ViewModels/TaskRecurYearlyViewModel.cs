@@ -73,27 +73,116 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private TextComboBoxControlSetup _weekTypeComboBoxSetup;
+
+        public TextComboBoxControlSetup WeekTypeComboBoxSetup
+        {
+            get { return _weekTypeComboBoxSetup; }
+            set
+            {
+                if (_weekTypeComboBoxSetup == value)
+                    return;
+
+                _weekTypeComboBoxSetup = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextComboBoxItem _weekTypeComboBoxItem;
+
+        public TextComboBoxItem WeekTypeComboBoxItem
+        {
+            get { return _weekTypeComboBoxItem; }
+            set
+            {
+                if (_weekTypeComboBoxItem == value)
+                    return;
+
+                _weekTypeComboBoxItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public WeekTypes WeekType
+        {
+            get { return (WeekTypes)WeekTypeComboBoxItem.NumericValue; }
+            set { WeekTypeComboBoxItem = WeekTypeComboBoxSetup.GetItem((int)value); }
+        }
+
+        private TextComboBoxControlSetup _dayTypeComboBoxSetup;
+
+        public TextComboBoxControlSetup DayTypeComboBoxSetup
+        {
+            get { return _dayTypeComboBoxSetup; }
+            set
+            {
+                if (_dayTypeComboBoxSetup == value)
+                    return;
+
+                _dayTypeComboBoxSetup = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextComboBoxItem _dayTypeComboBoxItem;
+
+        public TextComboBoxItem DayTypeComboBoxItem
+        {
+            get { return _dayTypeComboBoxItem; }
+            set
+            {
+                if (_dayTypeComboBoxItem == value)
+                    return;
+
+                _dayTypeComboBoxItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DayTypes DayType
+        {
+            get { return (DayTypes)DayTypeComboBoxItem.NumericValue; }
+            set { DayTypeComboBoxItem = DayTypeComboBoxSetup.GetItem((int)value); }
+        }
 
         public UiCommand EveryMonthTypeUiCommand { get; }
 
         public UiCommand MonthDayUiCommand { get; }
 
+        public UiCommand WeekTypeUiCommand { get; }
+
+        public UiCommand DayTypeUiCommand { get; }
+
+
         public TaskRecurYearlyViewModel()
         {
             EveryMonthTypeUiCommand = new UiCommand();
             MonthDayUiCommand = new UiCommand();
+            WeekTypeUiCommand = new UiCommand();
+            DayTypeUiCommand = new UiCommand();
 
             EveryMonthTypeComboBoxSetup = new TextComboBoxControlSetup();
             EveryMonthTypeComboBoxSetup.LoadFromEnum<MonthsInYear>();
-            EveryMonthType = MonthsInYear.January;
+            
+            WeekTypeComboBoxSetup = new TextComboBoxControlSetup();
+            WeekTypeComboBoxSetup.LoadFromEnum<WeekTypes>();
 
+            DayTypeComboBoxSetup = new TextComboBoxControlSetup();
+            DayTypeComboBoxSetup.LoadFromEnum<DayTypes>();
+
+            EveryMonthType = MonthsInYear.January;
             MonthDay = 1;
+            this.WeekType = WeekTypes.First;
+            this.DayType = DayTypes.Day;
+
         }
 
         public void SetEnabled()
         {
             //EveryMonthTypeUiCommand.IsEnabled = false;
             //MonthDayUiCommand.IsEnabled = false;
+            //WeekTypeUiCommand.IsEnabled = false;
+            //DayTypeUiCommand.IsEnabled = false;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
