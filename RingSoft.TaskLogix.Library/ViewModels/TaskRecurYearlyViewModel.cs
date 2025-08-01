@@ -18,6 +18,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     return;
                 }
                 _recurType = value;
+                SetEnabled();
                 OnPropertyChanged();
             }
         }
@@ -181,6 +182,21 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             set { WeekMonthTypeComboBoxItem = WeekMonthTypeComboBoxSetup.GetItem((int)value); }
         }
 
+        private int _regenYearsAfterCompleted;
+
+        public int RegenYearsAfterCompleted
+        {
+            get { return _regenYearsAfterCompleted; }
+            set
+            {
+                if (_regenYearsAfterCompleted == value)
+                    return;
+
+                _regenYearsAfterCompleted = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public UiCommand EveryMonthTypeUiCommand { get; }
 
@@ -192,6 +208,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public UiCommand WeekMonthTypeUiCommand { get; }
 
+        public UiCommand RegenYearsAfterCompletedUiCommand { get; }
+
 
         public TaskRecurYearlyViewModel()
         {
@@ -200,7 +218,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             WeekTypeUiCommand = new UiCommand();
             DayTypeUiCommand = new UiCommand();
             WeekMonthTypeUiCommand = new UiCommand();
-
+            RegenYearsAfterCompletedUiCommand =new UiCommand();
             EveryMonthTypeComboBoxSetup = new TextComboBoxControlSetup();
             EveryMonthTypeComboBoxSetup.LoadFromEnum<MonthsInYear>();
             
@@ -218,16 +236,35 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             this.WeekType = WeekTypes.First;
             this.DayType = DayTypes.Day;
             WeekMonthType = MonthsInYear.January;
-
+            RegenYearsAfterCompleted = 1;
         }
 
         public void SetEnabled()
         {
-            //EveryMonthTypeUiCommand.IsEnabled = false;
-            //MonthDayUiCommand.IsEnabled = false;
-            //WeekTypeUiCommand.IsEnabled = false;
-            //DayTypeUiCommand.IsEnabled = false;
-            //WeekMonthTypeUiCommand.IsEnabled = false;
+            EveryMonthTypeUiCommand.IsEnabled = false;
+            MonthDayUiCommand.IsEnabled = false;
+            WeekTypeUiCommand.IsEnabled = false;
+            DayTypeUiCommand.IsEnabled = false;
+            WeekMonthTypeUiCommand.IsEnabled = false;
+            RegenYearsAfterCompletedUiCommand.IsEnabled = false;
+
+            switch (RecurType)
+            {
+                case YearlylyRecurTypes.EveryMonthDayX:
+                    EveryMonthTypeUiCommand.IsEnabled = true;
+                    MonthDayUiCommand.IsEnabled = true;
+                    break;
+                case YearlylyRecurTypes.TheNthWeekdayTypeOfMonth:
+                    WeekTypeUiCommand.IsEnabled = true;
+                    DayTypeUiCommand.IsEnabled = true;
+                    WeekMonthTypeUiCommand.IsEnabled = true;
+                    break;
+                case YearlylyRecurTypes.RegenerateXYearsAfterCompleted:
+                    RegenYearsAfterCompletedUiCommand.IsEnabled = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
