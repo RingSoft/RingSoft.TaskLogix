@@ -26,10 +26,18 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5, 0, 0, 0">
 
-            <RadioButton x:Name="EveryMonthTypeRadio" Content="Every" Width="50" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:YearlylyRecurTypes.EveryMonthDayX}, Mode=TwoWay}"/>
+            <RadioButton x:Name="EveryMonthTypeRadio" Content="Every" Width="65" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:YearlylyRecurTypes.EveryMonthDayX}, Mode=TwoWay}"/>
 
             <dec:TextComboBoxControl Setup="{Binding EveryMonthTypeComboBoxSetup}" SelectedItem="{Binding EveryMonthTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding EveryMonthTypeUiCommand}"/>
 
+            <dec:IntegerEditControl Margin="5,0,0,0" Width="20" HorizontalAlignment="Left" Value="{Binding MonthDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding MonthDayUiCommand}"/>
+
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5, 5, 0, 0">
+
+            <RadioButton x:Name="NthWeekdayTypeOfMonthRadio" Content="The" Width="65" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:YearlylyRecurTypes.TheNthWeekdayTypeOfMonth}, Mode=TwoWay}"/>
 
         </StackPanel>
 

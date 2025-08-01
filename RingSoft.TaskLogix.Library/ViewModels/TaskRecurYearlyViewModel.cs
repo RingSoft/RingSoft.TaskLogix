@@ -58,20 +58,42 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             set { EveryMonthTypeComboBoxItem = EveryMonthTypeComboBoxSetup.GetItem((int)value); }
         }
 
+        private int _monthDay;
+
+        public int MonthDay
+        {
+            get { return _monthDay; }
+            set
+            {
+                if (_monthDay == value)
+                    return;
+
+                _monthDay = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public UiCommand EveryMonthTypeUiCommand { get; }
+
+        public UiCommand MonthDayUiCommand { get; }
 
         public TaskRecurYearlyViewModel()
         {
             EveryMonthTypeUiCommand = new UiCommand();
+            MonthDayUiCommand = new UiCommand();
 
             EveryMonthTypeComboBoxSetup = new TextComboBoxControlSetup();
             EveryMonthTypeComboBoxSetup.LoadFromEnum<MonthsInYear>();
             EveryMonthType = MonthsInYear.January;
+
+            MonthDay = 1;
         }
 
         public void SetEnabled()
         {
             //EveryMonthTypeUiCommand.IsEnabled = false;
+            //MonthDayUiCommand.IsEnabled = false;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
