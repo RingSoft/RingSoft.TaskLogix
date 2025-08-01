@@ -1,4 +1,5 @@
-﻿using RingSoft.TaskLogix.DataAccess.Model;
+﻿using RingSoft.DataEntryControls.Engine;
+using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.Processors;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
@@ -19,6 +20,58 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 _recurType = value;
                 OnPropertyChanged();
             }
+        }
+
+        private TextComboBoxControlSetup _everyMonthTypeComboBoxSetup;
+
+        public TextComboBoxControlSetup EveryMonthTypeComboBoxSetup
+        {
+            get { return _everyMonthTypeComboBoxSetup; }
+            set
+            {
+                if (_everyMonthTypeComboBoxSetup == value)
+                    return;
+
+                _everyMonthTypeComboBoxSetup = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextComboBoxItem _everyMonthTypeComboBoxItem;
+
+        public TextComboBoxItem EveryMonthTypeComboBoxItem
+        {
+            get { return _everyMonthTypeComboBoxItem; }
+            set
+            {
+                if (_everyMonthTypeComboBoxItem == value)
+                    return;
+
+                _everyMonthTypeComboBoxItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public MonthsInYear EveryMonthType
+        {
+            get { return (MonthsInYear)EveryMonthTypeComboBoxItem.NumericValue; }
+            set { EveryMonthTypeComboBoxItem = EveryMonthTypeComboBoxSetup.GetItem((int)value); }
+        }
+
+        public UiCommand EveryMonthTypeUiCommand { get; }
+
+        public TaskRecurYearlyViewModel()
+        {
+            EveryMonthTypeUiCommand = new UiCommand();
+
+            EveryMonthTypeComboBoxSetup = new TextComboBoxControlSetup();
+            EveryMonthTypeComboBoxSetup.LoadFromEnum<MonthsInYear>();
+            EveryMonthType = MonthsInYear.January;
+        }
+
+        public void SetEnabled()
+        {
+            //EveryMonthTypeUiCommand.IsEnabled = false;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
