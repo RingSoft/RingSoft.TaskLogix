@@ -91,12 +91,13 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         {
             View.TaskProcessor.RecurType = RecurType;
             View.TaskProcessor.StartDate = StartDate;
-            View.TaskProcessor.AdjustStartDate();
-
+            
             if (ActiveRecurViewModel != null)
             {
                 ActiveRecurViewModel.SaveToTaskProcessor(View.TaskProcessor);
             }
+            View.TaskProcessor.AdjustStartDate();
+
             View.CloseWindow(true);
         }
 

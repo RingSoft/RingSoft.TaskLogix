@@ -61,12 +61,37 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public override void LoadRecurProcessor(TlTask task)
         {
-            throw new NotImplementedException();
+            if (task.RecurMonthly.Any())
+            {
+                var recurMonthly = task.RecurMonthly.FirstOrDefault();
+                if (recurMonthly != null)
+                {
+                    RecurType = (MonthlyRecurTypes)recurMonthly.RecurType;
+                    DayXOfEvery = recurMonthly.DayXOfEvery.GetValueOrDefault();
+                    OfEveryYMonths = recurMonthly.OfEveryYMonths.GetValueOrDefault();
+                    WeekType = (WeekTypes)recurMonthly.WeekType.GetValueOrDefault();
+                    DayType = (DayTypes)recurMonthly.DayType.GetValueOrDefault();
+                    OfEveryWeekTypeMonths = recurMonthly.OfEveryWeekTypeMonths.GetValueOrDefault();
+                    RegenMonthsAfterCompleted = recurMonthly.RegenMonthsAfterCompleted.GetValueOrDefault();
+                }
+            }
         }
 
         public override bool SaveRecurProcessor(TlTask task, IDbContext context)
         {
-            throw new NotImplementedException();
+            var tlRecurMonthly = new TlTaskRecurMonthly
+            {
+                TaskId = task.Id,
+                RecurType = (byte)RecurType,
+                DayXOfEvery = DayXOfEvery,
+                OfEveryYMonths = OfEveryYMonths,
+                WeekType = (byte)WeekType,
+                DayType = (byte)DayType,
+                OfEveryWeekTypeMonths = OfEveryWeekTypeMonths,
+                RegenMonthsAfterCompleted = RegenMonthsAfterCompleted,
+            };
+
+            return context.AddSaveEntity(tlRecurMonthly, "");
         }
 
         private DateTime GetDayXOfEvery(DateTime startDate, int addMonths)

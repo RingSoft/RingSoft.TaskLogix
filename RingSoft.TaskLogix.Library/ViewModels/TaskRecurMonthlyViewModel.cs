@@ -183,26 +183,64 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             DayTypeComboBoxSetup = new TextComboBoxControlSetup();
             DayTypeComboBoxSetup.LoadFromEnum<DayTypes>();
+
+            this.RecurType = MonthlyRecurTypes.DayXOfEveryYMonths;
+            this.DayXOfEvery = 1;
+            this.OfEveryYMonths = 1;
+            this.WeekType = WeekTypes.First;
+            this.DayType = DayTypes.Day;
+            this.OfEveryWeekTypeMonths = 1;
+            this.RegenMonthsAfterCompleted = 1;
         }
 
         public void SetEnabled()
         {
-            //DayXOfEveryUiCommand.IsEnabled = false;
-            //OfEveryYMonthsUiCommand.IsEnabled = false;
-            //WeekTypeUiCommand.IsEnabled = false;
-            //DayTypeUiCommand.IsEnabled = false;
-            //OfEveryWeekTypeMonthsUiCommand.IsEnabled = false;
-            //RegenMonthsAfterCompletedUiCommand.IsEnabled = false;
+            DayXOfEveryUiCommand.IsEnabled = false;
+            OfEveryYMonthsUiCommand.IsEnabled = false;
+            WeekTypeUiCommand.IsEnabled = false;
+            DayTypeUiCommand.IsEnabled = false;
+            OfEveryWeekTypeMonthsUiCommand.IsEnabled = false;
+            RegenMonthsAfterCompletedUiCommand.IsEnabled = false;
+
+            switch (RecurType)
+            {
+                case MonthlyRecurTypes.DayXOfEveryYMonths:
+                    DayXOfEveryUiCommand.IsEnabled = true;
+                    OfEveryYMonthsUiCommand.IsEnabled = true;
+                    break;
+                case MonthlyRecurTypes.XthWeekdayOfEveryYMonths:
+                    WeekTypeUiCommand.IsEnabled = true;
+                    DayTypeUiCommand.IsEnabled = true;
+                    OfEveryWeekTypeMonthsUiCommand.IsEnabled = true;
+                    break;
+                case MonthlyRecurTypes.RegenerateXMonthsAfterCompleted:
+                    RegenMonthsAfterCompletedUiCommand.IsEnabled = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
         {
-            
+            this.RecurType = taskProcessor.MonthlyProcessor.RecurType;
+            this.DayXOfEvery = taskProcessor.MonthlyProcessor.DayXOfEvery;
+            this.OfEveryYMonths = taskProcessor.MonthlyProcessor.OfEveryYMonths;
+            this.WeekType = taskProcessor.MonthlyProcessor.WeekType;
+            this.DayType = taskProcessor.MonthlyProcessor.DayType;
+            this.OfEveryWeekTypeMonths = taskProcessor.MonthlyProcessor.OfEveryWeekTypeMonths;
+            this.RegenMonthsAfterCompleted = taskProcessor.MonthlyProcessor.RegenMonthsAfterCompleted;
         }
 
         public override void SaveToTaskProcessor(TaskProcessor taskProcessor)
         {
-            
+            taskProcessor.MonthlyProcessor.RecurType = this.RecurType;
+            taskProcessor.MonthlyProcessor.DayXOfEvery = this.DayXOfEvery;
+            taskProcessor.MonthlyProcessor.OfEveryYMonths = this.OfEveryYMonths;
+            taskProcessor.MonthlyProcessor.WeekType = this.WeekType;
+            taskProcessor.MonthlyProcessor.DayType = this.DayType;
+            taskProcessor.MonthlyProcessor.OfEveryWeekTypeMonths = this.OfEveryWeekTypeMonths;
+            taskProcessor.MonthlyProcessor.RegenMonthsAfterCompleted = this.RegenMonthsAfterCompleted;
         }
     }
 }
