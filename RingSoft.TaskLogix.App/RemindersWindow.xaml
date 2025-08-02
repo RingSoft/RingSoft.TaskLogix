@@ -15,7 +15,7 @@
         <vm:RemindersViewModel x:Name="LocalViewModel"/>
     </Window.DataContext>
 
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -28,13 +28,41 @@
 
         <Label Content="Select Reminder" HorizontalAlignment="Left"/>
 
-        <ListBox x:Name="ListBox" Grid.Row="1" Grid.Column="0" Height="150" ItemsSource="{Binding Reminders}" SelectedItem="{Binding Path=SelectedReminder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300">
+        <ListBox x:Name="ListBox" Grid.Row="1" Grid.Column="0" Height="150" ItemsSource="{Binding Reminders}" SelectedItem="{Binding Path=SelectedReminder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300" Background="Transparent">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Subject}"/>
+
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="180"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="{Binding Subject}"/>
+
+                        <TextBlock Grid.Column="1" Text="{Binding Date}"/>
+
+                    </Grid>
+                    
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Height" Value="25"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <Button Content="_Open Task" Margin="0,2.5" Command="{Binding OpenTaskCommand}"/>
+
+            <Button Content="_Mark Task Complete" Margin="0,2.5" Command="{Binding MarkTaskCompleteCommand}"/>
+
+            <Button Content="_Snooze Task" Margin="0,2.5" Command="{Binding SnoozeTaskCommand}"/>
+
+        </StackPanel>
     </Grid>
 </dec:BaseWindow>

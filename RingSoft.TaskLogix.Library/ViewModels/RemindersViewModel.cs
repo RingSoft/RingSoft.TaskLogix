@@ -1,12 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using RingSoft.DataEntryControls.Engine;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
 {
     public interface IReminderView
     {
-
+        void CloseWindow();
     };
 
     public class RemindersViewModel : INotifyPropertyChanged
@@ -45,9 +46,19 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public IReminderView View { get; private set; }
 
+        public RelayCommand OpenTaskCommand { get; }
+
+        public RelayCommand MarkTaskCompleteCommand { get; }
+
+        public RelayCommand SnoozeTaskCommand { get; }
+
         public RemindersViewModel()
         {
             Reminders = new ObservableCollection<Reminder>();
+
+            OpenTaskCommand = new RelayCommand(OpenTask);
+            MarkTaskCompleteCommand = new RelayCommand(MarkTaskComplete);
+            SnoozeTaskCommand = new RelayCommand(SnoozeTask);
         }
 
         public void Initialize(IReminderView view, List<Reminder> remindersList)
@@ -64,6 +75,26 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 Reminders.Add(reminder);
             }
+
+            if (!Reminders.Any())
+            {
+                View.CloseWindow();
+            }
+        }
+
+        private void OpenTask()
+        {
+
+        }
+
+        private void MarkTaskComplete()
+        {
+
+        }
+
+        private void SnoozeTask()
+        {
+
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

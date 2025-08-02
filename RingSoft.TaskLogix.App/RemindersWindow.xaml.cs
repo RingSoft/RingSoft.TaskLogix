@@ -11,10 +11,14 @@ namespace RingSoft.TaskLogix.App
         public RemindersWindow(List<Reminder> reminders)
         {
             InitializeComponent();
-            Loaded += (sender, args) =>
-            {
-                LocalViewModel.Initialize(this, reminders);
-            };
+            LocalViewModel.Initialize(this, reminders);
+
+            ListBox.GotKeyboardFocus += (sender, args) => ListBox.SelectedItem ??= ListBox.Items[0];
+        }
+
+        public void CloseWindow()
+        {
+            Close();
         }
     }
 }
