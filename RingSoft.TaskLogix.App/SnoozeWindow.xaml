@@ -1,0 +1,42 @@
+﻿<dec:BaseWindow x:Class="RingSoft.TaskLogix.App.SnoozeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dec="clr-namespace:RingSoft.DataEntryControls.WPF;assembly=RingSoft.DataEntryControls.WPF"
+        xmlns:viewModels="clr-namespace:RingSoft.TaskLogix.Library.ViewModels;assembly=RingSoft.TaskLogix.Library"
+        xmlns:local="clr-namespace:RingSoft.TaskLogix.App"
+        mc:Ignorable="d"
+        Title="SnoozeWindow" CloseOnEscape="True" SizeToContent="WidthAndHeight">
+
+    <Window.DataContext>
+        <viewModels:SnoozeViewModel x:Name="LocalViewModel"/>
+    </Window.DataContext>
+
+    <Grid Margin="5">
+    
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="New Snooze Date/Time"/>
+
+        <dec:DateEditControl Grid.Row="0" Grid.Column="1" DateFormatType="DateTime" AllowNullValue="True" Width="200" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+
+            <Button Content="_OK" Width="50" Height="25" IsDefault="True" Command="{Binding OkCommand}"/>
+
+            <Button Content="_Cancel" Width="50" Height="25" IsCancel="True" Margin="5,0,0,0" Command="{Binding CancelCommand}"/>
+
+        </StackPanel>
+
+    </Grid>
+</dec:BaseWindow>

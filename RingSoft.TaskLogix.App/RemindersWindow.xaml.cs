@@ -1,4 +1,5 @@
-﻿using RingSoft.TaskLogix.DataAccess.Model;
+﻿using RingSoft.DbLookup.Controls.WPF;
+using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library;
 using RingSoft.TaskLogix.Library.ViewModels;
 
@@ -26,9 +27,11 @@ namespace RingSoft.TaskLogix.App
             ListBox.Focus();
         }
 
-        public DateTime? GetSnoozeDateTime(TlTask tlTask)
+        public bool ProcessSnooze(TlTask tlTask)
         {
-            throw new NotImplementedException();
+            var snoozeWindow = new SnoozeWindow(tlTask);
+            LookupControlsGlobals.WindowRegistry.ShowDialog(snoozeWindow);
+            return snoozeWindow.LocalViewModel.DialogResult;
         }
     }
 }

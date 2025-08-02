@@ -14,7 +14,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         void ResetSelection();
 
-        DateTime? GetSnoozeDateTime(TlTask tlTask);
+        bool ProcessSnooze(TlTask tlTask);
     };
 
     public class RemindersViewModel : INotifyPropertyChanged
@@ -127,11 +127,12 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             if (tlTask != null)
             {
-                var snoozeDateTime = View.GetSnoozeDateTime(tlTask);
-                tlTask.SnoozeDateTime = snoozeDateTime;
-                if (context.SaveEntity(tlTask, ""))
+                if (View.ProcessSnooze(tlTask))
                 {
-                    AppGlobals.MainViewModel.HandleReminders();
+                    if (context.SaveEntity(tlTask, ""))
+                    {
+                        AppGlobals.MainViewModel.HandleReminders();
+                    }
                 }
             }
         }
