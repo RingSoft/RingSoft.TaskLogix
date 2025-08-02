@@ -1,4 +1,5 @@
-﻿using RingSoft.TaskLogix.Library;
+﻿using RingSoft.TaskLogix.DataAccess.Model;
+using RingSoft.TaskLogix.Library;
 using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.App
@@ -12,13 +13,22 @@ namespace RingSoft.TaskLogix.App
         {
             InitializeComponent();
             LocalViewModel.Initialize(this, reminders);
-
-            ListBox.GotKeyboardFocus += (sender, args) => ListBox.SelectedItem ??= ListBox.Items[0];
         }
 
         public void CloseWindow()
         {
             Close();
+        }
+
+        public void ResetSelection()
+        {
+            ListBox.SelectedItem = ListBox.Items[0];
+            ListBox.Focus();
+        }
+
+        public DateTime? GetSnoozeDateTime(TlTask tlTask)
+        {
+            throw new NotImplementedException();
         }
     }
 }

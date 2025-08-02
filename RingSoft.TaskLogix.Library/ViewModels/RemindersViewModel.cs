@@ -2,12 +2,19 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using RingSoft.DataEntryControls.Engine;
+using RingSoft.DbLookup;
+using RingSoft.TaskLogix.DataAccess.Model;
+using RingSoft.TaskLogix.Library.Processors;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
 {
     public interface IReminderView
     {
         void CloseWindow();
+
+        void ResetSelection();
+
+        DateTime? GetSnoozeDateTime(TlTask tlTask);
     };
 
     public class RemindersViewModel : INotifyPropertyChanged
@@ -76,7 +83,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 Reminders.Add(reminder);
             }
 
-            if (!Reminders.Any())
+            if (Reminders.Any())
+            {
+                View.ResetSelection();
+            }
+            else
             {
                 View.CloseWindow();
             }
@@ -84,17 +95,45 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         private void OpenTask()
         {
-
+            var tlTask = new TlTask
+            {
+                Id = SelectedReminder.TaskId,
+            };
+            var primaryKey = AppGlobals.LookupContext.Tasks.GetPrimaryKeyValueFromEntity(tlTask);
+            if (primaryKey != null)
+            {
+                SystemGlobals.TableRegistry.ShowEditAddOnTheFly(primaryKey);
+                AppGlobals.MainViewModel.HandleReminders();
+            }
         }
 
         private void MarkTaskComplete()
         {
-
+            var taskProcessor = TaskProcessor.LoadProcessor(SelectedReminder.TaskId);
+            if (taskProcessor != null)
+            {
+                taskProcessor.DoMarkComplete();
+                if (taskProcessor.SaveProcessorAfterMarkComplete(SelectedReminder.TaskId))
+                {
+                    AppGlobals.MainViewModel.HandleReminders();
+                }
+            }
         }
 
         private void SnoozeTask()
         {
+            var context = SystemGlobals.DataRepository.GetDataContext();
+            var tlTask = context.GetTable<TlTask>().FirstOrDefault(p => p.Id == SelectedReminder.TaskId);
 
+            if (tlTask != null)
+            {
+                var snoozeDateTime = View.GetSnoozeDateTime(tlTask);
+                tlTask.SnoozeDateTime = snoozeDateTime;
+                if (context.SaveEntity(tlTask, ""))
+                {
+                    AppGlobals.MainViewModel.HandleReminders();
+                }
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

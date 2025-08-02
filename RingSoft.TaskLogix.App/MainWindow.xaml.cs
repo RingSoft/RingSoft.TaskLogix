@@ -28,6 +28,10 @@ namespace RingSoft.TaskLogix.App
             if (_remindersWindow == null)
             {
                 _remindersWindow = new RemindersWindow(reminderList);
+                _remindersWindow.Closed += (sender, args) =>
+                {
+                    _remindersWindow = null;
+                };
                 _remindersWindow.ShowDialog();
             }
             else

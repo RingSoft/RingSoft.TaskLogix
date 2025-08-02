@@ -104,7 +104,7 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         }
 
-        public bool SaveProcessor(int taskId)
+        public bool SaveProcessorAfterMarkComplete(int taskId)
         {
             var result = true;
 
@@ -116,6 +116,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             if (task == null)
                 task = new TlTask();
 
+            task.SnoozeDateTime = null;
             SaveEntity(task);
 
             result = context.SaveEntity(task, "Saving Task");
@@ -124,44 +125,7 @@ namespace RingSoft.TaskLogix.Library.Processors
                 return result;
             }
             TaskId = task.Id;
-
-            var tlRecurDailyRec = context.GetTable<TlTaskRecurDaily>()
-                .FirstOrDefault(p => p.TaskId == TaskId);
-            if (tlRecurDailyRec != null)
-            {
-                result = context.DeleteEntity(tlRecurDailyRec, "Deleting Existing Daily Recurring");
-                if (!result)
-                {
-                    return result;
-                }
-            }
-
-            switch (RecurType)
-            {
-                case TaskRecurTypes.None:
-                    break;
-                case TaskRecurTypes.Daily:
-                    var tlTaskRecurDaily = new TlTaskRecurDaily
-                    {
-                        TaskId = TaskId,
-                    };
-                    DailyProcessor.SaveEntity(tlTaskRecurDaily);
-                    result = context.SaveEntity(tlTaskRecurDaily, "Saving Task Daily Recurring");
-                    if (!result)
-                    {
-                        return result;
-                    }
-                    break;
-                case TaskRecurTypes.Weekly:
-                    break;
-                case TaskRecurTypes.Monthly:
-                    break;
-                case TaskRecurTypes.Yearly:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
+            
             return result;
         }
 

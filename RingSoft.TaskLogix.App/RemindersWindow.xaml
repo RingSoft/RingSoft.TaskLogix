@@ -28,14 +28,14 @@
 
         <Label Content="Select Reminder" HorizontalAlignment="Left"/>
 
-        <ListBox x:Name="ListBox" Grid.Row="1" Grid.Column="0" Height="150" ItemsSource="{Binding Reminders}" SelectedItem="{Binding Path=SelectedReminder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="300" Background="Transparent">
+        <ListBox x:Name="ListBox" Grid.Row="1" Grid.Column="0" Height="150" ItemsSource="{Binding Reminders}" SelectedItem="{Binding Path=SelectedReminder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="400" Background="Transparent">
             <ListBox.ItemTemplate>
                 <DataTemplate>
 
                     <Grid>
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="180"/>
                         </Grid.ColumnDefinitions>
 
