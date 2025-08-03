@@ -39,5 +39,14 @@ namespace RingSoft.TaskLogix.App
                 _remindersWindow.LocalViewModel.ProcessNewReminders(reminderList);
             }
         }
+
+        public void CloseReminders()
+        {
+            if (_remindersWindow != null)
+            {
+                _remindersWindow.Close();
+                _remindersWindow = null;
+            }
+        }
     }
 }

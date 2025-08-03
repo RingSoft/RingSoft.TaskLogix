@@ -9,6 +9,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
     public interface IMainView
     {
         void ShowReminders(List<Reminder> ReminderList);
+
+        void CloseReminders();
     }
     public class MainViewModel : TemplateMainViewModel
     {
@@ -77,9 +79,16 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                             }
                         }
 
-                        if (MainView != null && remindersList.Any())
+                        if (MainView != null)
                         {
-                            MainView.ShowReminders(remindersList);
+                            if (remindersList.Any())
+                            {
+                                MainView.ShowReminders(remindersList);
+                            }
+                            else
+                            {
+                                MainView.CloseReminders();
+                            }
                         }
                     }
                 }

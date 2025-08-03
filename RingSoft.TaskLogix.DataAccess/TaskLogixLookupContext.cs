@@ -30,8 +30,8 @@ namespace RingSoft.TaskLogix.DataAccess
 
             TaskLookupDefinition.AddVisibleColumnDefinition(
                 p => p.DueDate
-                , "Due Date"
-                , p => p.DueDate, 30);
+                , "Start Date"
+                , p => p.StartDate, 30);
 
             Tasks.HasLookupDefinition(TaskLookupDefinition);
 
