@@ -201,6 +201,21 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private DateTime? _snoozeDateTime;
+
+        public DateTime? SnoozeDateTime
+        {
+            get { return _snoozeDateTime; }
+            set
+            {
+                if (_snoozeDateTime == value)
+                    return;
+
+                _snoozeDateTime = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         #endregion
 
@@ -211,6 +226,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public RelayCommand MarkCompleteCommand { get; }
 
         public RelayCommand RecurrenceCommand { get; }
+
+        public UiCommand SnoozeUiCommand { get; }
 
         public TaskProcessor TaskProcessor { get; private set; }
 
@@ -223,6 +240,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             PriorityComboBoxSetup.LoadFromEnum<TaskPriorityTypes>();
 
             ReminderUiCommand = new UiCommand();
+            SnoozeUiCommand = new UiCommand();
 
             MarkCompleteCommand = new RelayCommand((() =>
             {
@@ -298,6 +316,16 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 ReminderDateTime = entity.ReminderDateTime.GetValueOrDefault();
             }
 
+            if (entity.SnoozeDateTime == null)
+            {
+                SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
+            }
+            else
+            {
+                SnoozeUiCommand.Visibility = UiVisibilityTypes.Visible;
+            }
+            SnoozeDateTime = entity.SnoozeDateTime;
+
             Notes = entity.Notes;
             TaskProcessor.LoadProcessor(entity);
         }
@@ -314,6 +342,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 PriorityType = (byte)PriorityType,
                 PercentComplete = PercentComplete,
                 Notes = Notes,
+                SnoozeDateTime = SnoozeDateTime,
             };
             if (DoReminder)
             {
@@ -426,6 +455,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, 8, 0, 0);
             Notes = null;
             TaskProcessor = new TaskProcessor();
+            SnoozeDateTime = null;
+            SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
         }
     }
 }

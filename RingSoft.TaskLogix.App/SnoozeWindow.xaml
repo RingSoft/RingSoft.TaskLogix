@@ -28,7 +28,7 @@
 
         <Label Grid.Row="0" Grid.Column="0" Content="New Snooze Date/Time"/>
 
-        <dec:DateEditControl Grid.Row="0" Grid.Column="1" DateFormatType="DateTime" AllowNullValue="True" Width="200" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <dec:DateEditControl Grid.Row="0" Grid.Column="1" DateFormatType="DateTime" AllowNullValue="True" Width="175" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
 
