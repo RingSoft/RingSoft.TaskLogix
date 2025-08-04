@@ -279,7 +279,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         {
             if (DoSave() == DbMaintenanceResults.Success)
             {
-                TaskProcessor.LoadProcessor(Id);
+                TaskProcessor = TaskProcessor.LoadProcessor(Id);
                 TaskProcessor.DoMarkComplete();
                 TaskProcessor.SaveProcessorAfterMarkComplete(Id);
                 StartDate = TaskProcessor.StartDate;
