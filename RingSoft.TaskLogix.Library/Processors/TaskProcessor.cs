@@ -88,13 +88,14 @@ namespace RingSoft.TaskLogix.Library.Processors
         public void DoMarkComplete()
         {
             var origStartDate = StartDate;
+            var origDueDate = DueDate;
             if (ActiveRecurProcessor != null)
             {
                 ActiveRecurProcessor.DoMarkComplete();
             }
             AdjustReminderDate(origStartDate);
             AdjustDueDate(origStartDate);
-            AddHistory();
+            AddHistory(origStartDate, origDueDate);
         }
 
         public void AdjustStartDate()
@@ -108,15 +109,15 @@ namespace RingSoft.TaskLogix.Library.Processors
             AdjustDueDate(origStartDate);
         }
 
-        private void AddHistory()
+        private void AddHistory(DateTime startDate, DateTime? dueDate)
         {
             var context = SystemGlobals.DataRepository.GetDataContext();
 
             var historyRec = new TlTaskHistory
             {
                 TaskId = TaskId,
-                StartDate = this.StartDate,
-                DueDate = DueDate.GetValueOrDefault(),
+                StartDate = startDate,
+                DueDate = dueDate.GetValueOrDefault(),
                 CompletionDate = DateTime.Today,
             };
 
