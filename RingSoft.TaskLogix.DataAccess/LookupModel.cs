@@ -1,4 +1,5 @@
-﻿namespace RingSoft.TaskLogix.DataAccess
+﻿
+namespace RingSoft.TaskLogix.DataAccess
 {
     public class TaskLookup
     {
@@ -19,5 +20,16 @@
         public string Task { get; set; }
 
         public byte RecurType { get; set; }
+    }
+
+    public class TaskHistoryLookup
+    {
+        public string Task { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime DueDate { get; set; }
+
+        public DateTime CompletionDate { get; set; }
     }
 }

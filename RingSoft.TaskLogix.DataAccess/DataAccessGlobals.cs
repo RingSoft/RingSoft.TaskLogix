@@ -12,6 +12,7 @@ namespace RingSoft.TaskLogix.DataAccess
             modelBuilder.ApplyConfiguration(new TlTaskRecurWeeklyConfiguration());
             modelBuilder.ApplyConfiguration(new TlTaskRecurMonthlyConfiguration());
             modelBuilder.ApplyConfiguration(new TlTaskRecurYearlyConfiguration());
+            modelBuilder.ApplyConfiguration(new TlTaskHistoryConfiguration());
         }
     }
 }

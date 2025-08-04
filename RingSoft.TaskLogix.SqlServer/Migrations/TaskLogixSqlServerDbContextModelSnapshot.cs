@@ -280,6 +280,33 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                     b.ToTable("Tasks");
                 });
 
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CompletionDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("TaskId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("TaskHistory");
+                });
+
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurDaily", b =>
                 {
                     b.Property<int>("TaskId")
@@ -327,7 +354,7 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
 
                     b.HasKey("TaskId");
 
-                    b.ToTable("TlTaskRecurMonthly");
+                    b.ToTable("TaskRecurMonthlys");
                 });
 
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurWeekly", b =>
@@ -398,7 +425,7 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
 
                     b.HasKey("TaskId");
 
-                    b.ToTable("TlTaskRecurYearly");
+                    b.ToTable("TaskRecurYearlys");
                 });
 
             modelBuilder.Entity("RingSoft.DbLookup.AdvancedFind.AdvancedFindColumn", b =>
@@ -428,6 +455,17 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
                     b.Navigation("AdvancedFind");
 
                     b.Navigation("SearchForAdvancedFind");
+                });
+
+            modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskHistory", b =>
+                {
+                    b.HasOne("RingSoft.TaskLogix.DataAccess.Model.TlTask", "Task")
+                        .WithMany("History")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Task");
                 });
 
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTaskRecurDaily", b =>
@@ -485,6 +523,8 @@ namespace RingSoft.TaskLogix.SqlServer.Migrations
 
             modelBuilder.Entity("RingSoft.TaskLogix.DataAccess.Model.TlTask", b =>
                 {
+                    b.Navigation("History");
+
                     b.Navigation("RecurDaily");
 
                     b.Navigation("RecurMonthly");

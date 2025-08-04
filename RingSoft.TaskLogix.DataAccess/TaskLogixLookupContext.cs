@@ -13,11 +13,19 @@ namespace RingSoft.TaskLogix.DataAccess
 
         public TableDefinition<TlTaskRecurWeekly> TaskRecurWeeklys { get; set; }
 
+        public TableDefinition<TlTaskRecurMonthly> TaskRecurMonthlys { get; set; }
+
+        public TableDefinition<TlTaskRecurYearly> TaskRecurYearlys { get; set; }
+
+        public TableDefinition<TlTaskHistory> TaskHistory { get; set; }
+
         public LookupDefinition<TaskLookup, TlTask> TaskLookupDefinition { get; set; }
 
         public LookupDefinition<TaskRecurDailyLookup, TlTaskRecurDaily> TaskRecurDailyLookupDefinition { get; set; }
 
         public LookupDefinition<TaskRecurWeeklyLookup, TlTaskRecurWeekly> TaskRecurWeeklyLookupDefinition { get; set; }
+
+        public LookupDefinition<TaskHistoryLookup, TlTaskHistory> TaskHistoryLookupDefinition { get; set; }
 
         protected override void SetupTemplateLookupDefinitions()
         {
@@ -67,6 +75,29 @@ namespace RingSoft.TaskLogix.DataAccess
 
             TaskRecurWeeklys.HasLookupDefinition(TaskRecurWeeklyLookupDefinition);
 
+            this.TaskHistoryLookupDefinition = new LookupDefinition<TaskHistoryLookup, TlTaskHistory>(TaskHistory);
+
+            TaskHistoryLookupDefinition.Include(p => p.Task)
+                .AddVisibleColumnDefinition(p => p.Task
+                    , "Task"
+                    , p => p.Subject, 40);
+
+            TaskHistoryLookupDefinition.AddVisibleColumnDefinition(
+                p => p.StartDate
+                , "Start Date"
+                , p => p.StartDate, 20);
+
+            TaskHistoryLookupDefinition.AddVisibleColumnDefinition(
+                p => p.DueDate
+                , "Due Date"
+                , p => p.DueDate, 20);
+
+            TaskHistoryLookupDefinition.AddVisibleColumnDefinition(
+                p => p.CompletionDate
+                , "Date Complete"
+                , p => p.CompletionDate, 20);
+
+            TaskHistory.HasLookupDefinition(TaskHistoryLookupDefinition);
         }
 
         protected override void SetupTemplateModel()

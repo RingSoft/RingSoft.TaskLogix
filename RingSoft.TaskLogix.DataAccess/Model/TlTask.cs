@@ -101,12 +101,15 @@ namespace RingSoft.TaskLogix.DataAccess.Model
 
         public virtual ICollection<TlTaskRecurYearly> RecurYearly { get; set; }
 
+        public virtual ICollection<TlTaskHistory> History { get; set; }
+
         public TlTask()
         {
             RecurDaily = new HashSet<TlTaskRecurDaily>();
             RecurWeekly = new HashSet<TlTaskRecurWeekly>();
             RecurMonthly = new HashSet<TlTaskRecurMonthly>();
             RecurYearly = new HashSet<TlTaskRecurYearly>();
+            History = new HashSet<TlTaskHistory>();
         }
     }
 }
