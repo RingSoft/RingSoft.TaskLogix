@@ -91,6 +91,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                             }
                         }
                     }
+                    else
+                    {
+                        if (MainView != null) MainView.CloseReminders();
+                    }
                 }
             }
         }

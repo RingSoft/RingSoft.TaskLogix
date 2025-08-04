@@ -22,6 +22,8 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public DateTime? ReminderDateTime { get; set; }
 
+        public DateTime? DueDate { get; set; }
+
         private TaskRecurTypes _recurType;
         public TaskRecurTypes RecurType
         {
@@ -79,6 +81,10 @@ namespace RingSoft.TaskLogix.Library.Processors
             RecurType = TaskRecurTypes.None;
         }
 
+        public void SetTaskId(int taskId)
+        {
+            TaskId = taskId;
+        }
         public void DoMarkComplete()
         {
             var origStartDate = StartDate;
@@ -87,6 +93,8 @@ namespace RingSoft.TaskLogix.Library.Processors
                 ActiveRecurProcessor.DoMarkComplete();
             }
             AdjustReminderDate(origStartDate);
+            AdjustDueDate(origStartDate);
+            AddHistory();
         }
 
         public void AdjustStartDate()
@@ -97,11 +105,22 @@ namespace RingSoft.TaskLogix.Library.Processors
                 ActiveRecurProcessor.AdjustStartDate();
             }
             AdjustReminderDate(origStartDate);
+            AdjustDueDate(origStartDate);
         }
 
-        public void SetPropsFromEntity(TlTask task)
+        private void AddHistory()
         {
+            var context = SystemGlobals.DataRepository.GetDataContext();
 
+            var historyRec = new TlTaskHistory
+            {
+                TaskId = TaskId,
+                StartDate = this.StartDate,
+                DueDate = DueDate.GetValueOrDefault(),
+                CompletionDate = DateTime.Today,
+            };
+
+            context.AddSaveEntity(historyRec, "");
         }
 
         public bool SaveProcessorAfterMarkComplete(int taskId)
@@ -137,6 +156,11 @@ namespace RingSoft.TaskLogix.Library.Processors
         {
             tlTask.StartDate = StartDate;
             tlTask.ReminderDateTime = ReminderDateTime;
+            if (DueDate.HasValue)
+            {
+                tlTask.DueDate = DueDate.GetValueOrDefault();
+            }
+
             SaveProcessorProps(tlTask);
         }
 
@@ -184,6 +208,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             RecurType = (TaskRecurTypes)task.RecurType;
             this.StartDate = task.StartDate;
             this.ReminderDateTime = task.ReminderDateTime;
+            this.DueDate = task.DueDate;
             
             this.RecurEndType = (TaskRecurEndingTypes)task.RecurEndType;
             switch (this.RecurEndType)
@@ -211,6 +236,16 @@ namespace RingSoft.TaskLogix.Library.Processors
                 var dateDif = origStartDate - ReminderDateTime;
                 var ticksDif = dateDif.GetValueOrDefault().Ticks;
                 ReminderDateTime = StartDate.AddTicks(-ticksDif);
+            }
+        }
+
+        public void AdjustDueDate(DateTime origStartDate)
+        {
+            if (DueDate != null)
+            {
+                var dateDif = origStartDate - DueDate;
+                var ticksDif = dateDif.GetValueOrDefault().Ticks;
+                DueDate = StartDate.AddTicks(-ticksDif);
             }
         }
     }

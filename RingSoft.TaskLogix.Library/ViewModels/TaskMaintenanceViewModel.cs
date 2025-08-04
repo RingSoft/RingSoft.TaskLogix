@@ -244,8 +244,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             MarkCompleteCommand = new RelayCommand((() =>
             {
-                ControlsGlobals.UserInterface.ShowMessageBox("Mark Complete"
-                    , "Nub", RsMessageBoxIcons.Information);
+                DoMarkComplete();
             }));
 
             RecurrenceCommand = new RelayCommand((() =>
@@ -258,6 +257,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         private void OnRecurrence()
         {
             TaskProcessor.StartDate = StartDate;
+            TaskProcessor.DueDate = DueDate;
             if (DoReminder)
             {
                 TaskProcessor.ReminderDateTime = ReminderDateTime;
@@ -266,11 +266,26 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             if (View.ShowTaskRecurrenceWindow())
             {
                 StartDate = TaskProcessor.StartDate;
+                DueDate = TaskProcessor.DueDate.GetValueOrDefault();
                 if (DoReminder)
                 {
                     ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
                 }
                 RecordDirty = true;
+            }
+        }
+
+        private void DoMarkComplete()
+        {
+            if (DoSave() == DbMaintenanceResults.Success)
+            {
+                TaskProcessor.LoadProcessor(Id);
+                TaskProcessor.DoMarkComplete();
+                TaskProcessor.SaveProcessorAfterMarkComplete(Id);
+                StartDate = TaskProcessor.StartDate;
+                ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
+                DueDate = TaskProcessor.DueDate.GetValueOrDefault();
+                RecordDirty = false;
             }
         }
 
@@ -325,9 +340,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 SnoozeUiCommand.Visibility = UiVisibilityTypes.Visible;
             }
             SnoozeDateTime = entity.SnoozeDateTime;
-
-            Notes = entity.Notes;
             TaskProcessor.LoadProcessor(entity);
+            Notes = entity.Notes;
         }
 
         protected override TlTask GetEntityData()
