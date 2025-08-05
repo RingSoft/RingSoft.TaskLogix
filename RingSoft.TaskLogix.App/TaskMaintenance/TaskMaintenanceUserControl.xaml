@@ -154,6 +154,29 @@
                     </Grid>
 
                 </TabItem>
+
+                <TabItem Header="History" x:Name="HistoryTab" VerticalAlignment="Stretch">
+
+                    <DockPanel>
+
+                        <lc:LookupControl LookupDefinition="{Binding HistoryLookup}">
+
+                            <lc:LookupControl.LookupColumns>
+
+                                <lc:LookupColumn PropertyName="{lc:NameOf CompletionDate, Type={x:Type lm:TaskHistoryLookup}}" Header="Date Complete" Width="100"/>
+
+                                <lc:LookupColumn PropertyName="{lc:NameOf StartDate, Type={x:Type lm:TaskHistoryLookup}}" Header="Start Date" Width="100"/>
+
+                                <lc:LookupColumn PropertyName="{lc:NameOf DueDate, Type={x:Type lm:TaskHistoryLookup}}" Header="Due Date" Width="100"/>
+
+                            </lc:LookupControl.LookupColumns>
+
+                        </lc:LookupControl>
+
+                    </DockPanel>
+
+                </TabItem>
+
             </TabControl>
         </Grid>
     </DockPanel>
