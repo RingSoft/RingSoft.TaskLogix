@@ -286,6 +286,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
                 DueDate = TaskProcessor.DueDate.GetValueOrDefault();
                 SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
+                SnoozeDateTime = null;
                 RecordDirty = false;
             }
         }
