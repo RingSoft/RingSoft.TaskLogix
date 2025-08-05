@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RingSoft.DataEntryControls.Engine;
 using RingSoft.DbLookup;
+using RingSoft.DbLookup.Lookup;
+using RingSoft.DbLookup.QueryBuilder;
 using RingSoft.DbMaintenance;
+using RingSoft.TaskLogix.DataAccess;
 using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.Processors;
 
@@ -42,6 +45,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     return;
 
                 _startDate = value;
+                UpdateDatesAfterStartDateChange();
                 OnPropertyChanged();
             }
         }
@@ -216,6 +220,20 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private LookupDefinition<TaskHistoryLookup, TlTaskHistory> _historyLookup;
+
+        public LookupDefinition<TaskHistoryLookup, TlTaskHistory> HistoryLookup
+        {
+            get => _historyLookup;
+            set
+            {
+                if (_historyLookup == value)
+                    return;
+
+                _historyLookup = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion
 
@@ -230,6 +248,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public UiCommand SnoozeUiCommand { get; }
 
         public TaskProcessor TaskProcessor { get; private set; }
+
+        private bool _loading;
 
         public TaskMaintenanceViewModel()
         {
@@ -252,10 +272,26 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 OnRecurrence();
             }));
             TaskProcessor = new TaskProcessor();
+
+            HistoryLookup = AppGlobals.LookupContext.TaskHistoryLookupDefinition.Clone();
+            HistoryLookup.InitialOrderByType = OrderByTypes.Descending;
+            RegisterLookup(HistoryLookup);
+        }
+
+        private void UpdateDatesAfterStartDateChange()
+        {
+            if (!_loading)
+            {
+                DueDate = StartDate;
+                var oldReminder = ReminderDateTime;
+                ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day
+                    , oldReminder.Hour, oldReminder.Minute, oldReminder.Second);
+            }
         }
 
         private void OnRecurrence()
         {
+            _loading = true;
             TaskProcessor.StartDate = StartDate;
             TaskProcessor.DueDate = DueDate;
             if (DoReminder)
@@ -273,12 +309,14 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 }
                 RecordDirty = true;
             }
+            _loading = false;
         }
 
         private void DoMarkComplete()
         {
             if (DoSave() == DbMaintenanceResults.Success)
             {
+                _loading = true;
                 TaskProcessor = TaskProcessor.LoadProcessor(Id);
                 TaskProcessor.DoMarkComplete();
                 TaskProcessor.SaveProcessorAfterMarkComplete(Id);
@@ -288,6 +326,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
                 SnoozeDateTime = null;
                 RecordDirty = false;
+                _loading = false;
             }
         }
 
@@ -317,6 +356,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         protected override void LoadFromEntity(TlTask entity)
         {
+            _loading = true;
             StartDate = entity.StartDate;
             StatusType = (TaskStatusTypes)entity.StatusType;
             DueDate = entity.DueDate;
@@ -344,6 +384,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             SnoozeDateTime = entity.SnoozeDateTime;
             TaskProcessor.LoadProcessor(entity);
             Notes = entity.Notes;
+            _loading = false;
         }
 
         protected override TlTask GetEntityData()
@@ -461,6 +502,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         protected override void ClearData()
         {
+            _loading = true;
             Id = 0;
             StartDate = DueDate = DateTime.Today;
             StatusType = TaskStatusTypes.NotStarted;
@@ -468,11 +510,12 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             PercentComplete = 0;
             DoReminder = false;
             ReminderUiCommand.IsEnabled = false;
-            ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, 8, 0, 0);
+            ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, 7, 0, 0);
             Notes = null;
             TaskProcessor = new TaskProcessor();
             SnoozeDateTime = null;
             SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
+            _loading = false;
         }
     }
 }
