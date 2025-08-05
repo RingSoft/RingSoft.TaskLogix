@@ -327,6 +327,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 SnoozeDateTime = null;
                 RecordDirty = false;
                 _loading = false;
+                HistoryLookup.SetCommand(GetLookupCommand((LookupCommands.Refresh)));
             }
         }
 
