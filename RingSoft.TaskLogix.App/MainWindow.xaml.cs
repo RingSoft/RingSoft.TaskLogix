@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using RingSoft.CustomTemplate.Library.ViewModels;
 using RingSoft.DbLookup.Controls.WPF;
 using RingSoft.TaskLogix.Library;
@@ -32,7 +33,7 @@ namespace RingSoft.TaskLogix.App
                 {
                     _remindersWindow = null;
                 };
-                _remindersWindow.ShowDialog();
+                LookupControlsGlobals.WindowRegistry.ShowDialog(_remindersWindow);
             }
             else
             {
@@ -47,6 +48,17 @@ namespace RingSoft.TaskLogix.App
                 _remindersWindow.Close();
                 _remindersWindow = null;
             }
+        }
+
+        public bool CloseAllTabs()
+        {
+            return TabControl.CloseAllTabs();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            e.Cancel = !CloseAllTabs();
+            base.OnClosing(e);
         }
     }
 }

@@ -11,15 +11,25 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         void ShowReminders(List<Reminder> ReminderList);
 
         void CloseReminders();
+
+        bool CloseAllTabs();
     }
     public class MainViewModel : TemplateMainViewModel
     {
         public IMainView MainView { get; set; }
+        public RelayCommand ChangeDatabaseCommand { get; }
         public RelayCommand ManageTasksCommand { get; }
         public RelayCommand ShowAdvFindTabCommand { get; }
 
         public MainViewModel()
         {
+            ChangeDatabaseCommand = new RelayCommand((() =>
+            {
+                if (MainView.CloseAllTabs())
+                {
+                    ChangeMaster();
+                }
+            }));
             ManageTasksCommand = new RelayCommand((() =>
             {
                 View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);

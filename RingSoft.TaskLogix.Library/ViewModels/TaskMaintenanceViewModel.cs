@@ -509,8 +509,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             StatusType = TaskStatusTypes.NotStarted;
             PriorityType = TaskPriorityTypes.Normal;
             PercentComplete = 0;
-            DoReminder = false;
-            ReminderUiCommand.IsEnabled = false;
+            DoReminder = true;
+            ReminderUiCommand.IsEnabled = true;
             ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, 7, 0, 0);
             Notes = null;
             TaskProcessor = new TaskProcessor();
