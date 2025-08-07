@@ -14,7 +14,7 @@ namespace RingSoft.TaskLogix.Library
         public override string AppGuid => "c0cad4a3-57e1-474c-ac1f-7e9e04cdc9c3";
         public override string AppItem => "Task Data";
         public override string AppDemoName => "Demonstration Data";
-        public override int AppVersionId => 368;
+        public override int AppVersionId => 369;
         public override string DebugFolder => GetDebugFolder();
 
         public string GetDebugFolder()
