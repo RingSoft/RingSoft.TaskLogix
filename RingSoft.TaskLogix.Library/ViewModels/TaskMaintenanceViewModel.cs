@@ -292,23 +292,36 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         private void OnRecurrence()
         {
             _loading = true;
+            UpdateTaskProcessor();
+
+            if (View.ShowTaskRecurrenceWindow())
+            {
+                UpdateAfterRecurrence();
+                RecordDirty = true;
+            }
+            _loading = false;
+        }
+
+        private void UpdateTaskProcessor()
+        {
             TaskProcessor.StartDate = StartDate;
             TaskProcessor.DueDate = DueDate;
             if (DoReminder)
             {
                 TaskProcessor.ReminderDateTime = ReminderDateTime;
             }
+        }
 
-            if (View.ShowTaskRecurrenceWindow())
+        private void UpdateAfterRecurrence()
+        {
+            _loading = true;
+            StartDate = TaskProcessor.StartDate;
+            DueDate = TaskProcessor.DueDate.GetValueOrDefault();
+            if (DoReminder)
             {
-                StartDate = TaskProcessor.StartDate;
-                DueDate = TaskProcessor.DueDate.GetValueOrDefault();
-                if (DoReminder)
-                {
-                    ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
-                }
-                RecordDirty = true;
+                ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
             }
+
             _loading = false;
         }
 
@@ -411,8 +424,32 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 result.ReminderDateTime = null;
             }
 
+
             TaskProcessor.SaveEntityFromTaskMaint(result);
             return result;
+        }
+
+        protected override bool ValidateEntity(TlTask entity)
+        {
+            UpdateTaskProcessor();
+            if (!TaskProcessor.AdjustStartDate())
+            {
+                ControlsGlobals.UserInterface.ShowMessageBox(
+                    "Start Date adjusted to match recurrence pattern."
+                    , "Start Date Adjusted"
+                    , RsMessageBoxIcons.Information);
+
+                UpdateAfterRecurrence();
+
+                entity.StartDate = StartDate;
+                entity.DueDate = DueDate;
+                if (DoReminder)
+                {
+                    entity.ReminderDateTime = ReminderDateTime;
+                }
+            }
+
+            return base.ValidateEntity(entity);
         }
 
         protected override bool SaveEntity(TlTask entity)

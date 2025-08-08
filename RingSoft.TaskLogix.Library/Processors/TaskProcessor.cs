@@ -98,7 +98,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             AddHistory(origStartDate, origDueDate);
         }
 
-        public void AdjustStartDate()
+        public bool AdjustStartDate()
         {
             var origStartDate = StartDate;
             if (ActiveRecurProcessor != null)
@@ -107,6 +107,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
             AdjustReminderDate(origStartDate);
             AdjustDueDate(origStartDate);
+            return origStartDate.Equals(StartDate);
         }
 
         private void AddHistory(DateTime startDate, DateTime? dueDate)
