@@ -278,6 +278,16 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             RegisterLookup(HistoryLookup);
         }
 
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            TablesToDelete.Add(AppGlobals.LookupContext.TaskRecurDailys);
+            TablesToDelete.Add(AppGlobals.LookupContext.TaskRecurWeeklys);
+            TablesToDelete.Add(AppGlobals.LookupContext.TaskRecurMonthlys);
+            TablesToDelete.Add(AppGlobals.LookupContext.TaskRecurYearlys);
+        }
+
         private void UpdateDatesAfterStartDateChange()
         {
             if (!_loading)
@@ -434,11 +444,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             UpdateTaskProcessor();
             if (!TaskProcessor.AdjustStartDate())
             {
-                ControlsGlobals.UserInterface.ShowMessageBox(
-                    "Start Date adjusted to match recurrence pattern."
-                    , "Start Date Adjusted"
-                    , RsMessageBoxIcons.Information);
-
                 UpdateAfterRecurrence();
 
                 entity.StartDate = StartDate;
@@ -447,6 +452,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 {
                     entity.ReminderDateTime = ReminderDateTime;
                 }
+
+                ControlsGlobals.UserInterface.ShowMessageBox(
+                    "Start Date adjusted to match recurrence pattern."
+                    , "Start Date Adjusted"
+                    , RsMessageBoxIcons.Information);
             }
 
             return base.ValidateEntity(entity);
@@ -460,21 +470,21 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 var context = SystemGlobals.DataRepository.GetDataContext();
 
-                result = PurgeDaily(entity, context);
+                result = PurgeDaily(entity.Id, context);
 
                 if (result)
                 {
-                    result = PurgeWeekly(entity, context);
+                    result = PurgeWeekly(entity.Id, context);
                 }
 
                 if (result)
                 {
-                    result = PurgeMonthly(entity, context);
+                    result = PurgeMonthly(entity.Id, context);
                 }
 
                 if (result)
                 {
-                    result = PurgeYearly(entity, context);
+                    result = PurgeYearly(entity.Id, context);
                 }
 
                 if (result)
@@ -486,11 +496,35 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             return result;
         }
 
-        private static bool PurgeDaily(TlTask entity, IDbContext context)
+        protected override bool DeleteEntity()
+        {
+            var context = SystemGlobals.DataRepository.GetDataContext();
+
+            var result = PurgeDaily(Id, context);
+
+            if (result)
+            {
+                result = PurgeWeekly(Id, context);
+            }
+
+            if (result)
+            {
+                result = PurgeMonthly(Id, context);
+            }
+
+            if (result)
+            {
+                result = PurgeYearly(Id, context);
+            }
+
+            return base.DeleteEntity();
+        }
+
+        private static bool PurgeDaily(int taskId, IDbContext context)
         {
             var result = true;
             var rec = context.GetTable<TlTaskRecurDaily>()
-                .FirstOrDefault(p => p.TaskId == entity.Id);
+                .FirstOrDefault(p => p.TaskId == taskId);
             if (rec != null)
             {
                 result = context.DeleteEntity(rec, "");
@@ -499,11 +533,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             return result;
         }
 
-        private static bool PurgeWeekly(TlTask entity, IDbContext context)
+        private static bool PurgeWeekly(int taskId, IDbContext context)
         {
             var result = true;
             var rec = context.GetTable<TlTaskRecurWeekly>()
-                .FirstOrDefault(p => p.TaskId == entity.Id);
+                .FirstOrDefault(p => p.TaskId == taskId);
             if (rec != null)
             {
                 result = context.DeleteEntity(rec, "");
@@ -512,11 +546,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             return result;
         }
 
-        private static bool PurgeMonthly(TlTask entity, IDbContext context)
+        private static bool PurgeMonthly(int taskId, IDbContext context)
         {
             var result = true;
             var rec = context.GetTable<TlTaskRecurMonthly>()
-                .FirstOrDefault(p => p.TaskId == entity.Id);
+                .FirstOrDefault(p => p.TaskId == taskId);
             if (rec != null)
             {
                 result = context.DeleteEntity(rec, "");
@@ -525,11 +559,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             return result;
         }
 
-        private static bool PurgeYearly(TlTask entity, IDbContext context)
+        private static bool PurgeYearly(int taskId, IDbContext context)
         {
             var result = true;
             var rec = context.GetTable<TlTaskRecurYearly>()
-                .FirstOrDefault(p => p.TaskId == entity.Id);
+                .FirstOrDefault(p => p.TaskId == taskId);
             if (rec != null)
             {
                 result = context.DeleteEntity(rec, "");
