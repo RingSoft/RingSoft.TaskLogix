@@ -76,6 +76,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        public DateTime CurrentDate { get; set; } = DateTime.Today;
+
         public TaskListTypes TaskListType { get; private set; }
 
         public DateTime? StartDate { get; private set; }
@@ -92,7 +94,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             TaskListType = taskListType;
 
             StartDate = null;
-            EndDate = DateTime.Today;
+            EndDate = CurrentDate;
 
             switch (TaskListType)
             {
@@ -101,12 +103,28 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     break;
                 case TaskListTypes.Tomorrow:
                     Header = "Due Tomorrow";
-                    StartDate = DateTime.Today.AddDays(1);
-                    EndDate = DateTime.Today.AddDays(1);
+                    StartDate = EndDate = GetDueTomorrowDate();
                     break;
                 case TaskListTypes.ThisWeek:
+                    Header = "Due This Week";
+                    var startDate = GetCurrentWeekStart();
+                    if (startDate == null)
+                    {
+                        return;
+                    }
+
+                    var endDate = GetCurrentWeekEnd();
+
+                    if (endDate == null)
+                    {
+                        return; 
+
+                    }
+                    StartDate = startDate;
+                    EndDate = endDate;
                     break;
                 case TaskListTypes.ThisMonth:
+                    Header = "Due This Month";
                     break;
                 case TaskListTypes.NextMonth:
                     break;
@@ -136,11 +154,37 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     TaskId = tlTask.Id,
                     Subject = tlTask.Subject,
                     DueDate = tlTask.DueDate.ToString("ddd, MMM dd, yyyy"),
-                    PastDue = tlTask.DueDate < DateTime.Today,
+                    PastDue = tlTask.DueDate < CurrentDate,
                 });
             }
         }
 
+        private DateTime GetDueTomorrowDate()
+        {
+            return CurrentDate.AddDays(1);
+        }
+
+        private DateTime? GetCurrentWeekStart()
+        {
+            var startDate = CurrentDate;
+            if (startDate.DayOfWeek == DayOfWeek.Saturday)
+            {
+                return null;
+            }
+
+            return GetDueTomorrowDate().AddDays(1);
+        }
+
+        private DateTime? GetCurrentWeekEnd()
+        {
+            var startDate = GetCurrentWeekStart();
+            if (startDate == null)
+            {
+                return null;
+            }
+
+            return startDate.GetValueOrDefault().AddDays(7 - (int)startDate.GetValueOrDefault().DayOfWeek);
+        }
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

@@ -60,7 +60,7 @@ namespace RingSoft.TaskLogix.App
             TaskListPanel.Children.Clear();
             if (show)
             {
-                for (int i = 0; i <= (int)TaskListTypes.Tomorrow; i++)
+                for (int i = 0; i <= (int)TaskListTypes.Older; i++)
                 {
                     var type = (TaskListTypes)i;
                     var listControl = new TaskListUserControl();
