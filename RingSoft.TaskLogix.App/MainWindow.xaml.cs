@@ -60,12 +60,16 @@ namespace RingSoft.TaskLogix.App
             TaskListPanel.Children.Clear();
             if (show)
             {
-                var today = new TaskListUserControl();
-                today.LocalViewModel.Initialize(TaskListTypes.Today);
-                if (today.LocalViewModel.TaskList.Any())
+                for (int i = 0; i <= (int)TaskListTypes.Tomorrow; i++)
                 {
-                    TaskListPanel.Children.Add(today);
-                    TaskListPanel.UpdateLayout();
+                    var type = (TaskListTypes)i;
+                    var listControl = new TaskListUserControl();
+                    listControl.LocalViewModel.Initialize(type);
+                    if (listControl.LocalViewModel.TaskList.Any())
+                    {
+                        TaskListPanel.Children.Add(listControl);
+                        TaskListPanel.UpdateLayout();
+                    }
                 }
             }
         }

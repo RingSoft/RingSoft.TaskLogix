@@ -97,9 +97,12 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             switch (TaskListType)
             {
                 case TaskListTypes.Today:
-                    Header = "Today";
+                    Header = "Due Today";
                     break;
                 case TaskListTypes.Tomorrow:
+                    Header = "Due Tomorrow";
+                    StartDate = DateTime.Today.AddDays(1);
+                    EndDate = DateTime.Today.AddDays(1);
                     break;
                 case TaskListTypes.ThisWeek:
                     break;

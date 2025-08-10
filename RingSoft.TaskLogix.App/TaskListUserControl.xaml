@@ -15,6 +15,17 @@
     <StackPanel Orientation="Vertical">
         <TextBlock HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" Text="{Binding Header}"/>
 
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="180"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" HorizontalAlignment="Left" Content="Task"/>
+
+            <Label Grid.Column="1" HorizontalAlignment="Left" Content="Due Date"/>
+
+        </Grid>
         <ListBox Width="400" ItemsSource="{Binding TaskList}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="Transparent">
 
             <ListBox.ItemTemplate>
