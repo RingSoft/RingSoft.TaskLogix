@@ -26,9 +26,33 @@
                             <ColumnDefinition Width="180"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="{Binding Subject}"/>
+                        <TextBlock Grid.Column="0" Text="{Binding Subject}">
+                            <TextBlock.Style>
 
-                        <TextBlock Grid.Column="1" Text="{Binding DueDate}"/>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PastDue}" Value="True">
+                                            <Setter Property="Foreground" Value="LightPink"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <TextBlock Grid.Column="1" Text="{Binding DueDate}">
+                            <TextBlock.Style>
+
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PastDue}" Value="True">
+                                            <Setter Property="Foreground" Value="LightPink"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+
+                            </TextBlock.Style>
+                        </TextBlock>
 
                     </Grid>
 
