@@ -55,6 +55,21 @@ namespace RingSoft.TaskLogix.App
             return TabControl.CloseAllTabs();
         }
 
+        public void ShowTaskListPanel(bool show = true)
+        {
+            TaskListPanel.Children.Clear();
+            if (show)
+            {
+                var today = new TaskListUserControl();
+                today.LocalViewModel.Initialize(TaskListTypes.Today);
+                if (today.LocalViewModel.TaskList.Any())
+                {
+                    TaskListPanel.Children.Add(today);
+                    TaskListPanel.UpdateLayout();
+                }
+            }
+        }
+
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = !CloseAllTabs();

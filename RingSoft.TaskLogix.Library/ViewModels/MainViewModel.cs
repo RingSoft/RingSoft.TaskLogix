@@ -13,6 +13,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         void CloseReminders();
 
         bool CloseAllTabs();
+
+        void ShowTaskListPanel(bool show = true);
     }
     public class MainViewModel : TemplateMainViewModel
     {
@@ -50,6 +52,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         protected override bool PostInitialize()
         {
             HandleReminders();
+            MainView.ShowTaskListPanel();
             return true;
         }
 

@@ -33,6 +33,8 @@
             <ac:DbMaintenanceButton x:Name="AdvancedFindButton" Content="_Advanced Find" ImageSource="{StaticResource FindImage}" Command="{Binding ShowAdvFindTabCommand }"/>
         </StackPanel>
 
+        <StackPanel x:Name="TaskListPanel" DockPanel.Dock="Right" Orientation="Vertical"/>
+
         <lc:DbMaintenanceTabControl x:Name="TabControl" VerticalAlignment="Stretch"/>
 
     </DockPanel>
