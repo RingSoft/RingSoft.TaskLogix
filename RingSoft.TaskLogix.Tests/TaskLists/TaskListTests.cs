@@ -6,21 +6,14 @@ using RingSoft.TaskLogix.Library.ViewModels;
 namespace RingSoft.TaskLogix.Tests.TaskLists
 {
     [TestClass]
-    public class TaskListCurrentWeekTests
+    public class TaskListTests
     {
-        public static TaskLogixTestDataRepository Database { get; } = new TaskLogixTestDataRepository(new TestDataRegistry());
-
-        [ClassInitialize]
-        public static void Setup(TestContext testContext)
-        {
-            Database.Initialize();
-            var test = AppGlobals.LookupContext;
-        }
-
         [TestMethod]
         public void TestCurrentDateSaturday()
         {
-            Database.ClearData();
+            var database = new TaskLogixTestDataRepository(new TestDataRegistry());
+            database.Initialize();
+
             var viewModel = new TaskListViewModel();
             var tlTask = new TlTask
             {
@@ -51,15 +44,26 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
             Assert.AreEqual(false, viewModel.TaskList.Any());
             Assert.AreEqual(null, viewModel.StartDate);
             Assert.AreEqual(null, viewModel.EndDate);
-        }
 
-        [TestMethod]
-        public void TestCurrentDateWeek()
-        {
-            Database.ClearData();
-            var viewModel = new TaskListViewModel();
+            //------------------------------------------------------------------
 
-            Assert.AreEqual(true, true);
+            database.ClearData();
+            tlTask = new TlTask
+            {
+                Id = 1,
+                Subject = "Test",
+                DueDate = new DateTime(2025, 8, 20),
+            };
+            context.SaveEntity(tlTask, "");
+
+            viewModel.CurrentDate = new DateTime(2025, 8, 4);
+            viewModel.Initialize(TaskListTypes.ThisMonth);
+
+            Assert.AreEqual(1, viewModel.TaskList.FirstOrDefault().TaskId);
+            Assert.AreEqual(new DateTime(2025, 8, 10), viewModel.StartDate);
+            Assert.AreEqual(new DateTime(2025, 8, 31), viewModel.EndDate);
+
+
         }
     }
 }

@@ -126,6 +126,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     break;
                 case TaskListTypes.ThisMonth:
                     Header = "Due This Month";
+                    StartDate = GetCurrentMonthStart();
+                    EndDate = GetCurrentMonthEnd();
                     break;
                 case TaskListTypes.NextMonth:
                     break;
@@ -137,28 +139,34 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             var context = SystemGlobals.DataRepository.GetDataContext();
             var table = context.GetTable<TlTask>();
+            var doQuery = false;
             if (StartDate.HasValue)
             {
                 table = table.Where(p => p.DueDate >= StartDate);
+                doQuery = true;
             }
 
             if (EndDate.HasValue)
             {
                 table = table.Where(p => p.DueDate <= EndDate);
+                doQuery = true;
             }
 
             table = table.OrderBy(p => p.DueDate);
 
             TaskList.Clear();
-            foreach (var tlTask in table)
+            if (doQuery)
             {
-                TaskList.Add(new TaskListItem
+                foreach (var tlTask in table)
                 {
-                    TaskId = tlTask.Id,
-                    Subject = tlTask.Subject,
-                    DueDate = tlTask.DueDate.ToString("ddd, MMM dd, yyyy"),
-                    PastDue = tlTask.DueDate < CurrentDate,
-                });
+                    TaskList.Add(new TaskListItem
+                    {
+                        TaskId = tlTask.Id,
+                        Subject = tlTask.Subject,
+                        DueDate = tlTask.DueDate.ToString("ddd, MMM dd, yyyy"),
+                        PastDue = tlTask.DueDate < CurrentDate,
+                    });
+                }
             }
         }
 
@@ -193,6 +201,38 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
 
             return startDate.GetValueOrDefault().AddDays(6 - (int)startDate.GetValueOrDefault().DayOfWeek);
+        }
+
+        private DateTime? GetCurrentMonthStart()
+        {
+            var startDate = GetCurrentWeekEnd();
+
+            if (startDate == null)
+            {
+                startDate = GetDueTomorrowDate();
+            }
+
+            startDate = startDate.GetValueOrDefault().AddDays(1);
+
+            if (startDate.GetValueOrDefault().Month > CurrentDate.Month)
+            {
+                return null;
+            }
+            return startDate;
+        }
+
+        private DateTime? GetCurrentMonthEnd()
+        {
+            var startDate = GetCurrentMonthStart();
+
+            if (startDate == null)
+            {
+                return null;
+            }
+
+            return new DateTime(startDate.GetValueOrDefault().Year
+                , startDate.GetValueOrDefault().Month
+                , startDate.GetValueOrDefault().GetLastDayOfMonth());
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

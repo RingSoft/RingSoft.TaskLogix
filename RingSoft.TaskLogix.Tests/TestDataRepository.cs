@@ -49,7 +49,7 @@ namespace RingSoft.TaskLogix.Tests
                 IsDesignTime = true,
             };
             AppGlobals.LookupContext.SetDbContext(sqliteContext);
-            //AppGlobals.LookupContext.Initialize();  Lookup initialize runs twice.  On second run, crashes.
+            AppGlobals.LookupContext.Initialize();
         }
     }
 }
