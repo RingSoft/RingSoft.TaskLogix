@@ -6,12 +6,12 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
     [TestClass]
     public class TaskRecurDailyProcessorTests
     {
- 
         [TestMethod]
         public void TestTaskDailyEvery2Days_Friday()
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 27),
                 RecurType = TaskRecurTypes.Daily,
             };
@@ -29,6 +29,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 27),
                 RecurType = TaskRecurTypes.Daily,
             };
@@ -46,6 +47,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 30),
                 RecurType = TaskRecurTypes.Daily,
             };
@@ -62,6 +64,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 26),
                 RecurType = TaskRecurTypes.Daily,
             };
@@ -80,6 +83,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 28),
                 RecurType = TaskRecurTypes.Daily,
             };
@@ -96,6 +100,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 30),
                 RecurType = TaskRecurTypes.Daily,
             };

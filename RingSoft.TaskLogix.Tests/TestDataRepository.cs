@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RingSoft.App.Library;
 using RingSoft.CustomTemplate.Library;
+using RingSoft.CustomTemplate.MasterData;
 using RingSoft.DbLookup;
+using RingSoft.DbLookup.EfCore;
 using RingSoft.DbLookup.Testing;
 using RingSoft.TaskLogix.DataAccess;
 using RingSoft.TaskLogix.DataAccess.Model;
@@ -32,6 +34,7 @@ namespace RingSoft.TaskLogix.Tests
             DataContext.AddEntity(new DataRepositoryRegistryItem<TlTaskRecurWeekly>());
             DataContext.AddEntity(new DataRepositoryRegistryItem<TlTaskRecurMonthly>());
             DataContext.AddEntity(new DataRepositoryRegistryItem<TlTaskRecurYearly>());
+            DataContext.AddEntity(new DataRepositoryRegistryItem<TlTaskHistory>());
         }
 
         public void Initialize()

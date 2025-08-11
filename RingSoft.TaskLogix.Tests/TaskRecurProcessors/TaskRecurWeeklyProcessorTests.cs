@@ -11,6 +11,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 24),
                 RecurType = TaskRecurTypes.Weekly,
             };
@@ -26,6 +27,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 24),
                 RecurType = TaskRecurTypes.Weekly,
             };
@@ -43,6 +45,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 24),
                 RecurType = TaskRecurTypes.Weekly,
             };
@@ -60,6 +63,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 26),
                 RecurType = TaskRecurTypes.Weekly,
             };
@@ -78,6 +82,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 26),
                 RecurType = TaskRecurTypes.Weekly,
             };
@@ -97,6 +102,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 26),
                 RecurType = TaskRecurTypes.Weekly,
                 ReminderDateTime = new DateTime(2025,6,24,7, 0, 0),

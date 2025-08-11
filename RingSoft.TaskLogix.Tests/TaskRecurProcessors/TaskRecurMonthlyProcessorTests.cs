@@ -11,6 +11,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 5, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -29,6 +30,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 5, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -47,6 +49,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 5, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -65,6 +68,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 5, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -83,6 +87,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 5, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -101,6 +106,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 4, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -119,6 +125,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 4, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -137,6 +144,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 5, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -155,6 +163,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 4, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -173,6 +182,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -191,6 +201,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -209,6 +220,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -227,6 +239,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 7, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -245,6 +258,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -263,6 +277,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };
@@ -282,6 +297,7 @@ namespace RingSoft.TaskLogix.Tests.TaskRecurProcessors
         {
             var taskProc = new TaskProcessor
             {
+                UnitTestMode = true,
                 StartDate = new DateTime(2025, 6, 1),
                 RecurType = TaskRecurTypes.Monthly,
             };

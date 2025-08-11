@@ -76,6 +76,8 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public int? EndAfterOccurrences { get; set; }
 
+        public bool UnitTestMode { get; set; }
+
         public TaskProcessor()
         {
             RecurType = TaskRecurTypes.None;
@@ -95,7 +97,11 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
             AdjustReminderDate(origStartDate);
             AdjustDueDate(origStartDate);
-            AddHistory(origStartDate, origDueDate);
+
+            if (!UnitTestMode)
+            {
+                AddHistory(origStartDate, origDueDate);
+            }
         }
 
         public bool AdjustStartDate()
