@@ -130,8 +130,13 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     EndDate = GetCurrentMonthEnd();
                     break;
                 case TaskListTypes.NextMonth:
+                    Header = "Due Next Month";
+                    StartDate = GetNextMonthStart();
+                    EndDate = GetNextMonthEnd();
                     break;
                 case TaskListTypes.Older:
+                    Header = "Older";
+                    StartDate = GetNextMonthEnd().AddDays(1);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -234,6 +239,29 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 , startDate.GetValueOrDefault().Month
                 , startDate.GetValueOrDefault().GetLastDayOfMonth());
         }
+
+        public DateTime GetNextMonthStart()
+        {
+            var date = new DateTime(CurrentDate.Year, CurrentDate.Month, 1).AddMonths(1);
+            var weekEndDate = GetCurrentWeekEnd();
+            if (weekEndDate != null)
+            {
+                if (weekEndDate > date)
+                {
+                    date = weekEndDate.GetValueOrDefault().AddDays(1);
+                }
+            }
+
+            return date;
+        }
+
+        public DateTime GetNextMonthEnd()
+        {
+            var date = new DateTime(CurrentDate.Year, CurrentDate.Month, 1).AddMonths(1);
+            date = new DateTime(date.Year, date.Month, date.GetLastDayOfMonth());
+            return date;
+        }
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

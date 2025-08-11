@@ -85,6 +85,30 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
             Assert.AreEqual(null, viewModel.StartDate);
             Assert.AreEqual(null, viewModel.EndDate);
 
+            //------------------------------------------------------------------
+
+            database.ClearData();
+            tlTask = new TlTask
+            {
+                Id = 1,
+                Subject = "Test",
+                DueDate = new DateTime(2025, 9, 5),
+            };
+            context.SaveEntity(tlTask, "");
+
+            viewModel.CurrentDate = new DateTime(2025, 8, 1);
+            viewModel.Initialize(TaskListTypes.NextMonth);
+
+            Assert.AreEqual(1, viewModel.TaskList.FirstOrDefault().TaskId);
+            Assert.AreEqual(new DateTime(2025, 9, 1), viewModel.StartDate);
+            Assert.AreEqual(new DateTime(2025, 9, 30), viewModel.EndDate);
+
+            viewModel.CurrentDate = new DateTime(2025, 8, 31);
+            viewModel.Initialize(TaskListTypes.NextMonth);
+
+            Assert.AreEqual(false, viewModel.TaskList.Any());
+            Assert.AreEqual(new DateTime(2025, 9, 7), viewModel.StartDate);
+            Assert.AreEqual(new DateTime(2025, 9, 30), viewModel.EndDate);
         }
     }
 }
