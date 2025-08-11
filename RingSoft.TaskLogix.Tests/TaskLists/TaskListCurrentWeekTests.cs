@@ -1,5 +1,6 @@
 ﻿using RingSoft.DbLookup;
 using RingSoft.TaskLogix.DataAccess.Model;
+using RingSoft.TaskLogix.Library;
 using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.Tests.TaskLists
@@ -13,6 +14,7 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
         public static void Setup(TestContext testContext)
         {
             Database.Initialize();
+            var test = AppGlobals.LookupContext;
         }
 
         [TestMethod]
@@ -32,7 +34,23 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
             viewModel.CurrentDate = new DateTime(2025, 8, 4);
             viewModel.Initialize(TaskListTypes.ThisWeek);
 
-            Assert.AreEqual(viewModel.TaskList.FirstOrDefault().TaskId, 1);
+            Assert.AreEqual(1, viewModel.TaskList.FirstOrDefault().TaskId);
+            Assert.AreEqual(new DateTime(2025, 8, 6), viewModel.StartDate);
+            Assert.AreEqual(new DateTime(2025, 8, 9), viewModel.EndDate);
+
+            viewModel.CurrentDate = new DateTime(2025, 8, 1);
+            viewModel.Initialize(TaskListTypes.ThisWeek);
+
+            Assert.AreEqual(false, viewModel.TaskList.Any());
+            Assert.AreEqual(null, viewModel.StartDate);
+            Assert.AreEqual(null, viewModel.EndDate);
+
+            viewModel.CurrentDate = new DateTime(2025, 8, 2);
+            viewModel.Initialize(TaskListTypes.ThisWeek);
+
+            Assert.AreEqual(false, viewModel.TaskList.Any());
+            Assert.AreEqual(null, viewModel.StartDate);
+            Assert.AreEqual(null, viewModel.EndDate);
         }
 
         [TestMethod]

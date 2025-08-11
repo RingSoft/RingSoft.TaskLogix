@@ -1,4 +1,5 @@
-﻿using RingSoft.TaskLogix.Library.ViewModels;
+﻿using RingSoft.TaskLogix.Library;
+using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.Tests.TaskLists
 {
@@ -11,6 +12,7 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
         public static void Setup(TestContext testContext)
         {
             Database.Initialize();
+            var test = AppGlobals.LookupContext;
         }
 
         [TestMethod]

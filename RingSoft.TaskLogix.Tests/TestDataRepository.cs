@@ -3,6 +3,7 @@ using RingSoft.App.Library;
 using RingSoft.CustomTemplate.Library;
 using RingSoft.CustomTemplate.MasterData;
 using RingSoft.DbLookup;
+using RingSoft.DbLookup.DataProcessor;
 using RingSoft.DbLookup.EfCore;
 using RingSoft.DbLookup.Testing;
 using RingSoft.TaskLogix.DataAccess;
@@ -26,6 +27,8 @@ namespace RingSoft.TaskLogix.Tests
     {
         public new TestDataRegistry DataContext { get; }
 
+        public static bool FirstTime { get; private set; } = true;
+
         public TaskLogixTestDataRepository(TestDataRegistry context) : base(context)
         {
             DataContext = context;
@@ -46,23 +49,7 @@ namespace RingSoft.TaskLogix.Tests
                 IsDesignTime = true,
             };
             AppGlobals.LookupContext.SetDbContext(sqliteContext);
-            AppGlobals.LookupContext.Initialize();
+            //AppGlobals.LookupContext.Initialize();  Lookup initialize runs twice.  On second run, crashes.
         }
-
-        //public void SaveTlTask(TaskProcessor taskProcessor)
-        //{
-        //    var task = new TlTask();
-        //    task.Subject = "Test";
-        //    task.DueDate = taskProcessor.StartDate;
-        //    if (taskProcessor.ReminderDateTime.HasValue)
-        //    {
-        //        task.SnoozeDateTime = taskProcessor.ReminderDateTime.Value;
-        //    }
-
-        //    var context = SystemGlobals.DataRepository.GetDataContext();
-        //    context.SaveEntity(task, "");
-
-        //    taskProcessor.SaveProcessor(task.Id);
-        //}
     }
 }

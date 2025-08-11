@@ -93,13 +93,15 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         {
             TaskListType = taskListType;
 
+            TaskList.Clear();
             StartDate = null;
-            EndDate = CurrentDate;
+            EndDate = null;
 
             switch (TaskListType)
             {
                 case TaskListTypes.Today:
                     Header = "Due Today";
+                    EndDate = CurrentDate;
                     break;
                 case TaskListTypes.Tomorrow:
                     Header = "Due Tomorrow";
@@ -118,7 +120,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     if (endDate == null)
                     {
                         return; 
-
                     }
                     StartDate = startDate;
                     EndDate = endDate;
@@ -146,6 +147,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 table = table.Where(p => p.DueDate <= EndDate);
             }
 
+            table = table.OrderBy(p => p.DueDate);
+
             TaskList.Clear();
             foreach (var tlTask in table)
             {
@@ -172,7 +175,13 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 return null;
             }
 
-            return GetDueTomorrowDate().AddDays(1);
+            startDate = GetDueTomorrowDate();
+            if (startDate.DayOfWeek == DayOfWeek.Saturday)
+            {
+                return null;
+            }
+
+            return startDate.AddDays(1);
         }
 
         private DateTime? GetCurrentWeekEnd()
@@ -183,7 +192,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 return null;
             }
 
-            return startDate.GetValueOrDefault().AddDays(7 - (int)startDate.GetValueOrDefault().DayOfWeek);
+            return startDate.GetValueOrDefault().AddDays(6 - (int)startDate.GetValueOrDefault().DayOfWeek);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
