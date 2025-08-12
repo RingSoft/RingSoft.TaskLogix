@@ -71,6 +71,27 @@ namespace RingSoft.TaskLogix.Library.Processors
             return context.AddSaveEntity(tlTaskRecurDaily, "");
         }
 
+        public override string GetRecurText()
+        {
+            var text = string.Empty;
+
+            switch (RecurType)
+            {
+                case DailyRecurTypes.EveryXDays:
+                    text = $"{RecurDays} Day(s)";
+                    break;
+                case DailyRecurTypes.EveryWeekday:
+                    text = $"Weekday";
+                    break;
+                case DailyRecurTypes.RegenerateXDaysAfterCompleted:
+                    text = $"{RegenDaysAfterCompleted} Day(s) After the Task Has Been Completed";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            return text;
+        }
+
         private DateTime GetNextWeekdayDate(DateTime startDate)
         {
             var taskProcessor = new TaskProcessor();

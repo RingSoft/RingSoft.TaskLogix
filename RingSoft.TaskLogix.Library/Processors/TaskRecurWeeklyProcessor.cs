@@ -129,6 +129,77 @@ namespace RingSoft.TaskLogix.Library.Processors
             return context.AddSaveEntity(tlTaskRecurWeekly, "");
         }
 
+        public override string GetRecurText()
+        {
+            var text = string.Empty;
+
+            switch (RecurType)
+            {
+                case WeeklyRecurTypes.EveryXWeeks:
+                    text = $"{RecurWeeks} Week(s) On ";
+                    var days = new List<string>();
+                    if (Sunday)
+                    {
+                        days.Add("Sunday");
+                    }
+
+                    if (Monday)
+                    {
+                        days.Add("Monday");
+                    }
+
+                    if (Tuesday)
+                    {
+                        days.Add("Tuesday");
+                    }
+
+                    if (Wednesday)
+                    {
+                        days.Add("Wednesday");
+                    }
+
+                    if (Thursday)
+                    {
+                        days.Add("Thursday");
+                    }
+
+                    if (Friday)
+                    {
+                        days.Add("Friday");
+                    }
+
+                    if (Saturday)
+                    {
+                        days.Add("Saturday");
+                    }
+
+                    var index = 0;
+                    foreach (var day in days)
+                    {
+                        if (days.IndexOf(day) == days.Count - 2)
+                        {
+                            text += $"{day} and ";
+                        }
+                        else if (days.IndexOf(day) == days.Count - 1)
+                        {
+                            text += day;
+                        }
+                        else
+                        {
+                            text += $"{day}, ";
+                        }
+                        index++;
+                    }
+                    break;
+                case WeeklyRecurTypes.RegenerateXWeeksAfterCompleted:
+                    text = $"{RegenWeeksAfterCompleted} Week(s) After the Task Has Been Completed";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            return text;
+        }
+
         private DateTime GetNextDateAfterCompleted(DateTime startDate)
         {
             var daysToAdd = RegenWeeksAfterCompleted * 7;

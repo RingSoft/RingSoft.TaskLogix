@@ -68,6 +68,8 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -79,15 +81,19 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Task Database ID"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Text="{Binding RecurText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <dec:StringReadOnlyBox Grid.Row="0" Grid.Column="1" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50" HorizontalAlignment="Left"/>
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" BorderThickness="1" BorderBrush="White" Margin="0,5"/>
 
-            <Label Grid.Row="0" Grid.Column="2" Content="Subject"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Task Database ID"/>
 
-            <lc:AutoFillControl Grid.Row="0" Grid.Column="3" x:Name="SubjectControl" Width="200" HorizontalAlignment="Left"/>
+            <dec:StringReadOnlyBox Grid.Row="2" Grid.Column="1" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50" HorizontalAlignment="Left"/>
 
-            <TabControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5">
+            <Label Grid.Row="2" Grid.Column="2" Content="Subject"/>
+
+            <lc:AutoFillControl Grid.Row="2" Grid.Column="3" x:Name="SubjectControl" Width="200" HorizontalAlignment="Left"/>
+
+            <TabControl Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5">
 
                 <TabItem Header="Details">
 

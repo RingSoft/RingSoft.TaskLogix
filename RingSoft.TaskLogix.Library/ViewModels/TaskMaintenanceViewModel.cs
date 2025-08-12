@@ -220,6 +220,22 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private string _recurText;
+
+        public string RecurText
+        {
+            get { return _recurText; }
+            set
+            {
+                if (_recurText == value)
+                    return;
+
+                _recurText = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         private LookupDefinition<TaskHistoryLookup, TlTaskHistory> _historyLookup;
 
         public LookupDefinition<TaskHistoryLookup, TlTaskHistory> HistoryLookup
@@ -332,6 +348,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
             }
 
+            RecurText = TaskProcessor.GetRecurrenceText();
             _loading = false;
         }
 
@@ -407,6 +424,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
             SnoozeDateTime = entity.SnoozeDateTime;
             TaskProcessor.LoadProcessor(entity);
+            RecurText = TaskProcessor.GetRecurrenceText();
             Notes = entity.Notes;
             _loading = false;
         }
@@ -596,6 +614,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             TaskProcessor = new TaskProcessor();
             SnoozeDateTime = null;
             SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
+            RecurText = "No Recurrence";
             _loading = false;
         }
     }

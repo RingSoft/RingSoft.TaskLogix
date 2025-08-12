@@ -94,6 +94,11 @@ namespace RingSoft.TaskLogix.Library.Processors
             return context.AddSaveEntity(tlYearly, "");
         }
 
+        public override string GetRecurText()
+        {
+            return string.Empty;
+        }
+
         private DateTime GetDayXOfEvery(DateTime startDate, int addYears = 1)
         {
             startDate = new DateTime(startDate.Year, (int)EveryMonthType + 1, 1);

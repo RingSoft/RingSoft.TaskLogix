@@ -19,5 +19,7 @@ namespace RingSoft.TaskLogix.Library.Processors
         public abstract void LoadRecurProcessor(TlTask task);
 
         public abstract bool SaveRecurProcessor(TlTask task, IDbContext context);
+
+        public abstract string GetRecurText();
     }
 }

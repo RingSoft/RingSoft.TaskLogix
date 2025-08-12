@@ -258,5 +258,19 @@ namespace RingSoft.TaskLogix.Library.Processors
                 DueDate = StartDate.AddTicks(-ticksDif);
             }
         }
+
+        public string GetRecurrenceText()
+        {
+            if (ActiveRecurProcessor == null)
+            {
+                return "No Recurrence";
+            }
+            else
+            {
+                return $"Recurs Every {ActiveRecurProcessor.GetRecurText()}.";
+            }
+
+            return string.Empty;
+        }
     }
 }

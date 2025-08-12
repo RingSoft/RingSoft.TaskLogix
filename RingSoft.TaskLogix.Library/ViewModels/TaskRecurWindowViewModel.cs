@@ -108,7 +108,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         private void OnRemoveRecurrence()
         {
-            ControlsGlobals.UserInterface.ShowMessageBox("Remove Recurrence", "Nub", RsMessageBoxIcons.Information);
+            View.TaskProcessor.RecurType = TaskRecurTypes.None;
+            View.CloseWindow(true);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
