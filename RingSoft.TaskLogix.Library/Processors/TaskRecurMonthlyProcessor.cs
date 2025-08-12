@@ -1,4 +1,5 @@
-﻿using RingSoft.DbLookup;
+﻿using RingSoft.DataEntryControls.Engine;
+using RingSoft.DbLookup;
 using RingSoft.TaskLogix.DataAccess.Model;
 
 namespace RingSoft.TaskLogix.Library.Processors
@@ -97,6 +98,34 @@ namespace RingSoft.TaskLogix.Library.Processors
         public override string GetRecurText()
         {
             var text = string.Empty;
+
+            switch (RecurType)
+            {
+                case MonthlyRecurTypes.DayXOfEveryYMonths:
+                    text = $"On Day {DayXOfEvery} of Every {OfEveryYMonths} Month(s).";
+                    break;
+                case MonthlyRecurTypes.XthWeekdayOfEveryYMonths:
+                    var weekTypeTrans = new EnumFieldTranslation();
+                    weekTypeTrans.LoadFromEnum<WeekTypes>();
+                    var weekText = weekTypeTrans.TypeTranslations
+                        .FirstOrDefault(p => p.NumericValue == (int)WeekType)
+                        .TextValue;
+
+                    var dayTypeTrans = new EnumFieldTranslation();
+                    dayTypeTrans.LoadFromEnum<DayTypes>();
+                    var dayText = dayTypeTrans.TypeTranslations
+                        .FirstOrDefault(p => p.NumericValue == (int)DayType)
+                        .TextValue;
+
+                    text = $"on the {weekText} {dayText} of Every {OfEveryWeekTypeMonths} Month(s)";
+                    break;
+                case MonthlyRecurTypes.RegenerateXMonthsAfterCompleted:
+                    text = $"Every {RegenMonthsAfterCompleted} Month(s) After the Task Has Been Completed";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             return text;
         }
 

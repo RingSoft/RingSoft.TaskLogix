@@ -78,13 +78,13 @@ namespace RingSoft.TaskLogix.Library.Processors
             switch (RecurType)
             {
                 case DailyRecurTypes.EveryXDays:
-                    text = $"{RecurDays} Day(s)";
+                    text = $"Every {RecurDays} Day(s)";
                     break;
                 case DailyRecurTypes.EveryWeekday:
-                    text = $"Weekday";
+                    text = $"Every Weekday";
                     break;
                 case DailyRecurTypes.RegenerateXDaysAfterCompleted:
-                    text = $"{RegenDaysAfterCompleted} Day(s) After the Task Has Been Completed";
+                    text = $"Every {RegenDaysAfterCompleted} Day(s) After the Task Has Been Completed";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

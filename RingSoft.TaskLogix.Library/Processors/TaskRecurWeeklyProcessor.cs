@@ -136,7 +136,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             switch (RecurType)
             {
                 case WeeklyRecurTypes.EveryXWeeks:
-                    text = $"{RecurWeeks} Week(s) On ";
+                    text = $"Every {RecurWeeks} Week(s) On ";
                     var days = new List<string>();
                     if (Sunday)
                     {
@@ -192,7 +192,7 @@ namespace RingSoft.TaskLogix.Library.Processors
                     }
                     break;
                 case WeeklyRecurTypes.RegenerateXWeeksAfterCompleted:
-                    text = $"{RegenWeeksAfterCompleted} Week(s) After the Task Has Been Completed";
+                    text = $"Every {RegenWeeksAfterCompleted} Week(s) After the Task Has Been Completed";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

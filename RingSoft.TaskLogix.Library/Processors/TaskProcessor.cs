@@ -267,7 +267,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
             else
             {
-                return $"Recurs Every {ActiveRecurProcessor.GetRecurText()}.";
+                return $"Recurs {ActiveRecurProcessor.GetRecurText()}.";
             }
 
             return string.Empty;
