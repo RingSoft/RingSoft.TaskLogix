@@ -1,4 +1,5 @@
-﻿using RingSoft.DbLookup;
+﻿using RingSoft.DataEntryControls.Engine;
+using RingSoft.DbLookup;
 using RingSoft.TaskLogix.DataAccess.Model;
 
 namespace RingSoft.TaskLogix.Library.Processors
@@ -96,7 +97,47 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public override string GetRecurText()
         {
-            return string.Empty;
+            var text = string.Empty;
+
+            var monthTypeTrans = new EnumFieldTranslation();
+            monthTypeTrans.LoadFromEnum<MonthsInYear>();
+
+            switch (RecurType)
+            {
+                case YearlylyRecurTypes.EveryMonthDayX:
+                    var monthText = monthTypeTrans.TypeTranslations
+                        .FirstOrDefault(p => p.NumericValue == (int)EveryMonthType)
+                        .TextValue;
+
+                    text = $"Every Year on {monthText} {MonthDay}";
+                    break;
+                case YearlylyRecurTypes.TheNthWeekdayTypeOfMonth:
+                    var weekTypeTrans = new EnumFieldTranslation();
+                    weekTypeTrans.LoadFromEnum<WeekTypes>();
+                    var weekText = weekTypeTrans.TypeTranslations
+                        .FirstOrDefault(p => p.NumericValue == (int)WeekType)
+                        .TextValue;
+
+                    var dayTypeTrans = new EnumFieldTranslation();
+                    dayTypeTrans.LoadFromEnum<DayTypes>();
+                    var dayText = dayTypeTrans.TypeTranslations
+                        .FirstOrDefault(p => p.NumericValue == (int)DayType)
+                        .TextValue;
+
+                    var monthText1 = monthTypeTrans.TypeTranslations
+                        .FirstOrDefault(p => p.NumericValue == (int)WeekMonthType)
+                        .TextValue;
+
+                    text = $"Every Year on the {weekText} {dayText} of {monthText1}";
+                    break;
+                case YearlylyRecurTypes.RegenerateXYearsAfterCompleted:
+                    text = $"Every {RegenYearsAfterCompleted} Year(s) After the Task Has Been Completed";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return text;
         }
 
         private DateTime GetDayXOfEvery(DateTime startDate, int addYears = 1)
