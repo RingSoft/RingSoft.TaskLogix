@@ -10,7 +10,7 @@ using RingSoft.TaskLogix.Library.Processors;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
 {
-    public interface ITaskMaintenanceView
+    public interface ITaskMaintenanceView : IDbMaintenanceView
     {
         bool ShowTaskRecurrenceWindow();
     }

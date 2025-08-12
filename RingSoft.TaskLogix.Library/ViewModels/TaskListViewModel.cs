@@ -17,6 +17,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         Older = 5,
     }
 
+    public interface ITaskListView
+    {
+        void ShowMaintenanceTab(PrimaryKeyValue primaryKey = null);
+    }
     public class TaskListItem
     {
         public int TaskId { get; set; }
@@ -87,6 +91,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public RelayCommand OpenTaskCommand { get; }
 
+        public ITaskListView View { get; private set; }
+
         public TaskListViewModel()
         {
             TaskList = new ObservableCollection<TaskListItem>();
@@ -94,9 +100,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             OpenTaskCommand = new RelayCommand(OpenTask);
         }
 
-        public void Initialize(TaskListTypes taskListType)
+        public void Initialize(TaskListTypes taskListType, ITaskListView view = null)
         {
             TaskListType = taskListType;
+            View = view;
 
             TaskList.Clear();
             StartDate = null;
@@ -286,7 +293,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             if (primaryKey != null)
             {
-                
+                if (View != null)
+                {
+                    View.ShowMaintenanceTab(primaryKey);
+                }
             }
         }
 

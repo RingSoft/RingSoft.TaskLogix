@@ -52,6 +52,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         protected override bool PostInitialize()
         {
             MainView.ShowTaskListPanel();
+            View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);
             HandleReminders();
             return true;
         }

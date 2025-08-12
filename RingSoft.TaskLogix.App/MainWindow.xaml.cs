@@ -73,7 +73,7 @@ namespace RingSoft.TaskLogix.App
                 {
                     var type = (TaskListTypes)i;
                     var listControl = new TaskListUserControl();
-                    listControl.LocalViewModel.Initialize(type);
+                    listControl.LocalViewModel.Initialize(type, listControl);
                     if (listControl.LocalViewModel.TaskList.Any())
                     {
                         TaskListPanel.Children.Add(listControl);
