@@ -96,7 +96,8 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public override string GetRecurText()
         {
-            return string.Empty;
+            var text = string.Empty;
+            return text;
         }
 
         private DateTime GetDayXOfEvery(DateTime startDate, int addMonths)
