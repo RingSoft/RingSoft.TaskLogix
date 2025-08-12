@@ -102,7 +102,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             switch (RecurType)
             {
                 case MonthlyRecurTypes.DayXOfEveryYMonths:
-                    text = $"On Day {DayXOfEvery} of Every {OfEveryYMonths} Month(s).";
+                    text = $"on Day {DayXOfEvery} of Every {OfEveryYMonths} Month(s).";
                     break;
                 case MonthlyRecurTypes.XthWeekdayOfEveryYMonths:
                     var weekTypeTrans = new EnumFieldTranslation();

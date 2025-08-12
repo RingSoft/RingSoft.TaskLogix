@@ -136,7 +136,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             switch (RecurType)
             {
                 case WeeklyRecurTypes.EveryXWeeks:
-                    text = $"Every {RecurWeeks} Week(s) On ";
+                    text = $"Every {RecurWeeks} Week(s) on ";
                     var days = new List<string>();
                     if (Sunday)
                     {
