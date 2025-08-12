@@ -51,8 +51,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         protected override bool PostInitialize()
         {
-            HandleReminders();
             MainView.ShowTaskListPanel();
+            HandleReminders();
             return true;
         }
 

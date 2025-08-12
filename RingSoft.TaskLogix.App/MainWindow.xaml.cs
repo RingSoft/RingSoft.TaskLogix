@@ -32,6 +32,7 @@ namespace RingSoft.TaskLogix.App
                 _remindersWindow.Closed += (sender, args) =>
                 {
                     _remindersWindow = null;
+                    AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
                 };
                 LookupControlsGlobals.WindowRegistry.ShowDialog(_remindersWindow);
             }
@@ -47,17 +48,25 @@ namespace RingSoft.TaskLogix.App
             {
                 _remindersWindow.Close();
                 _remindersWindow = null;
+                AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
             }
         }
 
         public bool CloseAllTabs()
         {
-            return TabControl.CloseAllTabs();
+            var result = TabControl.CloseAllTabs();
+            if (result)
+            {
+                ShowTaskListPanel(false);
+            }
+
+            return result;
         }
 
         public void ShowTaskListPanel(bool show = true)
         {
             TaskListPanel.Children.Clear();
+            TaskListPanel.UpdateLayout();
             if (show)
             {
                 for (int i = 0; i <= (int)TaskListTypes.Older; i++)

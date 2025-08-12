@@ -26,7 +26,7 @@
             <Label Grid.Column="1" HorizontalAlignment="Left" Content="Due Date"/>
 
         </Grid>
-        <ListBox Width="400" ItemsSource="{Binding TaskList}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="Transparent">
+        <ListBox x:Name="ListBox" Width="400" ItemsSource="{Binding TaskList}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="Transparent">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>

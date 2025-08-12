@@ -491,6 +491,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 {
                     if (TaskProcessor.ActiveRecurProcessor != null)
                         result = TaskProcessor.ActiveRecurProcessor.SaveRecurProcessor(entity, context);
+
+                    AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
                 }
             }
             return result;
@@ -517,7 +519,14 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 result = PurgeYearly(Id, context);
             }
 
-            return base.DeleteEntity();
+            result = base.DeleteEntity();
+
+            if (result)
+            {
+                AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
+            }
+
+            return result;
         }
 
         private static bool PurgeDaily(int taskId, IDbContext context)

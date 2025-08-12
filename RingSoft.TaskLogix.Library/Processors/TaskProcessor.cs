@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RingSoft.DbLookup;
 using RingSoft.TaskLogix.DataAccess.Model;
+using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.Library.Processors
 {
@@ -100,6 +101,7 @@ namespace RingSoft.TaskLogix.Library.Processors
 
             if (!UnitTestMode)
             {
+                AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
                 AddHistory(origStartDate, origDueDate);
             }
         }

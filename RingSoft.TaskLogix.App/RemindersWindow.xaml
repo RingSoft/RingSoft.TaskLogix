@@ -20,6 +20,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -28,7 +29,18 @@
 
         <Label Content="Select Reminder" HorizontalAlignment="Left"/>
 
-        <ListBox x:Name="ListBox" Grid.Row="1" Grid.Column="0" Height="150" ItemsSource="{Binding Reminders}" SelectedItem="{Binding Path=SelectedReminder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="400" Background="Transparent">
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="180"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" HorizontalAlignment="Left" Content="Task"/>
+
+            <Label Grid.Column="1" HorizontalAlignment="Left" Content="Due Date"/>
+
+        </Grid>
+        <ListBox x:Name="ListBox" Grid.Row="2" Grid.Column="0" Height="150" ItemsSource="{Binding Reminders}" SelectedItem="{Binding Path=SelectedReminder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="400" Background="Transparent">
             <ListBox.ItemTemplate>
                 <DataTemplate>
 
@@ -49,7 +61,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5,0,0,0">
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="5,0,0,0">
 
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">

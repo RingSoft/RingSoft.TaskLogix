@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using RingSoft.DataEntryControls.Engine;
 using RingSoft.DbLookup;
 using RingSoft.TaskLogix.DataAccess.Model;
 
@@ -84,9 +85,13 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public DateTime? EndDate { get; private set; }
 
+        public RelayCommand OpenTaskCommand { get; }
+
         public TaskListViewModel()
         {
             TaskList = new ObservableCollection<TaskListItem>();
+
+            OpenTaskCommand = new RelayCommand(OpenTask);
         }
 
         public void Initialize(TaskListTypes taskListType)
@@ -244,7 +249,15 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         {
             var date = new DateTime(CurrentDate.Year, CurrentDate.Month, 1).AddMonths(1);
             var weekEndDate = GetCurrentWeekEnd();
-            if (weekEndDate != null)
+            if (weekEndDate == null)
+            {
+                var tomorrowDate = GetDueTomorrowDate();
+                if (tomorrowDate == date)
+                {
+                    date = tomorrowDate.AddDays(1);
+                }
+            }
+            else
             {
                 if (weekEndDate > date)
                 {
@@ -260,6 +273,21 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             var date = new DateTime(CurrentDate.Year, CurrentDate.Month, 1).AddMonths(1);
             date = new DateTime(date.Year, date.Month, date.GetLastDayOfMonth());
             return date;
+        }
+
+        private void OpenTask()
+        {
+            var tlTask = new TlTask
+            {
+                Id = SelectedItem.TaskId,
+            };
+
+            var primaryKey = AppGlobals.LookupContext.Tasks.GetPrimaryKeyValueFromEntity(tlTask);
+
+            if (primaryKey != null)
+            {
+                
+            }
         }
 
 

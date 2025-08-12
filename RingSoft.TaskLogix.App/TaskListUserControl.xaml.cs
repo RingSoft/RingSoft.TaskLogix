@@ -23,6 +23,11 @@ namespace RingSoft.TaskLogix.App
         public TaskListUserControl()
         {
             InitializeComponent();
+
+            ListBox.MouseDoubleClick += (sender, args) =>
+            {
+                LocalViewModel.OpenTaskCommand.Execute(null);
+            };
         }
     }
 }
