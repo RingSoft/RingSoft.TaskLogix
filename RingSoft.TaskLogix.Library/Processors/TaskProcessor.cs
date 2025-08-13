@@ -146,6 +146,12 @@ namespace RingSoft.TaskLogix.Library.Processors
                 task = new TlTask();
 
             task.SnoozeDateTime = null;
+            if (ActiveRecurProcessor == null)
+            {
+                task.StatusType = (byte)TaskStatusTypes.Completed;
+                task.ReminderDateTime = null;
+            }
+            
             SaveEntity(task);
 
             result = context.SaveEntity(task, "Saving Task");

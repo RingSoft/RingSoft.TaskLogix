@@ -365,6 +365,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 DueDate = TaskProcessor.DueDate.GetValueOrDefault();
                 SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
                 SnoozeDateTime = null;
+                if (TaskProcessor.ActiveRecurProcessor == null)
+                {
+                    StatusType = TaskStatusTypes.Completed;
+                    DoReminder = false;
+                }
                 RecordDirty = false;
                 _loading = false;
                 HistoryLookup.SetCommand(GetLookupCommand((LookupCommands.Refresh)));
@@ -509,8 +514,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 {
                     if (TaskProcessor.ActiveRecurProcessor != null)
                         result = TaskProcessor.ActiveRecurProcessor.SaveRecurProcessor(entity, context);
-
-                    AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
                 }
             }
             return result;

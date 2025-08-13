@@ -11,13 +11,18 @@ namespace RingSoft.TaskLogix.App
 {
     public class TaskLogixAppStart : TemplateAppStart
     {
+        private Application _application;
+
         public TaskLogixAppStart(Application application)
             : base(application, new AppGlobals(), new MainWindow())
         {
+            _application = application;
         }
 
         protected override void RegisterWindows()
         {
+            var factory = new TaskLogixControlContentFactory(_application);
+
             LookupControlsGlobals.WindowRegistry.RegisterUserControl<TaskMaintenanceUserControl, TlTask>();
         }
     }

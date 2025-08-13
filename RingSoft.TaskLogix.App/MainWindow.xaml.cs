@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using RingSoft.CustomTemplate.Library.ViewModels;
+using RingSoft.DbLookup;
 using RingSoft.DbLookup.Controls.WPF;
 using RingSoft.TaskLogix.Library;
 using RingSoft.TaskLogix.Library.ViewModels;
@@ -15,6 +16,20 @@ namespace RingSoft.TaskLogix.App
         public override TemplateMainViewModel TemplateMainViewModel => ViewModel;
         public override ITemplateMainView View => this;
 
+        public new bool IsActive
+        {
+            get
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    return base.IsActive;
+                });
+                return true;
+            }
+        }
+
+        public bool ShowRemindersOnActivate { get; set; }
+
         private RemindersWindow _remindersWindow;
 
         public MainWindow()
@@ -24,17 +39,37 @@ namespace RingSoft.TaskLogix.App
             TabControl.SetDestionationAsFirstTab = false;
         }
 
+        protected override void OnActivated(EventArgs e)
+        {
+            var cont = true;
+            
+            if (ViewModel.FinishedInit)
+            {
+                if (ShowRemindersOnActivate)
+                {
+                    ShowRemindersOnActivate = false;
+                    ViewModel.HandleReminders();
+                    ShowRemindersOnActivate = true;
+                }
+            }
+            base.OnActivated(e);
+        }
+
         public void ShowReminders(List<Reminder> reminderList)
         {
             if (_remindersWindow == null)
             {
-                _remindersWindow = new RemindersWindow(reminderList);
-                _remindersWindow.Closed += (sender, args) =>
+                Dispatcher.Invoke(() =>
                 {
-                    _remindersWindow = null;
-                    AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
-                };
-                LookupControlsGlobals.WindowRegistry.ShowDialog(_remindersWindow);
+                    _remindersWindow = new RemindersWindow(reminderList);
+                    _remindersWindow.Closed += (sender, args) =>
+                    {
+                        _remindersWindow = null;
+                        AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
+                    };
+
+                    LookupControlsGlobals.WindowRegistry.ShowDialog(_remindersWindow);
+                });
             }
             else
             {
@@ -51,6 +86,8 @@ namespace RingSoft.TaskLogix.App
                 AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
             }
         }
+
+        public bool IsRemindersOpen => _remindersWindow != null;
 
         public bool CloseAllTabs()
         {
@@ -81,6 +118,24 @@ namespace RingSoft.TaskLogix.App
                     }
                 }
             }
+        }
+
+        public void ShowBalloon(List<Reminder> reminders)
+        {
+            foreach (var reminder in reminders)
+            {
+                ShowBalloon(reminder.Subject);
+            }
+        }
+
+        private void ShowBalloon(string text)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                LookupControlsGlobals.LookupWindowFactory.SetAlertLevel(AlertLevels.Yellow, false
+                    , this, text);
+            });
+
         }
 
         protected override void OnClosing(CancelEventArgs e)

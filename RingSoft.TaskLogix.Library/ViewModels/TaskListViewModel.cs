@@ -176,13 +176,25 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 foreach (var tlTask in table)
                 {
-                    TaskList.Add(new TaskListItem
+                    var addTask = true;
+                    if (tlTask.RecurType == (byte)TaskRecurTypes.None)
                     {
-                        TaskId = tlTask.Id,
-                        Subject = tlTask.Subject,
-                        DueDate = tlTask.DueDate.ToString("ddd, MMM dd, yyyy"),
-                        PastDue = tlTask.DueDate < CurrentDate,
-                    });
+                        if (tlTask.StatusType == (byte)TaskStatusTypes.Completed)
+                        {
+                            addTask = false;
+                        }
+                    }
+
+                    if (addTask)
+                    {
+                        TaskList.Add(new TaskListItem
+                        {
+                            TaskId = tlTask.Id,
+                            Subject = tlTask.Subject,
+                            DueDate = tlTask.DueDate.ToString("ddd, MMM dd, yyyy"),
+                            PastDue = tlTask.DueDate < CurrentDate,
+                        });
+                    }
                 }
             }
         }

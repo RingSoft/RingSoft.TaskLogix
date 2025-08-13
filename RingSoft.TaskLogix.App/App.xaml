@@ -8,6 +8,10 @@
                 <ResourceDictionary
                     Source="pack://application:,,,/RingSoft.CustomTemplate.Controls.WPF;component/Resources/TemplateResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Image x:Key="GreenAlertImage" Source="Resources/Task.ico"/>
+
         </ResourceDictionary>
+
     </Application.Resources>
 </Application>

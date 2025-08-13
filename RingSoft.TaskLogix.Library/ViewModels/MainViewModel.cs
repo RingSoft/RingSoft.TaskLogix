@@ -3,6 +3,7 @@ using RingSoft.CustomTemplate.Library.ViewModels;
 using RingSoft.DataEntryControls.Engine;
 using RingSoft.DbLookup;
 using RingSoft.TaskLogix.DataAccess.Model;
+using Timer = System.Timers.Timer;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
 {
@@ -12,9 +13,15 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         void CloseReminders();
 
+        bool IsActive { get; }
+
+        bool ShowRemindersOnActivate { get; set; }
+
         bool CloseAllTabs();
 
         void ShowTaskListPanel(bool show = true);
+
+        void ShowBalloon(List<Reminder> reminders);
     }
     public class MainViewModel : TemplateMainViewModel
     {
@@ -22,6 +29,12 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public RelayCommand ChangeDatabaseCommand { get; }
         public RelayCommand ManageTasksCommand { get; }
         public RelayCommand ShowAdvFindTabCommand { get; }
+
+        public bool IsTimerActive => _timer.Enabled;
+
+        public bool FinishedInit { get; private set; }
+
+        private Timer _timer = new Timer(1000);
 
         public MainViewModel()
         {
@@ -38,6 +51,28 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }));
             ShowAdvFindTabCommand = new RelayCommand(ShowAdvFindTab);
             AppGlobals.MainViewModel = this;
+
+            _timer.Elapsed += (sender, args) =>
+            {
+                _timer.Enabled = false;
+                _timer.Stop();
+                HandleReminders(true);
+                _timer.Enabled = true;
+                _timer.Start();
+            };
+        }
+
+        public void ActivateTimer(bool activate = true)
+        {
+            _timer.Enabled = activate;
+            if (activate)
+            {
+                _timer.Start();
+            }
+            else
+            {
+                _timer.Stop();
+            }
         }
 
         public override void Initialize(ITemplateMainView view)
@@ -54,11 +89,15 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             MainView.ShowTaskListPanel();
             View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);
             HandleReminders();
+            FinishedInit = true;
+            _timer.Enabled = true;
+            _timer.Start();
             return true;
         }
 
-        public void HandleReminders()
+        public bool HandleReminders(bool fromTimer = false)
         {
+            var result = false;
             var context = SystemGlobals.DataRepository.GetDataContext();
             if (context != null)
             {
@@ -81,6 +120,14 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                                 addReminder = false;
                             }
 
+                            if (taskReminder.RecurType == (byte)TaskRecurTypes.None)
+                            {
+                                if (taskReminder.StatusType == (byte)TaskStatusTypes.Completed)
+                                {
+                                    addReminder = false;
+                                }
+                            }
+
                             if (addReminder)
                             {
                                 var reminder = new Reminder
@@ -97,7 +144,28 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                         {
                             if (remindersList.Any())
                             {
-                                MainView.ShowReminders(remindersList);
+                                if (fromTimer && !MainView.IsActive)
+                                {
+                                    MainView.ShowBalloon(remindersList);
+                                }
+
+                                if (!MainView.IsActive)
+                                {
+                                    MainView.ShowRemindersOnActivate = true;
+                                }
+
+                                if (MainView.ShowRemindersOnActivate && MainView.IsActive)
+                                {
+                                    MainView.ShowReminders(remindersList);
+                                }
+                                else
+                                {
+                                    if (!fromTimer)
+                                    {
+                                        MainView.ShowReminders(remindersList);
+                                    }
+                                }
+                                result = true;
                             }
                             else
                             {
@@ -107,10 +175,13 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     }
                     else
                     {
-                        if (MainView != null) MainView.CloseReminders();
+                        if (MainView != null) 
+                            MainView.CloseReminders();
                     }
                 }
             }
+
+            return result;
         }
 
         private void ShowAdvFindTab()
