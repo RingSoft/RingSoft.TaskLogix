@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Controls;
 using RingSoft.CustomTemplate.Library.ViewModels;
 using RingSoft.DbLookup;
 using RingSoft.DbLookup.Controls.WPF;
@@ -39,6 +40,32 @@ namespace RingSoft.TaskLogix.App
             TabControl.SetDestionationAsFirstTab = false;
         }
 
+        protected override void OnActivated(EventArgs e)
+        {
+            if (_remindersWindow != null)
+            {
+                _remindersWindow.Activate();
+            }
+            else
+            {
+                ActivateTab();
+            }
+            base.OnActivated(e);
+        }
+
+        private void ActivateTab()
+        {
+            if (TabControl.SelectedItem != null)
+            {
+                var tabItem = TabControl.SelectedItem as DbMaintenanceTabItem;
+                if (tabItem != null)
+                {
+                    tabItem.Focus();
+                    tabItem.UserControl.SetInitialFocus();
+                }
+            }
+        }
+
         public void ShowReminders(List<Reminder> reminderList)
         {
             if (_remindersWindow == null)
@@ -51,6 +78,7 @@ namespace RingSoft.TaskLogix.App
                         _remindersWindow = null;
                         AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
                         Activate();
+                        ActivateTab();
                     };
 
                     _remindersWindow.ShowInTaskbar = false;
