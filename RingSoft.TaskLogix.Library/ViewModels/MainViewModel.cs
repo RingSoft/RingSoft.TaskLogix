@@ -29,10 +29,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public RelayCommand ChangeDatabaseCommand { get; }
         public RelayCommand ManageTasksCommand { get; }
         public RelayCommand ShowAdvFindTabCommand { get; }
-
-        public bool IsTimerActive => _timer.Enabled;
-
-        public bool FinishedInit { get; private set; }
+        public List<Reminder> BalloonsShown { get; }
 
         private Timer _timer = new Timer(1000);
 
@@ -56,23 +53,12 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 _timer.Enabled = false;
                 _timer.Stop();
-                HandleReminders(true);
+                HandleRemindersTimer();
                 _timer.Enabled = true;
                 _timer.Start();
             };
-        }
 
-        public void ActivateTimer(bool activate = true)
-        {
-            _timer.Enabled = activate;
-            if (activate)
-            {
-                _timer.Start();
-            }
-            else
-            {
-                _timer.Stop();
-            }
+            BalloonsShown = new List<Reminder>();
         }
 
         public override void Initialize(ITemplateMainView view)
@@ -88,8 +74,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         {
             MainView.ShowTaskListPanel();
             View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);
-            HandleReminders();
-            FinishedInit = true;
             _timer.Enabled = true;
             _timer.Start();
             return true;
@@ -146,29 +130,51 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             return result;
         }
 
-        public bool HandleReminders(bool fromTimer = false)
+        public void HandleReminders()
         {
-            var result = false;
             var reminders = GetReminders();
             if (MainView != null)
             {
                 if (reminders.Any())
                 {
-                    if (fromTimer)
-                    {
-                        MainView.ShowBalloon(reminders);
-                    }
-
                     MainView.ShowReminders(reminders);
-
-                    result = true;
                 }
                 else
                 {
                     MainView.CloseReminders();
                 }
             }
-            return result;
+        }
+
+        private void HandleRemindersTimer()
+        {
+            var reminders = GetReminders();
+            if (MainView != null)
+            {
+                if (reminders.Any())
+                {
+                    var balloonsToShow = new List<Reminder>();
+
+                    foreach (var reminder in reminders)
+                    {
+                        var addBalloon = !BalloonsShown.Any(
+                            p => p.TaskId == reminder.TaskId
+                                 && p.ReminderDateTime == reminder.ReminderDateTime);
+
+                        if (addBalloon)
+                        {
+                            BalloonsShown.Add(reminder);
+                            balloonsToShow.Add(reminder);
+                        }
+                    }
+                    if (balloonsToShow.Any())
+                    {
+                        MainView.ShowBalloon(balloonsToShow);
+                    }
+
+                    //MainView.ShowReminders(reminders);
+                }
+            }
         }
 
         private void ShowAdvFindTab()
