@@ -9,13 +9,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 {
     public interface IMainView
     {
-        void ShowReminders(List<Reminder> ReminderList);
+        void ShowReminders(List<Reminder> reminders);
+
+        void ShowReminderTimer(List<Reminder> reminders);
 
         void CloseReminders();
-
-        bool IsActive { get; }
-
-        bool ShowRemindersOnActivate { get; set; }
 
         bool CloseAllTabs();
 
@@ -170,9 +168,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     if (balloonsToShow.Any())
                     {
                         MainView.ShowBalloon(balloonsToShow);
+                        MainView.ShowReminderTimer(reminders);
                     }
-
-                    //MainView.ShowReminders(reminders);
                 }
             }
         }

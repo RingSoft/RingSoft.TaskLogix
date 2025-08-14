@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using RingSoft.CustomTemplate.Library.ViewModels;
 using RingSoft.DbLookup;
@@ -16,6 +17,8 @@ namespace RingSoft.TaskLogix.App
     {
         public override TemplateMainViewModel TemplateMainViewModel => ViewModel;
         public override ITemplateMainView View => this;
+
+        private bool _showRemindersOnActivate;
 
         public new bool IsActive
         {
@@ -42,13 +45,18 @@ namespace RingSoft.TaskLogix.App
 
         protected override void OnActivated(EventArgs e)
         {
-            if (_remindersWindow != null)
+            if (_showRemindersOnActivate)
             {
-                _remindersWindow.Activate();
+                _showRemindersOnActivate = false;
+                WindowState = WindowState.Maximized;
+                ViewModel.HandleReminders();
             }
             else
             {
-                ActivateTab();
+                if (_remindersWindow != null)
+                {
+                    _remindersWindow.Activate();
+                }
             }
             base.OnActivated(e);
         }
@@ -90,6 +98,40 @@ namespace RingSoft.TaskLogix.App
             {
                 _remindersWindow.LocalViewModel.ProcessNewReminders(reminderList);
             }
+        }
+
+        public void ShowReminderTimer(List<Reminder> reminders)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                switch (WindowState)
+                {
+                    case WindowState.Normal:
+                    case WindowState.Maximized:
+                        if (_remindersWindow == null)
+                        {
+                            if (IsActive)
+                            {
+                                ShowReminders(reminders);
+                            }
+                            else
+                            {
+                                _showRemindersOnActivate = true;
+                            }
+                        }
+
+                        break;
+                    case WindowState.Minimized:
+                        if (_remindersWindow == null)
+                        {
+                            _showRemindersOnActivate = true;
+                        }
+
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            });
         }
 
         public void CloseReminders()
