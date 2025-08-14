@@ -144,27 +144,13 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                         {
                             if (remindersList.Any())
                             {
-                                if (fromTimer && !MainView.IsActive)
+                                if (fromTimer)
                                 {
                                     MainView.ShowBalloon(remindersList);
                                 }
 
-                                if (!MainView.IsActive)
-                                {
-                                    MainView.ShowRemindersOnActivate = true;
-                                }
+                                MainView.ShowReminders(remindersList);
 
-                                if (MainView.ShowRemindersOnActivate && MainView.IsActive)
-                                {
-                                    MainView.ShowReminders(remindersList);
-                                }
-                                else
-                                {
-                                    if (!fromTimer)
-                                    {
-                                        MainView.ShowReminders(remindersList);
-                                    }
-                                }
                                 result = true;
                             }
                             else

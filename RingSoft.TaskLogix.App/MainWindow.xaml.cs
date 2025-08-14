@@ -39,22 +39,6 @@ namespace RingSoft.TaskLogix.App
             TabControl.SetDestionationAsFirstTab = false;
         }
 
-        protected override void OnActivated(EventArgs e)
-        {
-            var cont = true;
-            
-            if (ViewModel.FinishedInit)
-            {
-                if (ShowRemindersOnActivate)
-                {
-                    ShowRemindersOnActivate = false;
-                    ViewModel.HandleReminders();
-                    ShowRemindersOnActivate = true;
-                }
-            }
-            base.OnActivated(e);
-        }
-
         public void ShowReminders(List<Reminder> reminderList)
         {
             if (_remindersWindow == null)
@@ -66,9 +50,12 @@ namespace RingSoft.TaskLogix.App
                     {
                         _remindersWindow = null;
                         AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
+                        Activate();
                     };
 
-                    LookupControlsGlobals.WindowRegistry.ShowDialog(_remindersWindow);
+                    _remindersWindow.ShowInTaskbar = false;
+                    _remindersWindow.Owner = this;
+                    _remindersWindow.ShowDialog();
                 });
             }
             else
