@@ -95,9 +95,9 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             return true;
         }
 
-        public bool HandleReminders(bool fromTimer = false)
+        public List<Reminder> GetReminders()
         {
-            var result = false;
+            var result = new List<Reminder>();
             var context = SystemGlobals.DataRepository.GetDataContext();
             if (context != null)
             {
@@ -110,7 +110,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
                     if (remindersInDb.Any())
                     {
-                        var remindersList = new List<Reminder>();
                         foreach (var taskReminder in remindersInDb)
                         {
                             var addReminder = true;
@@ -135,38 +134,40 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                                     TaskId = taskReminder.Id,
                                     Subject = taskReminder.Subject,
                                     Date = taskReminder.StartDate.ToLongDateString(),
+                                    ReminderDateTime = taskReminder.GetReminderDateTime(),
                                 };
-                                remindersList.Add(reminder);
+                                result.Add(reminder);
                             }
                         }
-
-                        if (MainView != null)
-                        {
-                            if (remindersList.Any())
-                            {
-                                if (fromTimer)
-                                {
-                                    MainView.ShowBalloon(remindersList);
-                                }
-
-                                MainView.ShowReminders(remindersList);
-
-                                result = true;
-                            }
-                            else
-                            {
-                                MainView.CloseReminders();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (MainView != null) 
-                            MainView.CloseReminders();
                     }
                 }
             }
 
+            return result;
+        }
+
+        public bool HandleReminders(bool fromTimer = false)
+        {
+            var result = false;
+            var reminders = GetReminders();
+            if (MainView != null)
+            {
+                if (reminders.Any())
+                {
+                    if (fromTimer)
+                    {
+                        MainView.ShowBalloon(reminders);
+                    }
+
+                    MainView.ShowReminders(reminders);
+
+                    result = true;
+                }
+                else
+                {
+                    MainView.CloseReminders();
+                }
+            }
             return result;
         }
 

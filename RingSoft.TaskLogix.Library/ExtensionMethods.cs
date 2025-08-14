@@ -1,4 +1,6 @@
-﻿namespace RingSoft.TaskLogix.Library
+﻿using RingSoft.TaskLogix.DataAccess.Model;
+
+namespace RingSoft.TaskLogix.Library
 {
     public static class ExtensionMethods
     {
@@ -9,6 +11,21 @@
                 .AddDays(-1);
 
             return lastDayOfMonth.Day;
+        }
+
+        public static DateTime GetReminderDateTime(this TlTask task)
+        {
+            if (task.ReminderDateTime.HasValue)
+            {
+                if (task.SnoozeDateTime.HasValue)
+                {
+                    return task.SnoozeDateTime.GetValueOrDefault();
+                }
+
+                return task.ReminderDateTime.GetValueOrDefault();
+            }
+
+            return DateTime.MaxValue;
         }
     }
 }

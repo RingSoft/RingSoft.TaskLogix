@@ -7,5 +7,7 @@
         public string Subject { get; set; } = string.Empty;
 
         public string Date { get; set; } = string.Empty;
+
+        public DateTime ReminderDateTime { get; set; }
     }
 }
