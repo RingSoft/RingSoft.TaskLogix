@@ -525,6 +525,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                         result = TaskProcessor.ActiveRecurProcessor.SaveRecurProcessor(entity, context);
                 }
             }
+
+            if (result)
+            {
+                AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
+            }
             return result;
         }
 
