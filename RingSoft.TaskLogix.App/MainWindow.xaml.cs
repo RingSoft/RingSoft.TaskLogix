@@ -76,9 +76,9 @@ namespace RingSoft.TaskLogix.App
 
         public void ShowReminders(List<Reminder> reminderList)
         {
-            if (_remindersWindow == null)
+            Dispatcher.Invoke(() =>
             {
-                Dispatcher.Invoke(() =>
+                if (_remindersWindow == null)
                 {
                     _remindersWindow = new RemindersWindow(reminderList);
                     _remindersWindow.Closed += (sender, args) =>
@@ -92,13 +92,13 @@ namespace RingSoft.TaskLogix.App
                     _remindersWindow.ShowInTaskbar = false;
                     _remindersWindow.Owner = this;
                     _remindersWindow.ShowDialog();
-                });
-            }
-            else
-            {
-                _remindersWindow.LocalViewModel.ProcessNewReminders(reminderList);
-            }
-        }
+                }
+                else
+                {
+                    _remindersWindow.LocalViewModel.ProcessNewReminders(reminderList);
+                }
+            });
+    }
 
         public void ShowReminderTimer(List<Reminder> reminders)
         {
@@ -108,18 +108,14 @@ namespace RingSoft.TaskLogix.App
                 {
                     case WindowState.Normal:
                     case WindowState.Maximized:
-                        if (_remindersWindow == null)
+                        if (IsActive)
                         {
-                            if (IsActive)
-                            {
-                                ShowReminders(reminders);
-                            }
-                            else
-                            {
-                                _showRemindersOnActivate = true;
-                            }
+                            ShowReminders(reminders);
                         }
-
+                        else
+                        {
+                            _showRemindersOnActivate = true;
+                        }
                         break;
                     case WindowState.Minimized:
                         if (_remindersWindow == null)
@@ -190,7 +186,7 @@ namespace RingSoft.TaskLogix.App
             Dispatcher.Invoke(() =>
             {
                 LookupControlsGlobals.LookupWindowFactory.SetAlertLevel(AlertLevels.Yellow, false
-                    , this, text);
+                    , this, text, "Task Logix Reminder");
             });
 
         }

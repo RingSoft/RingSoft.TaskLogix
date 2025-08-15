@@ -38,8 +38,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 if (MainView.CloseAllTabs())
                 {
-                    _timer.Stop();
-                    _timer.Enabled = false;
+                    EnableTiner(false);
                     ChangeMaster();
                 }
             }));
@@ -52,11 +51,9 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             _timer.Elapsed += (sender, args) =>
             {
-                _timer.Enabled = false;
-                _timer.Stop();
+                EnableTiner(false);
                 HandleRemindersTimer();
-                _timer.Enabled = true;
-                _timer.Start();
+                EnableTiner();
             };
 
             BalloonsShown = new List<Reminder>();
@@ -76,9 +73,21 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             MainView.ShowTaskListPanel();
             View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);
             BalloonsShown.Clear();
-            _timer.Enabled = true;
-            _timer.Start();
+            EnableTiner();
             return true;
+        }
+
+        public void EnableTiner(bool enable = true)
+        {
+            _timer.Enabled = enable;
+            if (enable)
+            {
+                _timer.Start();
+            }
+            else
+            {
+                _timer.Stop();
+            }
         }
 
         public List<Reminder> GetReminders()
@@ -172,6 +181,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     if (balloonsToShow.Any())
                     {
                         MainView.ShowBalloon(balloonsToShow);
+                        EnableTiner();
                         MainView.ShowReminderTimer(reminders);
                     }
                 }
