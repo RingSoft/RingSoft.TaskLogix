@@ -28,6 +28,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public RelayCommand ManageTasksCommand { get; }
         public RelayCommand ShowAdvFindTabCommand { get; }
         public List<Reminder> BalloonsShown { get; }
+        public List<TaskMaintenanceViewModel> TaskViewModels { get; } = new List<TaskMaintenanceViewModel>();
 
         private Timer _timer = new Timer(1000);
 
@@ -177,6 +178,18 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         private void ShowAdvFindTab()
         {
             View.ShowMaintenanceUserControl(AppGlobals.LookupContext.AdvancedFinds);
+        }
+
+        public void RefreshTaskViewModels(int taskId)
+        {
+            var viewModels = TaskViewModels.Where(p => p.Id == taskId);
+            if (viewModels.Any())
+            {
+                foreach (var taskMaintenanceViewModel in viewModels)
+                {
+                    taskMaintenanceViewModel.RefreshFromDatabase();
+                }
+            }
         }
     }
 }

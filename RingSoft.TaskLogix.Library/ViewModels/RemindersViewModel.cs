@@ -59,6 +59,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public RelayCommand SnoozeTaskCommand { get; }
 
+        public RelayCommand CloseCommand { get; }
+
         public RemindersViewModel()
         {
             Reminders = new ObservableCollection<Reminder>();
@@ -66,6 +68,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             OpenTaskCommand = new RelayCommand(OpenTask);
             MarkTaskCompleteCommand = new RelayCommand(MarkTaskComplete);
             SnoozeTaskCommand = new RelayCommand(SnoozeTask);
+            CloseCommand = new RelayCommand((() =>
+            {
+                View.CloseWindow();
+            }));
         }
 
         public void Initialize(IReminderView view, List<Reminder> remindersList)
@@ -115,6 +121,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 taskProcessor.DoMarkComplete();
                 if (taskProcessor.SaveProcessorAfterMarkComplete(SelectedReminder.TaskId))
                 {
+                    AppGlobals.MainViewModel.RefreshTaskViewModels(SelectedReminder.TaskId);
                     AppGlobals.MainViewModel.HandleReminders();
                 }
             }
@@ -131,6 +138,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 {
                     if (context.SaveEntity(tlTask, ""))
                     {
+                        AppGlobals.MainViewModel.RefreshTaskViewModels(SelectedReminder.TaskId);
                         AppGlobals.MainViewModel.HandleReminders();
                     }
                 }

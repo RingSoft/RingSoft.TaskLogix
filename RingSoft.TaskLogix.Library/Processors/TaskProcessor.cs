@@ -127,7 +127,7 @@ namespace RingSoft.TaskLogix.Library.Processors
                 TaskId = TaskId,
                 StartDate = startDate,
                 DueDate = dueDate.GetValueOrDefault(),
-                CompletionDate = DateTime.Today,
+                CompletionDate = GblMethods.NowDate(),
             };
 
             context.AddSaveEntity(historyRec, "");

@@ -169,7 +169,7 @@
 
                             <lc:LookupControl.LookupColumns>
 
-                                <lc:LookupColumn PropertyName="{lc:NameOf CompletionDate, Type={x:Type lm:TaskHistoryLookup}}" Header="Date Complete" Width="100"/>
+                                <lc:LookupColumn PropertyName="{lc:NameOf CompletionDate, Type={x:Type lm:TaskHistoryLookup}}" Header="Date Complete" Width="175"/>
 
                                 <lc:LookupColumn PropertyName="{lc:NameOf StartDate, Type={x:Type lm:TaskHistoryLookup}}" Header="Start Date" Width="100"/>
 

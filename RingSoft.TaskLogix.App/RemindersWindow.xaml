@@ -75,6 +75,8 @@
 
             <Button Content="_Snooze Task" Margin="0,2.5" Command="{Binding SnoozeTaskCommand}"/>
 
+            <Button Content="_Close" Margin="0,2.5" Command="{Binding CloseCommand}"/>
+
         </StackPanel>
     </Grid>
 </dec:BaseWindow>

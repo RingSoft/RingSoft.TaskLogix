@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 using RingSoft.DataEntryControls.Engine;
 using RingSoft.DbLookup;
 using RingSoft.DbLookup.Lookup;
@@ -292,6 +293,14 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             HistoryLookup = AppGlobals.LookupContext.TaskHistoryLookupDefinition.Clone();
             HistoryLookup.InitialOrderByType = OrderByTypes.Descending;
             RegisterLookup(HistoryLookup);
+
+            AppGlobals.MainViewModel.TaskViewModels.Add(this);
+        }
+
+        public override void OnWindowClosing(CancelEventArgs e)
+        {
+            AppGlobals.MainViewModel.TaskViewModels.Remove(this);
+            base.OnWindowClosing(e);
         }
 
         protected override void Initialize()
@@ -619,6 +628,23 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
             RecurText = "No Recurrence";
             _loading = false;
+        }
+
+        public void RefreshFromDatabase()
+        {
+            var task = new TlTask
+            {
+                Id = Id,
+            };
+
+            var primaryKey = AppGlobals.LookupContext.Tasks.GetPrimaryKeyValueFromEntity(task);
+
+            var entity = GetEntityFromDb(task, primaryKey);
+            if (entity != null)
+            {
+                LoadFromEntity(entity);
+                HistoryLookup.SetCommand(GetLookupCommand(LookupCommands.Refresh));
+            }
         }
     }
 }

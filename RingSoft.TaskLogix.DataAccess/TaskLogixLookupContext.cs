@@ -1,6 +1,7 @@
 ﻿using RingSoft.CustomTemplate.Library;
 using RingSoft.DbLookup.Lookup;
 using RingSoft.DbLookup.ModelDefinition;
+using RingSoft.DbLookup.QueryBuilder;
 using RingSoft.TaskLogix.DataAccess.Model;
 
 namespace RingSoft.TaskLogix.DataAccess
@@ -103,6 +104,9 @@ namespace RingSoft.TaskLogix.DataAccess
         protected override void SetupTemplateModel()
         {
             Tasks.HasDescription("Tasks").HasRecordDescription("Task");
+
+            TaskHistory.GetFieldDefinition(p => p.CompletionDate)
+                .HasDateType(DbDateTypes.DateTime);
 
             TaskRecurDailys.HasDescription("Task Recur Dailys").HasRecordDescription("Recur Daily");
 
