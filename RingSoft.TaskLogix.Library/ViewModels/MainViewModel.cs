@@ -38,6 +38,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 if (MainView.CloseAllTabs())
                 {
+                    _timer.Stop();
+                    _timer.Enabled = false;
                     ChangeMaster();
                 }
             }));
@@ -73,6 +75,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         {
             MainView.ShowTaskListPanel();
             View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);
+            BalloonsShown.Clear();
             _timer.Enabled = true;
             _timer.Start();
             return true;
