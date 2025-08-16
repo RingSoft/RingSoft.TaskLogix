@@ -69,6 +69,59 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private int _timeBlockValue;
+
+        public int TimeBlockValue
+        {
+            get { return _timeBlockValue; }
+            set
+            {
+                if (_timeBlockValue == value)
+                    return;
+
+                _timeBlockValue = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+
+        private TextComboBoxControlSetup _timeTypeComboBoxSetup;
+
+        public TextComboBoxControlSetup TimeTypeComboBoxSetup
+        {
+            get { return _timeTypeComboBoxSetup; }
+            set
+            {
+                if (_timeTypeComboBoxSetup == value)
+                    return;
+
+                _timeTypeComboBoxSetup = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private TextComboBoxItem _timeTypeComboBoxItem;
+
+        public TextComboBoxItem TimeTypeComboBoxItem
+        {
+            get { return _timeTypeComboBoxItem; }
+            set
+            {
+                if (_timeTypeComboBoxItem == value)
+                    return;
+
+                _timeTypeComboBoxItem = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public SnoozeTimeBlocks TimeType
+        {
+            get { return (SnoozeTimeBlocks)TimeTypeComboBoxItem.NumericValue; }
+            set { _timeTypeComboBoxItem = TimeTypeComboBoxSetup.GetItem((int)value); }
+        }
+
 
         public ISnoozeView View { get; private set; }
 
@@ -80,13 +133,23 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public UiCommand DateTimeUiCommand { get; }
 
+        public UiCommand TimeBlockUiCommand { get; }
+        public UiCommand TimeTypeComboUiCommand { get; }
+
         private TlTask _task;
 
         public SnoozeViewModel()
         {
             DateTimeUiCommand = new UiCommand();
+            TimeBlockUiCommand = new UiCommand();
+            TimeTypeComboUiCommand = new UiCommand();
+
+            TimeTypeComboBoxSetup = new TextComboBoxControlSetup();
+            TimeTypeComboBoxSetup.LoadFromEnum<SnoozeTimeBlocks>();
 
             SnoozeType = SnoozeTypes.TimeBlock;
+            TimeType = SnoozeTimeBlocks.Minutes;
+            TimeBlockValue = 15;
 
             OkCommand = new RelayCommand(OnOK);
             CancelCommand = new RelayCommand(OnCancel);
@@ -124,10 +187,14 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public void UpdateUi()
         {
             DateTimeUiCommand.IsEnabled = false;
+            TimeTypeComboUiCommand.IsEnabled = false;
+            TimeBlockUiCommand.IsEnabled = false;
 
             switch (SnoozeType)
             {
                 case SnoozeTypes.TimeBlock:
+                    TimeBlockUiCommand.IsEnabled = true;
+                    TimeTypeComboUiCommand.IsEnabled = true;
                     break;
                 case SnoozeTypes.DateTime:
                     DateTimeUiCommand.IsEnabled = true;

@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.ViewModels;
 
@@ -17,6 +18,18 @@ namespace RingSoft.TaskLogix.App
             Loaded += (sender, args) =>
             {
                 LocalViewModel.UpdateUi();
+            };
+
+            SnoozeTimeBlockRadio.KeyDown += (sender, args) =>
+            {
+                if (args.Key == Key.Tab)
+                {
+                    if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
+                    {
+                        TimeBlockValueEditControl.Focus();
+                        args.Handled = true;
+                    }
+                }
             };
         }
     }
