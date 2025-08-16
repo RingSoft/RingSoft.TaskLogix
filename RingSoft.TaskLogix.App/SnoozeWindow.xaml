@@ -33,7 +33,7 @@
 
                 <RadioButton x:Name="SnoozeTimeBlockRadio" Content="Snooze For:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.TimeBlock}, Mode=TwoWay}"/>
 
-                <RadioButton x:Name="SnoozeDateRadio" Content="Snooze Until Date/Time:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.DateTime}, Mode=TwoWay}"/>
+                <RadioButton Content="Snooze Until:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.DateTime}, Mode=TwoWay}"/>
 
             </StackPanel>
         </GroupBox>
@@ -58,7 +58,7 @@
             </StackPanel>
 
 
-            <dec:DateEditControl x:Name="SnoozeDateControl" Grid.Row="1" Grid.Column="0" DateFormatType="DateTime" AllowNullValue="True" Width="175" Margin="0,5,0,0" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DateTimeUiCommand}"/>
+            <dec:DateEditControl Grid.Row="1" Grid.Column="0" DateFormatType="DateTime" AllowNullValue="True" Width="175" Margin="0,5,0,0" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DateTimeUiCommand}"/>
 
         </Grid>
 
