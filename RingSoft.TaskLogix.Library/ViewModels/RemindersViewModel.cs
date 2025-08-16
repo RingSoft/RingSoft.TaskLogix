@@ -115,13 +115,14 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         private void MarkTaskComplete()
         {
-            var taskProcessor = TaskProcessor.LoadProcessor(SelectedReminder.TaskId);
+            var taskId = SelectedReminder.TaskId;
+            var taskProcessor = TaskProcessor.LoadProcessor(taskId);
             if (taskProcessor != null)
             {
                 taskProcessor.DoMarkComplete();
-                if (taskProcessor.SaveProcessorAfterMarkComplete(SelectedReminder.TaskId))
+                if (taskProcessor.SaveProcessorAfterMarkComplete(taskId))
                 {
-                    AppGlobals.MainViewModel.RefreshTaskViewModels(SelectedReminder.TaskId);
+                    AppGlobals.MainViewModel.RefreshTaskViewModels(taskId);
                     AppGlobals.MainViewModel.HandleReminders();
                 }
             }
@@ -138,7 +139,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 {
                     if (context.SaveEntity(tlTask, ""))
                     {
-                        AppGlobals.MainViewModel.RefreshTaskViewModels(SelectedReminder.TaskId);
+                        AppGlobals.MainViewModel.RefreshTaskViewModels(tlTask.Id);
                         AppGlobals.MainViewModel.HandleReminders();
                     }
                 }
