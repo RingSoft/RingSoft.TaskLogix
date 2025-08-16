@@ -14,8 +14,9 @@
     </Window.DataContext>
 
     <Grid Margin="5">
-    
+
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -26,9 +27,40 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="New Snooze Date/Time"/>
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Snooze Type" Margin="0,0,5,0">
 
-        <dec:DateEditControl Grid.Row="0" Grid.Column="1" DateFormatType="DateTime" AllowNullValue="True" Width="175" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <StackPanel Orientation="Vertical">
+
+                <RadioButton Content="Snooze by Time Block:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.TimeBlock}, Mode=TwoWay}"/>
+
+                <RadioButton Content="Snooze by Date/Time:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.DateTime}, Mode=TwoWay}"/>
+
+            </StackPanel>
+        </GroupBox>
+
+        <Grid Grid.Row="0" Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="0,17,0,0">
+
+                <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Margin="0,0,5,0"/>
+
+                <dec:TextComboBoxControl HorizontalAlignment="Left"/>
+
+            </StackPanel>
+
+
+            <dec:DateEditControl Grid.Row="1" Grid.Column="0" DateFormatType="DateTime" AllowNullValue="True" Width="175" Margin="0,5,0,0" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DateTimeUiCommand}"/>
+
+        </Grid>
 
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
 
@@ -39,4 +71,5 @@
         </StackPanel>
 
     </Grid>
+    
 </dec:BaseWindow>

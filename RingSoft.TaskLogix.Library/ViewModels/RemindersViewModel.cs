@@ -123,6 +123,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 if (taskProcessor.SaveProcessorAfterMarkComplete(taskId))
                 {
                     AppGlobals.MainViewModel.RefreshTaskViewModels(taskId);
+                    AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
                     AppGlobals.MainViewModel.HandleReminders();
                 }
             }

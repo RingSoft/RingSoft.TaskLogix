@@ -5,6 +5,29 @@ using RingSoft.TaskLogix.DataAccess.Model;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
 {
+    public enum SnoozeTypes
+    {
+        TimeBlock = 0,
+        DateTime = 1,
+    }
+
+    public enum SnoozeTimeBlocks
+    {
+        [Description("Second(s)")]
+        Seconds = 0,
+        [Description("Minute(s)")]
+        Minutes = 1,
+        [Description("Hour(s)")]
+        Hours = 2,
+        [Description("Day(s)")]
+        Days = 3,
+        [Description("Week(s)")]
+        Weeks = 4,
+        [Description("Month(s)")]
+        Months = 5,
+        [Description("Year(s)")]
+        Years = 6,
+    }
     public interface ISnoozeView
     {
         void Close();
@@ -28,6 +51,25 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private SnoozeTypes _snoozeType;
+
+        public SnoozeTypes SnoozeType
+        {
+            get { return _snoozeType; }
+            set
+            {
+                if (_snoozeType == value)
+                    return;
+
+                _snoozeType = value;
+
+                UpdateUi();
+
+                OnPropertyChanged();
+            }
+        }
+
+
         public ISnoozeView View { get; private set; }
 
         public bool DialogResult { get; private set; }
@@ -36,10 +78,16 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         public RelayCommand CancelCommand { get; }
 
+        public UiCommand DateTimeUiCommand { get; }
+
         private TlTask _task;
 
         public SnoozeViewModel()
         {
+            DateTimeUiCommand = new UiCommand();
+
+            SnoozeType = SnoozeTypes.TimeBlock;
+
             OkCommand = new RelayCommand(OnOK);
             CancelCommand = new RelayCommand(OnCancel);
         }
@@ -71,6 +119,22 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         private void OnCancel()
         {
             View.Close();
+        }
+
+        public void UpdateUi()
+        {
+            DateTimeUiCommand.IsEnabled = false;
+
+            switch (SnoozeType)
+            {
+                case SnoozeTypes.TimeBlock:
+                    break;
+                case SnoozeTypes.DateTime:
+                    DateTimeUiCommand.IsEnabled = true;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

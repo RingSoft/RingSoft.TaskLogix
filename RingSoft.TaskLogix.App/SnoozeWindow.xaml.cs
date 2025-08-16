@@ -13,6 +13,11 @@ namespace RingSoft.TaskLogix.App
         {
             InitializeComponent();
             LocalViewModel.Init(this, task);
+
+            Loaded += (sender, args) =>
+            {
+                LocalViewModel.UpdateUi();
+            };
         }
     }
 }
