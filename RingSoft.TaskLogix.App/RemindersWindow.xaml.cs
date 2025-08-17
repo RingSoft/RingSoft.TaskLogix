@@ -33,5 +33,11 @@ namespace RingSoft.TaskLogix.App
             LookupControlsGlobals.WindowRegistry.ShowDialog(snoozeWindow);
             return snoozeWindow.LocalViewModel.DialogResult;
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            AppGlobals.MainViewModel.MainView.SetGreenAlert();
+            base.OnClosed(e);
+        }
     }
 }

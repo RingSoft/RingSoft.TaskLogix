@@ -181,6 +181,12 @@ namespace RingSoft.TaskLogix.App
             }
         }
 
+        public void SetGreenAlert()
+        {
+            LookupControlsGlobals.LookupWindowFactory.SetAlertLevel(AlertLevels.Green, false
+                , this, string.Empty, "Task Logix Reminder");
+        }
+
         private void ShowBalloon(string text)
         {
             Dispatcher.Invoke(() =>

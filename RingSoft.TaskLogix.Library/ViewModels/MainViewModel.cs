@@ -20,6 +20,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         void ShowTaskListPanel(bool show = true);
 
         void ShowBalloon(List<Reminder> reminders);
+
+        void SetGreenAlert();
     }
     public class MainViewModel : TemplateMainViewModel
     {
