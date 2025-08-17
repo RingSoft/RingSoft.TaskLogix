@@ -31,7 +31,7 @@
 
             <StackPanel Orientation="Vertical">
 
-                <RadioButton x:Name="SnoozeTimeBlockRadio" Content="Snooze For:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.TimeBlock}, Mode=TwoWay}"/>
+                <RadioButton x:Name="SnoozeTimeBlockRadio" Content="Snooze for:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.TimeBlock}, Mode=TwoWay}"/>
 
                 <RadioButton Content="Snooze Until:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.DateTime}, Mode=TwoWay}"/>
 

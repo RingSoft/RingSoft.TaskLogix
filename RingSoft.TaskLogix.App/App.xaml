@@ -10,6 +10,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Image x:Key="GreenAlertImage" Source="Resources/Task.ico"/>
+            <Image x:Key="YellowAlertImage" Source="Resources/YellowAlert.ico"/>
 
         </ResourceDictionary>
 

@@ -25,7 +25,7 @@ namespace RingSoft.TaskLogix.App
                         result = _application.Resources["GreenAlertImage"] as Image;
                         return result;
                     case AlertLevels.Yellow:
-                        result = _application.Resources["GreenAlertImage"] as Image;
+                        result = _application.Resources["YellowAlertImage"] as Image;
                         return result;
                     case AlertLevels.Red:
                         result = _application.Resources["GreenAlertImage"] as Image;

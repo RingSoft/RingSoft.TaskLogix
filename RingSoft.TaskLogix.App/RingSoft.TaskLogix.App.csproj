@@ -12,10 +12,12 @@
 
   <ItemGroup>
     <None Remove="Resources\Task.ico" />
+    <None Remove="Resources\YellowAlert.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Task.ico" />
+    <Resource Include="Resources\YellowAlert.ico" />
   </ItemGroup>
 
   <ItemGroup>
