@@ -17,7 +17,9 @@
 
   <ItemGroup>
     <Resource Include="Resources\Task.ico" />
-    <Resource Include="Resources\YellowAlert.ico" />
+    <Resource Include="Resources\YellowAlert.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
