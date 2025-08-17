@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using RingSoft.DataEntryControls.Engine;
+using RingSoft.DbLookup;
 using RingSoft.TaskLogix.DataAccess.Model;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
@@ -174,7 +175,44 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         private void OnOK()
         {
-            _task.SnoozeDateTime = SnoozeDateTime;
+            switch (SnoozeType)
+            {
+                case SnoozeTypes.TimeBlock:
+                    var date = GblMethods.NowDate();
+                    switch (TimeType)
+                    {
+                        case SnoozeTimeBlocks.Seconds:
+                            date = date.AddSeconds(TimeBlockValue);
+                            break;
+                        case SnoozeTimeBlocks.Minutes:
+                            date = date.AddMinutes(TimeBlockValue);
+                            break;
+                        case SnoozeTimeBlocks.Hours:
+                            date = date.AddHours(TimeBlockValue);
+                            break;
+                        case SnoozeTimeBlocks.Days:
+                            date = date.AddDays(TimeBlockValue);
+                            break;
+                        case SnoozeTimeBlocks.Weeks:
+                            date = date.AddDays(TimeBlockValue * 7);
+                            break;
+                        case SnoozeTimeBlocks.Months:
+                            date = date.AddMonths(TimeBlockValue);
+                            break;
+                        case SnoozeTimeBlocks.Years:
+                            date = date.AddYears(TimeBlockValue);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                    _task.SnoozeDateTime = date;
+                    break;
+                case SnoozeTypes.DateTime:
+                    _task.SnoozeDateTime = SnoozeDateTime;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             DialogResult = true;
             View.Close();
         }
