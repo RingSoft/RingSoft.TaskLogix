@@ -33,13 +33,17 @@
             <ac:DbMaintenanceButton x:Name="AdvancedFindButton" Content="_Advanced Find" ImageSource="{StaticResource FindImage}" Command="{Binding ShowAdvFindTabCommand }"/>
         </StackPanel>
 
-        <StackPanel DockPanel.Dock="Right" Orientation="Vertical">
+        <ScrollViewer DockPanel.Dock="Right" VerticalScrollBarVisibility="Auto">
 
-            <dec:DropDownCalendar HorizontalAlignment="Center" Margin="5"/>
+            <StackPanel Orientation="Vertical">
 
-            <StackPanel x:Name="TaskListPanel" Orientation="Vertical"/>
+                <dec:DropDownCalendar HorizontalAlignment="Center" Margin="5"/>
 
-        </StackPanel>
+                <StackPanel x:Name="TaskListPanel" Orientation="Vertical"/>
+
+            </StackPanel>
+
+        </ScrollViewer>
 
         <lc:DbMaintenanceTabControl x:Name="TabControl" VerticalAlignment="Stretch"/>
 
