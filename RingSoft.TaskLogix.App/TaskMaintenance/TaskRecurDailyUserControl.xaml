@@ -6,6 +6,7 @@
              xmlns:dec="clr-namespace:RingSoft.DataEntryControls.WPF;assembly=RingSoft.DataEntryControls.WPF"
              xmlns:da="clr-namespace:RingSoft.TaskLogix.DataAccess.Model;assembly=RingSoft.TaskLogix.DataAccess"
              xmlns:vm="clr-namespace:RingSoft.TaskLogix.Library.ViewModels;assembly=RingSoft.TaskLogix.Library"
+             xmlns:tla="clr-namespace:RingSoft.TaskLogix.App"
              xmlns:local="clr-namespace:RingSoft.TaskLogix.App.TaskMaintenance"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -26,7 +27,7 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5, 0, 0, 0">
 
-            <local:RecurControlRadioButton x:Name="EveryXDaysRadio" Content="Every" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.EveryXDays}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=EveryWeekdayRadio}"/>
+            <tla:TlControlRadioButton x:Name="EveryXDaysRadio" Content="Every" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.EveryXDays}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=EveryWeekdayRadio}"/>
 
             <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RecurDays, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RecurDaysUiCommand}"/>
 
@@ -36,13 +37,13 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5, 5, 0, 0">
 
-            <local:RecurControlRadioButton x:Name="EveryWeekdayRadio" Content="Every weekday" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.EveryWeekday}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=RegenRadio}"/>
+            <tla:TlControlRadioButton x:Name="EveryWeekdayRadio" Content="Every weekday" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.EveryWeekday}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=RegenRadio}"/>
 
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5, 5, 0, 0">
 
-            <local:RecurControlRadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.RegenerateXDaysAfterCompleted}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=EveryXDaysRadio}"/>
+            <tla:TlControlRadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:DailyRecurTypes.RegenerateXDaysAfterCompleted}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=EveryXDaysRadio}"/>
 
             <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RegenDaysAfterCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RegenDaysUiCommand}"/>
 
