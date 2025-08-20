@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using RingSoft.DataEntryControls.WPF;
 using RingSoft.TaskLogix.DataAccess.Model;
@@ -10,6 +11,36 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
     public class RecurRadioButton : RadioButton
     {
         public TaskRecurWindow RecurWindow { get; private set; }
+
+        public static readonly DependencyProperty NextDownRadioButtonProperty =
+            DependencyProperty.Register(nameof(NextDownRadioButton), typeof(RecurRadioButton), typeof(RecurRadioButton),
+                new FrameworkPropertyMetadata(NextDownRadioButtonChangedCallback));
+
+        /// <summary>
+        /// Gets or sets the UI label.  This is a bind-able property.
+        /// </summary>
+        /// <value>The UI label.</value>
+        public RecurRadioButton NextDownRadioButton
+        {
+            get { return (RecurRadioButton)GetValue(NextDownRadioButtonProperty); }
+            set { SetValue(NextDownRadioButtonProperty, value); }
+        }
+
+        /// <summary>
+        /// UIs the label changed callback.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+        private static void NextDownRadioButtonChangedCallback(DependencyObject obj,
+            DependencyPropertyChangedEventArgs args)
+        {
+            var recurRadioButton = (RecurRadioButton)obj;
+            if (recurRadioButton != null)
+            {
+
+            }
+        }
+
 
         public RecurRadioButton()
         {
@@ -27,6 +58,15 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
                     RecurWindow.ActiveRecurUserControl.SetInitialFocus();
                     e.Handled = true;
                     return;
+                }
+            }
+
+            if (e.Key == Key.Down)
+            {
+                if (NextDownRadioButton != null)
+                {
+                    NextDownRadioButton.Focus();
+                    e.Handled |= true;
                 }
             }
 

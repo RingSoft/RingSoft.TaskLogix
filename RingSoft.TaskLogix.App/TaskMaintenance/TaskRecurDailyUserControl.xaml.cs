@@ -1,8 +1,10 @@
-﻿using RingSoft.TaskLogix.DataAccess.Model;
+﻿using RingSoft.DataEntryControls.WPF;
+using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.App.TaskMaintenance
 {
+
     /// <summary>
     /// Interaction logic for TaskRecurDailyUserControl.xaml
     /// </summary>

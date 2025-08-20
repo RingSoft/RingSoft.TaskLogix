@@ -7,7 +7,7 @@
         xmlns:viewModels="clr-namespace:RingSoft.TaskLogix.Library.ViewModels;assembly=RingSoft.TaskLogix.Library"
         xmlns:local="clr-namespace:RingSoft.TaskLogix.App"
         mc:Ignorable="d"
-        Title="SnoozeWindow" CloseOnEscape="True" SizeToContent="WidthAndHeight">
+        Title="Snooze Options" CloseOnEscape="True" SizeToContent="WidthAndHeight">
 
     <Window.DataContext>
         <viewModels:SnoozeViewModel x:Name="LocalViewModel"/>
@@ -27,42 +27,24 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox Grid.Row="0" Grid.Column="0" Header="Snooze Type" Margin="0,0,5,0">
+        <RadioButton Grid.Row="0" Grid.Column="0" x:Name="SnoozeTimeBlockRadio" Content="Snooze for:" VerticalAlignment="Center" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.TimeBlock}, Mode=TwoWay}"/>
 
-            <StackPanel Orientation="Vertical">
+        <RadioButton Grid.Row="1" Grid.Column="0" Content="Snooze Until:" VerticalAlignment="Center" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.DateTime}, Mode=TwoWay}"/>
 
-                <RadioButton x:Name="SnoozeTimeBlockRadio" Content="Snooze for:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.TimeBlock}, Mode=TwoWay}"/>
+        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" BorderThickness="1,0,0,0" BorderBrush="White"/>
 
-                <RadioButton Content="Snooze Until:" Margin="5" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.DateTime}, Mode=TwoWay}"/>
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
 
-            </StackPanel>
-        </GroupBox>
+            <dec:IntegerEditControl x:Name="TimeBlockValueEditControl" Width="40" HorizontalAlignment="Left" Margin="0,0,5,0" MinimumValue="1" Value="{Binding TimeBlockValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding TimeBlockUiCommand}"/>
 
-        <Grid Grid.Row="0" Grid.Column="1">
+            <dec:TextComboBoxControl HorizontalAlignment="Left" Setup="{Binding TimeTypeComboBoxSetup}" SelectedItem="{Binding TimeTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding TimeTypeComboUiCommand}"/>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        </StackPanel>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="0,17,0,0">
-
-                <dec:IntegerEditControl x:Name="TimeBlockValueEditControl" Width="40" HorizontalAlignment="Left" Margin="0,0,5,0" MinimumValue="1" Value="{Binding TimeBlockValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding TimeBlockUiCommand}"/>
-
-                <dec:TextComboBoxControl HorizontalAlignment="Left" Setup="{Binding TimeTypeComboBoxSetup}" SelectedItem="{Binding TimeTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding TimeTypeComboUiCommand}"/>
-
-            </StackPanel>
+        <dec:DateEditControl Grid.Row="1" Grid.Column="2" DateFormatType="DateTime" AllowNullValue="True" Width="175" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DateTimeUiCommand}"/>
 
 
-            <dec:DateEditControl Grid.Row="1" Grid.Column="0" DateFormatType="DateTime" AllowNullValue="True" Width="175" Margin="0,5,0,0" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DateTimeUiCommand}"/>
-
-        </Grid>
-
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
 
             <Button Content="_OK" Width="50" Height="25" IsDefault="True" Command="{Binding OkCommand}"/>
 
