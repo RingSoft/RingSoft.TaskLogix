@@ -23,17 +23,14 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <RadioButton Grid.Row="0" Grid.Column="0" x:Name="SnoozeTimeBlockRadio" Content="Snooze for:" VerticalAlignment="Center" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.TimeBlock}, Mode=TwoWay}"/>
+        <local:TlControlRadioButton Grid.Row="0" Grid.Column="0" x:Name="SnoozeTimeBlockRadio" Content="Snooze for:" VerticalAlignment="Center" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.TimeBlock}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=SnoozeUntilRadio}"/>
 
-        <RadioButton Grid.Row="1" Grid.Column="0" Content="Snooze Until:" VerticalAlignment="Center" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.DateTime}, Mode=TwoWay}"/>
+        <local:TlControlRadioButton Grid.Row="1" Grid.Column="0" x:Name="SnoozeUntilRadio" Content="Snooze Until:" VerticalAlignment="Center" IsChecked="{Binding Path=SnoozeType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static viewModels:SnoozeTypes.DateTime}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=SnoozeTimeBlockRadio}"/>
 
-        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" BorderThickness="1,0,0,0" BorderBrush="White"/>
-
-        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5,0,0,0">
 
             <dec:IntegerEditControl x:Name="TimeBlockValueEditControl" Width="40" HorizontalAlignment="Left" Margin="0,0,5,0" MinimumValue="1" Value="{Binding TimeBlockValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding TimeBlockUiCommand}"/>
 
@@ -41,7 +38,7 @@
 
         </StackPanel>
 
-        <dec:DateEditControl Grid.Row="1" Grid.Column="2" DateFormatType="DateTime" AllowNullValue="True" Width="175" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DateTimeUiCommand}"/>
+        <dec:DateEditControl Grid.Row="1" Grid.Column="1" DateFormatType="DateTime" AllowNullValue="True" Margin="5,0,0,0" Width="175" Value="{Binding SnoozeDateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DateTimeUiCommand}"/>
 
 
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,0,0">
