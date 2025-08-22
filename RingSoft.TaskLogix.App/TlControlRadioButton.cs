@@ -7,8 +7,7 @@ namespace RingSoft.TaskLogix.App
     public class TlControlRadioButton : RadioButton
     {
         public static readonly DependencyProperty NextDownRadioButtonProperty =
-            DependencyProperty.Register(nameof(NextDownRadioButton), typeof(TlControlRadioButton), typeof(TlControlRadioButton),
-                new FrameworkPropertyMetadata());
+            DependencyProperty.Register(nameof(NextDownRadioButton), typeof(TlControlRadioButton), typeof(TlControlRadioButton));
 
         public TlControlRadioButton NextDownRadioButton
         {
@@ -17,13 +16,19 @@ namespace RingSoft.TaskLogix.App
         }
 
         public static readonly DependencyProperty TabRightControlProperty =
-            DependencyProperty.Register(nameof(TabRightControl), typeof(Control), typeof(TlControlRadioButton),
-                new FrameworkPropertyMetadata());
+            DependencyProperty.Register(nameof(TabRightControl), typeof(Control), typeof(TlControlRadioButton), new FrameworkPropertyMetadata(TabRightControlChangedCallback));
 
         public Control TabRightControl
         {
             get { return (Control)GetValue(TabRightControlProperty); }
             set { SetValue(TabRightControlProperty, value); }
+        }
+
+        private static void TabRightControlChangedCallback(DependencyObject obj,
+            DependencyPropertyChangedEventArgs args)
+        {
+            var radioButton = (TlControlRadioButton)obj;
+            radioButton.OnShiftTabKeyControl(radioButton.TabRightControl);
         }
 
         public TlControlRadioButton NextUpRadioButton { get; private set; }
@@ -32,27 +37,32 @@ namespace RingSoft.TaskLogix.App
         {
             Loaded += (sender, args) =>
             {
+                var test = this;
                 if (NextDownRadioButton != null)
                 {
                     NextDownRadioButton.NextUpRadioButton = this;
                 }
-
-                if (TabRightControl != null)
-                {
-                    TabRightControl.KeyDown += (o, eventArgs) =>
-                    {
-                        if (eventArgs.Key == Key.Tab)
-                        {
-                            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
-                            {
-                                Focus();
-                                eventArgs.Handled = true;
-                            }
-                        }
-                    };
-                }
             };
         }
+
+        private void OnShiftTabKeyControl(Control tabRightControl)
+        {
+            if (tabRightControl != null)
+            {
+                tabRightControl.KeyDown += (o, eventArgs) =>
+                {
+                    if (eventArgs.Key == Key.Tab)
+                    {
+                        if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+                        {
+                            Focus();
+                            eventArgs.Handled = true;
+                        }
+                    }
+                };
+            }
+        }
+
         protected override void OnKeyDown(KeyEventArgs e)
         {
             if (!e.Handled)
@@ -65,6 +75,7 @@ namespace RingSoft.TaskLogix.App
                         {
                             TabRightControl.Focus();
                             e.Handled = true;
+                            return;
                         }
                     }
                 }
@@ -74,7 +85,8 @@ namespace RingSoft.TaskLogix.App
                     if (NextDownRadioButton != null)
                     {
                         NextDownRadioButton.Focus();
-                        e.Handled |= true;
+                        e.Handled = true;
+                        return;
                     }
                 }
 
@@ -84,6 +96,7 @@ namespace RingSoft.TaskLogix.App
                     {
                         NextUpRadioButton.Focus();
                         e.Handled = true;
+                        return;
                     }
                 }
             }

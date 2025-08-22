@@ -19,33 +19,6 @@ namespace RingSoft.TaskLogix.App
             {
                 LocalViewModel.UpdateUi();
             };
-
-            SnoozeTimeBlockRadio.KeyDown += (sender, args) =>
-            {
-                if (args.Key == Key.Tab)
-                {
-                    if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
-                    {
-                        if (TimeBlockValueEditControl.IsEnabled)
-                        {
-                            TimeBlockValueEditControl.Focus();
-                            args.Handled = true;
-                        }
-                    }
-                }
-            };
-
-            TimeBlockValueEditControl.KeyDown += (sender, args) =>
-            {
-                if (args.Key == Key.Tab)
-                {
-                    if ((Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
-                    {
-                        SnoozeTimeBlockRadio.Focus();
-                        args.Handled = true;
-                    }
-                }
-            };
         }
     }
 }
