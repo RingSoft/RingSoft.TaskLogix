@@ -26,9 +26,9 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5, 0, 0, 0">
 
-            <RadioButton x:Name="DayXOfEveryYMonthsRadio" Content="Day" Width="50" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.DayXOfEveryYMonths}, Mode=TwoWay}"/>
+            <local:RecurControlRadioButton x:Name="DayXOfEveryYMonthsRadio" Content="Day" Width="50" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.DayXOfEveryYMonths}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=XthWeekdayOfEveryYMonthsRadio}" TabRightControl="{Binding ElementName=DayXOfEveryControl}"/>
 
-            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding DayXOfEvery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DayXOfEveryUiCommand}"/>
+            <dec:IntegerEditControl x:Name="DayXOfEveryControl" Width="20" HorizontalAlignment="Left" Value="{Binding DayXOfEvery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DayXOfEveryUiCommand}"/>
 
             <Label HorizontalAlignment="Left" Content="of every"/>
 
@@ -40,9 +40,9 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5, 5, 0, 0">
 
-            <RadioButton x:Name="XthWeekdayOfEveryYMonthsRadio" Content="The" Width="50" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.XthWeekdayOfEveryYMonths}, Mode=TwoWay}"/>
+            <local:RecurControlRadioButton x:Name="XthWeekdayOfEveryYMonthsRadio" Content="The" Width="50" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.XthWeekdayOfEveryYMonths}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=RegenRadio}" TabRightControl="{Binding ElementName=WeekTypeComboBoxControl}"/>
 
-            <dec:TextComboBoxControl Setup="{Binding WeekTypeComboBoxSetup}" SelectedItem="{Binding WeekTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding WeekTypeUiCommand}"/>
+            <dec:TextComboBoxControl x:Name="WeekTypeComboBoxControl" Setup="{Binding WeekTypeComboBoxSetup}" SelectedItem="{Binding WeekTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding WeekTypeUiCommand}"/>
 
             <dec:TextComboBoxControl Margin="5,0,0,0" Setup="{Binding DayTypeComboBoxSetup}" SelectedItem="{Binding DayTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DayTypeUiCommand}" />
 
@@ -56,9 +56,9 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5, 5, 0, 0">
 
-            <RadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.RegenerateXMonthsAfterCompleted}, Mode=TwoWay}"/>
+            <local:RecurControlRadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:MonthlyRecurTypes.RegenerateXMonthsAfterCompleted}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=DayXOfEveryYMonthsRadio}" TabRightControl="{Binding ElementName=RegenControl}"/>
 
-            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RegenMonthsAfterCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RegenMonthsAfterCompletedUiCommand}"/>
+            <dec:IntegerEditControl x:Name="RegenControl" Width="20" HorizontalAlignment="Left" Value="{Binding RegenMonthsAfterCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RegenMonthsAfterCompletedUiCommand}"/>
 
             <Label HorizontalAlignment="Left" Content="month(s) after each task is completed" VerticalAlignment="Center"/>
 
