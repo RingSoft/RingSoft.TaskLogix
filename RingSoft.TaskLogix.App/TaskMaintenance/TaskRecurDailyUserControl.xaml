@@ -6,7 +6,6 @@
              xmlns:dec="clr-namespace:RingSoft.DataEntryControls.WPF;assembly=RingSoft.DataEntryControls.WPF"
              xmlns:da="clr-namespace:RingSoft.TaskLogix.DataAccess.Model;assembly=RingSoft.TaskLogix.DataAccess"
              xmlns:vm="clr-namespace:RingSoft.TaskLogix.Library.ViewModels;assembly=RingSoft.TaskLogix.Library"
-             xmlns:tla="clr-namespace:RingSoft.TaskLogix.App"
              xmlns:local="clr-namespace:RingSoft.TaskLogix.App.TaskMaintenance"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
