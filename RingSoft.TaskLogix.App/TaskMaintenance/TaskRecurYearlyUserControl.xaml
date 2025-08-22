@@ -26,9 +26,9 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="5, 0, 0, 0">
 
-            <RadioButton x:Name="EveryMonthTypeRadio" Content="Every" Width="65" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:YearlylyRecurTypes.EveryMonthDayX}, Mode=TwoWay}"/>
+            <local:RecurControlRadioButton x:Name="EveryMonthTypeRadio" Content="Every" Width="65" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:YearlylyRecurTypes.EveryMonthDayX}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=NthWeekdayTypeOfMonthRadio}" TabRightControl="{Binding ElementName=EveryMonthTypeControl}"/>
 
-            <dec:TextComboBoxControl Setup="{Binding EveryMonthTypeComboBoxSetup}" SelectedItem="{Binding EveryMonthTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding EveryMonthTypeUiCommand}"/>
+            <dec:TextComboBoxControl x:Name="EveryMonthTypeControl" Setup="{Binding EveryMonthTypeComboBoxSetup}" SelectedItem="{Binding EveryMonthTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding EveryMonthTypeUiCommand}"/>
 
             <dec:IntegerEditControl Margin="5,0,0,0" Width="20" HorizontalAlignment="Left" Value="{Binding MonthDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding MonthDayUiCommand}"/>
 
@@ -37,9 +37,9 @@
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5, 5, 0, 0">
 
-            <RadioButton x:Name="NthWeekdayTypeOfMonthRadio" Content="The" Width="65" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:YearlylyRecurTypes.TheNthWeekdayTypeOfMonth}, Mode=TwoWay}"/>
+            <local:RecurControlRadioButton x:Name="NthWeekdayTypeOfMonthRadio" Content="The" Width="65" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:YearlylyRecurTypes.TheNthWeekdayTypeOfMonth}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=RegenRadio}" TabRightControl="{Binding ElementName=WeekTypeComboControl}"/>
 
-            <dec:TextComboBoxControl Setup="{Binding WeekTypeComboBoxSetup}" SelectedItem="{Binding WeekTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding WeekTypeUiCommand}"/>
+            <dec:TextComboBoxControl x:Name="WeekTypeComboControl" Setup="{Binding WeekTypeComboBoxSetup}" SelectedItem="{Binding WeekTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding WeekTypeUiCommand}"/>
 
             <dec:TextComboBoxControl Margin="5,0,0,0" Setup="{Binding DayTypeComboBoxSetup}" SelectedItem="{Binding DayTypeComboBoxItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding DayTypeUiCommand}" />
 
@@ -51,9 +51,9 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5, 5, 0, 0">
 
-            <RadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:YearlylyRecurTypes.RegenerateXYearsAfterCompleted}, Mode=TwoWay}"/>
+            <local:RecurControlRadioButton x:Name="RegenRadio" Content="Regenerate new task" VerticalAlignment="Center" IsChecked="{Binding Path=RecurType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:YearlylyRecurTypes.RegenerateXYearsAfterCompleted}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=EveryMonthTypeRadio}" TabRightControl="{Binding ElementName=RegenControl}"/>
 
-            <dec:IntegerEditControl Width="20" HorizontalAlignment="Left" Value="{Binding RegenYearsAfterCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RegenYearsAfterCompletedUiCommand}"/>
+            <dec:IntegerEditControl x:Name="RegenControl" Width="20" HorizontalAlignment="Left" Value="{Binding RegenYearsAfterCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding RegenYearsAfterCompletedUiCommand}"/>
 
             <Label HorizontalAlignment="Left" Content="year(s) after each task is completed" VerticalAlignment="Center"/>
 
