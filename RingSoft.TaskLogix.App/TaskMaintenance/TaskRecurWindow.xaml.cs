@@ -8,39 +8,9 @@ using RingSoft.TaskLogix.Library.ViewModels;
 
 namespace RingSoft.TaskLogix.App.TaskMaintenance
 {
-    public class RecurRadioButton : RadioButton
+    public class RecurRadioButton : TlControlRadioButton
     {
         public TaskRecurWindow RecurWindow { get; private set; }
-
-        public static readonly DependencyProperty NextDownRadioButtonProperty =
-            DependencyProperty.Register(nameof(NextDownRadioButton), typeof(RecurRadioButton), typeof(RecurRadioButton),
-                new FrameworkPropertyMetadata(NextDownRadioButtonChangedCallback));
-
-        /// <summary>
-        /// Gets or sets the UI label.  This is a bind-able property.
-        /// </summary>
-        /// <value>The UI label.</value>
-        public RecurRadioButton NextDownRadioButton
-        {
-            get { return (RecurRadioButton)GetValue(NextDownRadioButtonProperty); }
-            set { SetValue(NextDownRadioButtonProperty, value); }
-        }
-
-        /// <summary>
-        /// UIs the label changed callback.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        private static void NextDownRadioButtonChangedCallback(DependencyObject obj,
-            DependencyPropertyChangedEventArgs args)
-        {
-            var recurRadioButton = (RecurRadioButton)obj;
-            if (recurRadioButton != null)
-            {
-
-            }
-        }
-
 
         public RecurRadioButton()
         {
@@ -55,18 +25,12 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
             {
                 if (RecurWindow.ActiveRecurUserControl != null)
                 {
-                    RecurWindow.ActiveRecurUserControl.SetInitialFocus();
-                    e.Handled = true;
-                    return;
-                }
-            }
-
-            if (e.Key == Key.Down)
-            {
-                if (NextDownRadioButton != null)
-                {
-                    NextDownRadioButton.Focus();
-                    e.Handled |= true;
+                    if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
+                    {
+                        RecurWindow.ActiveRecurUserControl.SetInitialFocus();
+                        e.Handled = true;
+                        return;
+                    }
                 }
             }
 
@@ -90,23 +54,21 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
                     break;
                 case TaskRecurTypes.Daily:
                     ActiveRecurUserControl = new TaskRecurDailyUserControl();
-                    DailyRadio.Focus();
                     break;
                 case TaskRecurTypes.Weekly:
                     ActiveRecurUserControl = new TaskRecurWeeklyUserControl();
-                    WeeklyRadio.Focus();
                     break;
                 case TaskRecurTypes.Monthly:
                     ActiveRecurUserControl = new TaskRecurMonthlyUserControl();
-                    MonthlyRadio.Focus();
                     break;
                 case TaskRecurTypes.Yearly:
                     ActiveRecurUserControl = new TaskRecurYearlyUserControl();
-                    YearlyRadio.Focus();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            SetFocusToRecurRadio();
 
             RecurPanel.Children.Clear();
             if (ActiveRecurUserControl != null)
@@ -115,6 +77,29 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
                 LocalViewModel.ActiveRecurViewModel = ActiveRecurUserControl.GetRecurViewModel();
             }
             RecurPanel.UpdateLayout();
+        }
+
+        public void SetFocusToRecurRadio()
+        {
+            switch (LocalViewModel.RecurType)
+            {
+                case TaskRecurTypes.None:
+                    break;
+                case TaskRecurTypes.Daily:
+                    DailyRadio.Focus();
+                    break;
+                case TaskRecurTypes.Weekly:
+                    WeeklyRadio.Focus();
+                    break;
+                case TaskRecurTypes.Monthly:
+                    MonthlyRadio.Focus();
+                    break;
+                case TaskRecurTypes.Yearly:
+                    YearlyRadio.Focus();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public void CloseWindow(bool result)

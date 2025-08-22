@@ -8,31 +8,22 @@ namespace RingSoft.TaskLogix.App
     {
         public static readonly DependencyProperty NextDownRadioButtonProperty =
             DependencyProperty.Register(nameof(NextDownRadioButton), typeof(TlControlRadioButton), typeof(TlControlRadioButton),
-                new FrameworkPropertyMetadata(NextDownRadioButtonChangedCallback));
+                new FrameworkPropertyMetadata());
 
-        /// <summary>
-        /// Gets or sets the UI label.  This is a bind-able property.
-        /// </summary>
-        /// <value>The UI label.</value>
         public TlControlRadioButton NextDownRadioButton
         {
             get { return (TlControlRadioButton)GetValue(NextDownRadioButtonProperty); }
             set { SetValue(NextDownRadioButtonProperty, value); }
         }
 
-        /// <summary>
-        /// UIs the label changed callback.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="args">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        private static void NextDownRadioButtonChangedCallback(DependencyObject obj,
-            DependencyPropertyChangedEventArgs args)
-        {
-            var recurRadioButton = (TlControlRadioButton)obj;
-            if (recurRadioButton != null)
-            {
+        public static readonly DependencyProperty TabRightControlProperty =
+            DependencyProperty.Register(nameof(TabRightControl), typeof(Control), typeof(TlControlRadioButton),
+                new FrameworkPropertyMetadata());
 
-            }
+        public Control TabRightControl
+        {
+            get { return (Control)GetValue(TabRightControlProperty); }
+            set { SetValue(TabRightControlProperty, value); }
         }
 
         public TlControlRadioButton NextUpRadioButton { get; private set; }
@@ -45,29 +36,55 @@ namespace RingSoft.TaskLogix.App
                 {
                     NextDownRadioButton.NextUpRadioButton = this;
                 }
+
+                if (TabRightControl != null)
+                {
+                    TabRightControl.KeyDown += (o, eventArgs) =>
+                    {
+                        if (eventArgs.Key == Key.Tab)
+                        {
+                            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+                            {
+                                Focus();
+                                eventArgs.Handled = true;
+                            }
+                        }
+                    };
+                }
             };
         }
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Key == Key.Tab)
+            if (!e.Handled)
             {
-            }
-
-            if (e.Key == Key.Down)
-            {
-                if (NextDownRadioButton != null)
+                if (e.Key == Key.Tab)
                 {
-                    NextDownRadioButton.Focus();
-                    e.Handled |= true;
+                    if (TabRightControl != null && TabRightControl.IsEnabled)
+                    {
+                        if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
+                        {
+                            TabRightControl.Focus();
+                            e.Handled = true;
+                        }
+                    }
                 }
-            }
 
-            if (e.Key == Key.Up)
-            {
-                if (NextUpRadioButton != null)
+                if (e.Key == Key.Down)
                 {
-                    NextUpRadioButton.Focus();
-                    e.Handled |= true;
+                    if (NextDownRadioButton != null)
+                    {
+                        NextDownRadioButton.Focus();
+                        e.Handled |= true;
+                    }
+                }
+
+                if (e.Key == Key.Up)
+                {
+                    if (NextUpRadioButton != null)
+                    {
+                        NextUpRadioButton.Focus();
+                        e.Handled = true;
+                    }
                 }
             }
 

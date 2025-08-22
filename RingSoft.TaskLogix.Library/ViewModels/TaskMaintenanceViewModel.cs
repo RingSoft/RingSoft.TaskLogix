@@ -380,6 +380,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     DoReminder = false;
                 }
                 RecordDirty = false;
+                AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
                 _loading = false;
                 HistoryLookup.SetCommand(GetLookupCommand((LookupCommands.Refresh)));
             }
