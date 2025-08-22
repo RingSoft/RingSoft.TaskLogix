@@ -82,6 +82,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 if (ActiveRecurViewModel != null)
                 {
+                    ActiveRecurViewModel.SetInitialValues();
                     ActiveRecurViewModel.LoadFromTaskProcessor(view.TaskProcessor);
                 }
             }

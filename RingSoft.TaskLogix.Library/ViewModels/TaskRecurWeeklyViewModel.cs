@@ -228,6 +228,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        public override void SetInitialValues()
+        {
+            
+        }
+
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
         {
             this.RecurType = taskProcessor.WeeklyProcessor.RecurType;

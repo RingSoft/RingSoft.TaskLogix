@@ -6,6 +6,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 {
     public abstract class TaskRecurViewModelBase : INotifyPropertyChanged
     {
+        public abstract void SetInitialValues();
+
         public abstract void LoadFromTaskProcessor(TaskProcessor taskProcessor);
 
         public abstract void SaveToTaskProcessor(TaskProcessor taskProcessor);

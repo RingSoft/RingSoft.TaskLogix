@@ -67,6 +67,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             RegenDaysAfterCompleted = 1;
         }
 
+        public override void SetInitialValues()
+        {
+            
+        }
+
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
         {
             RecurType = taskProcessor.DailyProcessor.RecurType;

@@ -267,6 +267,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        public override void SetInitialValues()
+        {
+            
+        }
+
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
         {
             RecurType = taskProcessor.YearlyProcessor.RecurType;
