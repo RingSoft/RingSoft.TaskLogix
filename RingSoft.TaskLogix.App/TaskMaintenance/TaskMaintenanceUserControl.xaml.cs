@@ -110,5 +110,10 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
             LookupControlsGlobals.WindowRegistry.ShowDialog(win);
             return win.DialogResult;
         }
+
+        public override void SetInitialFocus()
+        {
+            SubjectControl.Focus();
+        }
     }
 }
