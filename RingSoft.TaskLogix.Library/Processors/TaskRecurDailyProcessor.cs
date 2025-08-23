@@ -13,6 +13,8 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public TaskRecurDailyProcessor(TaskProcessor taskProcessor) : base(taskProcessor)
         {
+            RecurDays = 1;
+            RegenDaysAfterCompleted = 1;
         }
 
         public override void DoMarkComplete()
