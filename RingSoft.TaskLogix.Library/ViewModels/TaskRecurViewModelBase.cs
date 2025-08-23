@@ -1,12 +1,21 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.Processors;
 
 namespace RingSoft.TaskLogix.Library.ViewModels
 {
     public abstract class TaskRecurViewModelBase : INotifyPropertyChanged
     {
-        public abstract void SetInitialValues();
+        public virtual void Init()
+        {
+            var newProcessor = new TaskProcessor();
+            newProcessor.StartDate = DateTime.Today;
+            newProcessor.RecurType = GeTaskRecurType();
+            LoadFromTaskProcessor(newProcessor);
+        }
+
+        public abstract TaskRecurTypes GeTaskRecurType();
 
         public abstract void LoadFromTaskProcessor(TaskProcessor taskProcessor);
 

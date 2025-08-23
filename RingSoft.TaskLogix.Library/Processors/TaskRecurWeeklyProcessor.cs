@@ -55,6 +55,8 @@ namespace RingSoft.TaskLogix.Library.Processors
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            RegenWeeksAfterCompleted = 1;
         }
 
         public void SetPropsFromEntity(TlTaskRecurWeekly entity)

@@ -61,15 +61,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         {
             RecurDaysUiCommand = new UiCommand();
             RegenDaysUiCommand = new UiCommand();
-
-            RecurType = DailyRecurTypes.EveryXDays;
-            RecurDays = 1;
-            RegenDaysAfterCompleted = 1;
         }
 
-        public override void SetInitialValues()
+        public override TaskRecurTypes GeTaskRecurType()
         {
-            
+            return TaskRecurTypes.Daily;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)

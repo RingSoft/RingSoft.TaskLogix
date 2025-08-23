@@ -189,11 +189,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             ThuUiCommand = new UiCommand();
             FriUiCommand = new UiCommand();
             SatUiCommand = new UiCommand();
-
-            RecurType = WeeklyRecurTypes.EveryXWeeks;
-            RecurWeeks = 1;
-            RegenWeeksAfterCompleted = 1;
-
         }
 
         public void SetEnabled()
@@ -228,9 +223,9 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
-        public override void SetInitialValues()
+        public override TaskRecurTypes GeTaskRecurType()
         {
-            
+            return TaskRecurTypes.Weekly;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)

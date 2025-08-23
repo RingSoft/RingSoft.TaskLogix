@@ -35,6 +35,14 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
     }
     public abstract class TaskRecurUserControlBase : UserControl
     {
+        public TaskRecurUserControlBase()
+        {
+            Loaded += (sender, args) =>
+            {
+                var viewModel = GetRecurViewModel();
+                viewModel.Init();
+            };
+        }
         public abstract TaskRecurViewModelBase GetRecurViewModel();
 
         public abstract void SetInitialFocus();

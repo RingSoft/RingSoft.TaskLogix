@@ -221,9 +221,9 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
-        public override void SetInitialValues()
+        public override TaskRecurTypes GeTaskRecurType()
         {
-            
+            return TaskRecurTypes.Monthly;
         }
 
         public override void LoadFromTaskProcessor(TaskProcessor taskProcessor)
