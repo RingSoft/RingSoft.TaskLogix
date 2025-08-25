@@ -27,5 +27,17 @@ namespace RingSoft.TaskLogix.Library
 
             return DateTime.MaxValue;
         }
+
+        public static WeekTypes GetWeekType(this DateTime date)
+        {
+            var result = (WeekTypes)(Math.Ceiling((double)date.Day / 7) - 1);
+            return result;
+        }
+
+        public static DayTypes GetDayType(this DateTime date)
+        {
+            var result = (DayTypes)(int)date.DayOfWeek + 3;
+            return result;
+        }
     }
 }
