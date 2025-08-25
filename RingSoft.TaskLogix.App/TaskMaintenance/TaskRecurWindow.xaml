@@ -68,12 +68,43 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Start"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="Start" VerticalAlignment="Top"/>
 
-                <dec:DateEditControl Grid.Row="0" Grid.Column="1" DateFormatType="DateOnly" Width="100" HorizontalAlignment="Left" Value="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <dec:DateEditControl Grid.Row="0" Grid.Column="1" DateFormatType="DateOnly" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Value="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Grid Grid.Row="0" Grid.Column="2">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <local:RecurControlRadioButton Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="No end date."/>
+
+                    <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+
+                        <local:RecurControlRadioButton VerticalAlignment="Center" Content="End after "/>
+
+                        <dec:IntegerEditControl Width="40" HorizontalAlignment="Left"/>
+
+                        <Label Content="occurrences" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                    </StackPanel>
+
+                    <local:RecurControlRadioButton Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="Recurs until "/>
+
+                    <dec:DateEditControl Grid.Row="2" Grid.Column="1" Width="100"/>
+                </Grid>
+
             </Grid>
 
         </GroupBox>
