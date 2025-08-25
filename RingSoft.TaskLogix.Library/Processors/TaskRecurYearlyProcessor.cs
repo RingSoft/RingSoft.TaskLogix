@@ -22,6 +22,14 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public TaskRecurYearlyProcessor(TaskProcessor taskProcessor) : base(taskProcessor)
         {
+            var curMonth = (MonthsInYear)DateTime.Today.Month - 1;
+            RecurType = YearlylyRecurTypes.EveryMonthDayX;
+            EveryMonthType = curMonth;
+            MonthDay = DateTime.Today.Day;
+            WeekType = DateTime.Today.GetWeekType();
+            DayType = DateTime.Today.GetDayType();
+            WeekMonthType = curMonth;
+            RegenYearsAfterCompleted = 1;
         }
 
         public override void DoMarkComplete()
