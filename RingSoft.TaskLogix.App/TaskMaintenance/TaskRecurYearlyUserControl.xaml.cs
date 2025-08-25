@@ -31,7 +31,7 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
                     EveryMonthTypeRadio.Focus();
                     break;
                 case YearlylyRecurTypes.TheNthWeekdayTypeOfMonth:
-                    EveryMonthTypeRadio.Focus();
+                    NthWeekdayTypeOfMonthRadio.Focus();
                     break;
                 case YearlylyRecurTypes.RegenerateXYearsAfterCompleted:
                     RegenRadio.Focus();

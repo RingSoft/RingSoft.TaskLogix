@@ -45,6 +45,12 @@ namespace RingSoft.TaskLogix.App
             };
         }
 
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            var test = Content;
+            base.OnGotFocus(e);
+        }
+
         private void OnShiftTabKeyControl(Control tabRightControl)
         {
             if (tabRightControl != null)
