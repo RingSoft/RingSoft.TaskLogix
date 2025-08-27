@@ -176,14 +176,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 foreach (var tlTask in table)
                 {
-                    var addTask = true;
-                    if (tlTask.RecurType == (byte)TaskRecurTypes.None)
-                    {
-                        if (tlTask.StatusType == (byte)TaskStatusTypes.Completed)
-                        {
-                            addTask = false;
-                        }
-                    }
+                    var addTask = tlTask.StatusType != (byte)TaskStatusTypes.Completed;
 
                     if (addTask)
                     {

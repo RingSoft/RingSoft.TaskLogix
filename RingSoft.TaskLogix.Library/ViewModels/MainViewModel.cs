@@ -109,19 +109,12 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     {
                         foreach (var taskReminder in remindersInDb)
                         {
-                            var addReminder = true;
-                            if (taskReminder.SnoozeDateTime != null
-                                && taskReminder.SnoozeDateTime > GblMethods.NowDate())
+                            var addReminder = !(taskReminder.SnoozeDateTime != null
+                                                && taskReminder.SnoozeDateTime > GblMethods.NowDate());
+
+                            if (taskReminder.StatusType == (byte)TaskStatusTypes.Completed)
                             {
                                 addReminder = false;
-                            }
-
-                            if (taskReminder.RecurType == (byte)TaskRecurTypes.None)
-                            {
-                                if (taskReminder.StatusType == (byte)TaskStatusTypes.Completed)
-                                {
-                                    addReminder = false;
-                                }
                             }
 
                             if (addReminder)

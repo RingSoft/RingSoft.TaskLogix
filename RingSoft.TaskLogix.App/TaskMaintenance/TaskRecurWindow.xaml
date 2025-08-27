@@ -88,21 +88,22 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:RecurControlRadioButton Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="No end date."/>
+                    <local:RecurControlRadioButton x:Name="NoEndDateRadio" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="No end date." IsChecked="{Binding Path=EndingType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurEndingTypes.NoEndDate}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=EndAfterXOccurRadio}"/>
 
                     <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
 
-                        <local:RecurControlRadioButton VerticalAlignment="Center" Content="End after "/>
+                        <local:RecurControlRadioButton x:Name="EndAfterXOccurRadio" VerticalAlignment="Center" Content="End after " IsChecked="{Binding Path=EndingType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurEndingTypes.EndAfterOccurXTimes}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=EndByRadio}" TabRightControl="{Binding ElementName=EndAfterControl}"/>
 
-                        <dec:IntegerEditControl Width="40" HorizontalAlignment="Left"/>
+                        <dec:IntegerEditControl x:Name="EndAfterControl" Width="40" HorizontalAlignment="Left" Value="{Binding EndAfterOccurrences, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding EndAfterUiCommand}"/>
 
                         <Label Content="occurrences" VerticalAlignment="Center" HorizontalAlignment="Left"/>
 
                     </StackPanel>
 
-                    <local:RecurControlRadioButton Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="Recurs until "/>
+                    <local:RecurControlRadioButton x:Name="EndByRadio" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="Recurs until " IsChecked="{Binding Path=EndingType, Converter={StaticResource ComparisonConverter}, ConverterParameter={x:Static da:TaskRecurEndingTypes.EndBy}, Mode=TwoWay}" NextDownRadioButton="{Binding ElementName=NoEndDateRadio}" TabRightControl="{Binding ElementName=EndByControl}"/>
 
-                    <dec:DateEditControl Grid.Row="2" Grid.Column="1" Width="100"/>
+                    <dec:DateEditControl x:Name="EndByControl" Grid.Row="2" Grid.Column="1" DateFormatType="DateOnly" Width="100" Value="{Binding RecurEndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" UiCommand="{Binding EndByUiCommand}"/>
+
                 </Grid>
 
             </Grid>

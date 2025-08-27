@@ -2,6 +2,7 @@
 using RingSoft.DbLookup;
 using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library.ViewModels;
+using System.Threading.Tasks;
 
 namespace RingSoft.TaskLogix.Library.Processors
 {
@@ -79,9 +80,15 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public bool UnitTestMode { get; set; }
 
+        public bool IsComplete { get; private set; }
+
         public TaskProcessor()
         {
             RecurType = TaskRecurTypes.None;
+            RecurEndType = TaskRecurEndingTypes.NoEndDate;
+            RecurEndDate = DateTime.Today.AddMonths(3);
+            EndAfterOccurrences = 25;
+            IsComplete = false;
         }
 
         public void SetTaskId(int taskId)
@@ -90,11 +97,37 @@ namespace RingSoft.TaskLogix.Library.Processors
         }
         public void DoMarkComplete()
         {
+            IsComplete = false;
             var origStartDate = StartDate;
             var origDueDate = DueDate;
             if (ActiveRecurProcessor != null)
             {
                 ActiveRecurProcessor.DoMarkComplete();
+            }
+
+            switch (RecurEndType)
+            {
+                case TaskRecurEndingTypes.NoEndDate:
+                    break;
+                case TaskRecurEndingTypes.EndBy:
+                    if (origStartDate >= RecurEndDate || StartDate > RecurEndDate)
+                    {
+                        StartDate = origStartDate;
+                        IsComplete = true;
+                    }
+                    break;
+                case TaskRecurEndingTypes.EndAfterOccurXTimes:
+                    var context = SystemGlobals.DataRepository.GetDataContext();
+                    var histTable = context.GetTable<TlTaskHistory>();
+                    var count = histTable.Where(p => p.TaskId == TaskId).Count() + 1;
+                    if (count >= EndAfterOccurrences)
+                    {
+                        StartDate = origStartDate;
+                        IsComplete = true;
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
             AdjustReminderDate(origStartDate);
             AdjustDueDate(origStartDate);
@@ -146,10 +179,24 @@ namespace RingSoft.TaskLogix.Library.Processors
                 task = new TlTask();
 
             task.SnoozeDateTime = null;
+            var setComplete = false;
             if (ActiveRecurProcessor == null)
             {
+                setComplete = true;
+            }
+
+            if (!setComplete)
+            {
+                if (IsComplete)
+                {
+                    setComplete = true;
+                }
+            }
+
+            if (setComplete)
+            {
+                IsComplete = true;
                 task.StatusType = (byte)TaskStatusTypes.Completed;
-                task.ReminderDateTime = null;
             }
             
             SaveEntity(task);
@@ -171,7 +218,15 @@ namespace RingSoft.TaskLogix.Library.Processors
         public void SaveEntity(TlTask tlTask)
         {
             tlTask.StartDate = StartDate;
-            tlTask.ReminderDateTime = ReminderDateTime;
+            if (IsComplete)
+            {
+                tlTask.ReminderDateTime = null;
+            }
+            else
+            {
+                tlTask.ReminderDateTime = ReminderDateTime;
+            }
+            
             if (DueDate.HasValue)
             {
                 tlTask.DueDate = DueDate.GetValueOrDefault();
@@ -225,6 +280,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             this.StartDate = task.StartDate;
             this.ReminderDateTime = task.ReminderDateTime;
             this.DueDate = task.DueDate;
+            this.IsComplete = (TaskStatusTypes)task.StatusType == TaskStatusTypes.Completed;
             
             this.RecurEndType = (TaskRecurEndingTypes)task.RecurEndType;
             switch (this.RecurEndType)
@@ -267,16 +323,36 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public string GetRecurrenceText()
         {
+            var result = string.Empty;
             if (ActiveRecurProcessor == null)
             {
-                return "No Recurrence";
+                result = "No Recurrence\r\n";
             }
             else
             {
-                return $"Recurs {ActiveRecurProcessor.GetRecurText()}.";
+                 result = $"Recurs {ActiveRecurProcessor.GetRecurText()}.\r\n";
             }
 
-            return string.Empty;
+            switch (RecurEndType)
+            {
+                case TaskRecurEndingTypes.NoEndDate:
+                    result += "No End Date.";
+                    break;
+                case TaskRecurEndingTypes.EndBy:
+                    result += $"Ends On {RecurEndDate.GetValueOrDefault().ToLongDateString()}.";
+                    break;
+                case TaskRecurEndingTypes.EndAfterOccurXTimes:
+                    result += $"Ends After {EndAfterOccurrences} Occurrences.\r\n";
+                    var context = SystemGlobals.DataRepository.GetDataContext();
+                    var table = context.GetTable<TlTaskHistory>();
+                    var count = table.Where(p => p.TaskId == TaskId).Count();
+                    result += $"There Are {count} Occurrences.";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return result;
         }
     }
 }

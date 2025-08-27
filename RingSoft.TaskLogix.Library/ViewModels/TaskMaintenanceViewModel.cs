@@ -318,10 +318,16 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             if (!_loading)
             {
                 DueDate = StartDate;
-                var oldReminder = ReminderDateTime;
-                ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day
-                    , oldReminder.Hour, oldReminder.Minute, oldReminder.Second);
+                SetDefaultReminder();
             }
+        }
+
+        private void SetDefaultReminder()
+        {
+            var oldReminder = ReminderDateTime;
+            ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day
+                , oldReminder.Hour, oldReminder.Minute, oldReminder.Second);
+
         }
 
         private void OnRecurrence()
@@ -370,19 +376,21 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 TaskProcessor.DoMarkComplete();
                 TaskProcessor.SaveProcessorAfterMarkComplete(Id);
                 StartDate = TaskProcessor.StartDate;
-                ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
+                if (TaskProcessor.ReminderDateTime != null)
+                    ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
                 DueDate = TaskProcessor.DueDate.GetValueOrDefault();
                 SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
                 SnoozeDateTime = null;
-                if (TaskProcessor.ActiveRecurProcessor == null)
+                if (TaskProcessor.IsComplete)
                 {
                     StatusType = TaskStatusTypes.Completed;
                     DoReminder = false;
                 }
-                RecordDirty = false;
                 AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
-                _loading = false;
                 HistoryLookup.SetCommand(GetLookupCommand((LookupCommands.Refresh)));
+                RecurText = TaskProcessor.GetRecurrenceText();
+                RecordDirty = false;
+                _loading = false;
             }
         }
 
@@ -421,7 +429,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             if (entity.ReminderDateTime == null)
             {
                 DoReminder = false;
-                ReminderDateTime = StartDate;
+                SetDefaultReminder();
             }
             else
             {

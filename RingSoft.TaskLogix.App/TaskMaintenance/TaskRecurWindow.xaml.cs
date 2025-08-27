@@ -45,6 +45,7 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
         public TaskProcessor TaskProcessor { get; set; }
 
         public TaskRecurUserControlBase ActiveRecurUserControl { get; private set; }
+
         public void UpdateRecurType()
         {
             ActiveRecurUserControl = null;
@@ -115,6 +116,11 @@ namespace RingSoft.TaskLogix.App.TaskMaintenance
             TaskProcessor = taskProcessor;
             InitializeComponent();
             LocalViewModel.Init(this);
+
+            Loaded += (sender, args) =>
+            {
+                LocalViewModel.SetEnabled();
+            };
         }
     }
 }
