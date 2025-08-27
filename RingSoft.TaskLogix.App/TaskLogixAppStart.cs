@@ -24,6 +24,7 @@ namespace RingSoft.TaskLogix.App
             var factory = new TaskLogixControlContentFactory(_application);
 
             LookupControlsGlobals.WindowRegistry.RegisterUserControl<TaskMaintenanceUserControl, TlTask>();
+            LookupControlsGlobals.WindowRegistry.RegisterUserControl<TaskHistoryUserControl, TlTaskHistory>();
         }
     }
 }
