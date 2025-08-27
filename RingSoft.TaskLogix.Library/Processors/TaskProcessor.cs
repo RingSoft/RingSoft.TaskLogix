@@ -198,6 +198,10 @@ namespace RingSoft.TaskLogix.Library.Processors
                 IsComplete = true;
                 task.StatusType = (byte)TaskStatusTypes.Completed;
             }
+            else
+            {
+                task.StatusType = (byte)TaskStatusTypes.NotStarted;
+            }
             
             SaveEntity(task);
 

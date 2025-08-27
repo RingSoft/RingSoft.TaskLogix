@@ -375,20 +375,9 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 TaskProcessor = TaskProcessor.LoadProcessor(Id);
                 TaskProcessor.DoMarkComplete();
                 TaskProcessor.SaveProcessorAfterMarkComplete(Id);
-                StartDate = TaskProcessor.StartDate;
-                if (TaskProcessor.ReminderDateTime != null)
-                    ReminderDateTime = TaskProcessor.ReminderDateTime.GetValueOrDefault();
-                DueDate = TaskProcessor.DueDate.GetValueOrDefault();
-                SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
-                SnoozeDateTime = null;
-                if (TaskProcessor.IsComplete)
-                {
-                    StatusType = TaskStatusTypes.Completed;
-                    DoReminder = false;
-                }
+
+                RefreshFromDatabase();
                 AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
-                HistoryLookup.SetCommand(GetLookupCommand((LookupCommands.Refresh)));
-                RecurText = TaskProcessor.GetRecurrenceText();
                 RecordDirty = false;
                 _loading = false;
             }
