@@ -37,11 +37,11 @@
 
             <Label Grid.Row="0" Grid.Column="0" Content="History Database ID"/>
 
-            <dec:StringReadOnlyBox Grid.Row="0" Grid.Column="1" Width="50" HorizontalAlignment="Left"/>
+            <dec:StringReadOnlyBox Grid.Row="0" Grid.Column="1" Width="75" HorizontalAlignment="Left" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="0" Grid.Column="2" Content="Task"/>
 
-            <lc:AutoFillReadOnlyControl Grid.Row="0" Grid.Column="3" Width="200" HorizontalAlignment="Left"/>
+            <lc:AutoFillReadOnlyControl Grid.Row="0" Grid.Column="3" Width="200" HorizontalAlignment="Left" Setup="{Binding TaskAutoFillSetup}" Value="{Binding TaskAutoFillValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="Start Date"/>
 
