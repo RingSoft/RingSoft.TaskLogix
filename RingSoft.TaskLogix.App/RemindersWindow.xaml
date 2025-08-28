@@ -9,7 +9,7 @@
         xmlns:lib="clr-namespace:RingSoft.TaskLogix.Library;assembly=RingSoft.TaskLogix.Library"
         xmlns:local="clr-namespace:RingSoft.TaskLogix.App"
         mc:Ignorable="d"
-        Title="RemindersWindow" SizeToContent="WidthAndHeight" CloseOnEscape="True">
+        Title="Reminders" SizeToContent="WidthAndHeight" CloseOnEscape="True">
 
     <Window.DataContext>
         <vm:RemindersViewModel x:Name="LocalViewModel"/>

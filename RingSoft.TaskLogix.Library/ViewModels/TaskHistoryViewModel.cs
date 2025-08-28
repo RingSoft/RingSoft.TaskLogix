@@ -56,6 +56,51 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
+        private DateTime _startDate;
+
+        public DateTime StartDate
+        {
+            get { return _startDate; }
+            set
+            {
+                if (_startDate == value)
+                    return;
+
+                _startDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _dueDate;
+
+        public DateTime DueDate
+        {
+            get { return _dueDate; }
+            set
+            {
+                if (_dueDate == value)
+                    return;
+
+                _dueDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private DateTime _completionDate;
+
+        public DateTime CompletionDate
+        {
+            get { return _completionDate; }
+            set
+            {
+                if (_completionDate == value)
+                    return;
+
+                _completionDate = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         #endregion
 
@@ -78,6 +123,9 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         protected override void LoadFromEntity(TlTaskHistory entity)
         {
             TaskAutoFillValue = entity.Task.GetAutoFillValue();
+            StartDate = entity.StartDate;
+            DueDate = entity.DueDate;
+            CompletionDate = entity.CompletionDate;
         }
 
         protected override TlTaskHistory GetEntityData()
@@ -89,6 +137,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         {
             Id = 0;
             TaskAutoFillValue = null;
+            StartDate = DueDate = CompletionDate = DateTime.MinValue;
         }
     }
 }
