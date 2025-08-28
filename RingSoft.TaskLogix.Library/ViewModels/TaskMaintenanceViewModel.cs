@@ -494,6 +494,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         protected override bool SaveEntity(TlTask entity)
         {
+            AppGlobals.MainViewModel.RemoveFromBalloonsShown(entity.Id);
             var result = base.SaveEntity(entity);
 
             if (result)

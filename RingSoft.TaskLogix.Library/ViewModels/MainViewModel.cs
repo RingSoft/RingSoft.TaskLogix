@@ -199,5 +199,15 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 }
             }
         }
+
+        public void RemoveFromBalloonsShown(int taskId)
+        {
+            var existBalloonsShown = BalloonsShown.Where(p => p.TaskId == taskId)
+                .ToList();
+            foreach (var reminder in existBalloonsShown)
+            {
+                BalloonsShown.Remove(reminder);
+            }
+        }
     }
 }
