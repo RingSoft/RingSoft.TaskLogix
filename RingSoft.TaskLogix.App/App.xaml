@@ -11,6 +11,10 @@
 
             <Image x:Key="GreenAlertImage" Source="Resources/Task.ico"/>
             <Image x:Key="YellowAlertImage" Source="Resources/YellowAlert.ico"/>
+            <BitmapImage x:Key="DatabaseImage" UriSource="/Resources/database-50.png" />
+            <BitmapImage x:Key="TaskImage" UriSource="/Resources/task-100.png" />
+            <BitmapImage x:Key="MarkCompleteImage" UriSource="/Resources/complete-50.png" />
+            <BitmapImage x:Key="RecurImage" UriSource="/Resources/recycle-arrows-triangle-64.png" />
 
         </ResourceDictionary>
 

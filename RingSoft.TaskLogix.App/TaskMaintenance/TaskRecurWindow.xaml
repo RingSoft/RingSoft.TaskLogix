@@ -9,7 +9,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RingSoft.TaskLogix.App.TaskMaintenance"
         mc:Ignorable="d"
-        Title="TaskRecurWindow" Height="450" Width="800"
+        Title="Task Recurrence Options" Height="450" Width="800"
         SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" CloseOnEscape="False">
 
     <Window.DataContext>

@@ -11,11 +11,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\complete-50.png" />
+    <None Remove="Resources\database-50.png" />
+    <None Remove="Resources\recycle-arrows-triangle-64.png" />
+    <None Remove="Resources\task-100.png" />
     <None Remove="Resources\Task.ico" />
     <None Remove="Resources\YellowAlert.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\complete-50.png" />
+    <Resource Include="Resources\database-50.png" />
+    <Resource Include="Resources\recycle-arrows-triangle-64.png" />
+    <Resource Include="Resources\task-100.png" />
     <Resource Include="Resources\Task.ico" />
     <Resource Include="Resources\YellowAlert.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
