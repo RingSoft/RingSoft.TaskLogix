@@ -33,6 +33,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public List<TaskMaintenanceViewModel> TaskViewModels { get; } = new List<TaskMaintenanceViewModel>();
 
         private Timer _timer = new Timer(1000);
+        private int _seconds = 0;
 
         public MainViewModel()
         {
@@ -40,7 +41,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             {
                 if (MainView.CloseAllTabs())
                 {
-                    EnableTiner(false);
+                    EnableTimer(false);
                     ChangeMaster();
                 }
             }));
@@ -53,9 +54,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             _timer.Elapsed += (sender, args) =>
             {
-                EnableTiner(false);
-                HandleRemindersTimer();
-                EnableTiner();
+                _seconds++;
+                if (_seconds >= 60)
+                {
+                    HandleRemindersTimer();
+                }
             };
 
             BalloonsShown = new List<Reminder>();
@@ -75,11 +78,12 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             MainView.ShowTaskListPanel();
             View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);
             BalloonsShown.Clear();
-            EnableTiner();
+            HandleRemindersTimer();
+            EnableTimer();
             return true;
         }
 
-        public void EnableTiner(bool enable = true)
+        public void EnableTimer(bool enable = true)
         {
             _timer.Enabled = enable;
             if (enable)
@@ -89,6 +93,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             else
             {
                 _timer.Stop();
+                _seconds = 0;
             }
         }
 
@@ -152,8 +157,9 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
         }
 
-        private void HandleRemindersTimer()
+        public void HandleRemindersTimer()
         {
+            EnableTimer(false);
             var reminders = GetReminders();
             if (MainView != null)
             {
@@ -176,11 +182,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     if (balloonsToShow.Any())
                     {
                         MainView.ShowBalloon(balloonsToShow);
-                        EnableTiner();
                         MainView.ShowReminderTimer(reminders);
                     }
                 }
             }
+            EnableTimer();
         }
 
         private void ShowAdvFindTab()

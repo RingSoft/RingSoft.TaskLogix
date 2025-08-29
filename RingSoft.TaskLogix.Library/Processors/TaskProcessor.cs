@@ -201,6 +201,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             else
             {
                 task.StatusType = (byte)TaskStatusTypes.NotStarted;
+                task.PercentComplete = 0;
             }
             
             SaveEntity(task);
