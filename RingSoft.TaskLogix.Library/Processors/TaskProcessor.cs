@@ -82,6 +82,8 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public bool IsComplete { get; private set; }
 
+        private DateTime? _origStartDate;
+
         public TaskProcessor()
         {
             RecurType = TaskRecurTypes.None;
@@ -139,8 +141,20 @@ namespace RingSoft.TaskLogix.Library.Processors
             }
         }
 
+        public void SetOriginalStartDate(DateTime origStartDate)
+        {
+            _origStartDate = origStartDate;
+            StartDate = origStartDate;
+        }
         public bool AdjustStartDate()
         {
+            if (_origStartDate != null)
+            {
+                AdjustReminderDate(_origStartDate.Value);
+                AdjustDueDate(_origStartDate.Value);
+                _origStartDate = null;
+            }
+
             var origStartDate = StartDate;
             if (ActiveRecurProcessor != null)
             {

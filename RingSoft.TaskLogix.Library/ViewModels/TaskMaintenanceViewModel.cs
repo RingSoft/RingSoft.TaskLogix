@@ -345,7 +345,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         private void UpdateTaskProcessor()
         {
-            TaskProcessor.StartDate = StartDate;
+            TaskProcessor.SetOriginalStartDate(StartDate);
             TaskProcessor.DueDate = DueDate;
             if (DoReminder)
             {
