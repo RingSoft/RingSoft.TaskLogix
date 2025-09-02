@@ -1,6 +1,6 @@
 ﻿using RingSoft.TaskLogix.Library;
 using RingSoft.TaskLogix.Library.ViewModels;
-
+//First--Comment Out Parallelize in MSTestSettings.cs file.
 namespace RingSoft.TaskLogix.Tests
 {
     public class TestGlobals
