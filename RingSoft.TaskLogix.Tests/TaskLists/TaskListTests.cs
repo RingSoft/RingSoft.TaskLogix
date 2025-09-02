@@ -1,18 +1,60 @@
 ﻿using RingSoft.DbLookup;
+using RingSoft.DbLookup.AutoFill;
+using RingSoft.DbMaintenance;
 using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library;
 using RingSoft.TaskLogix.Library.ViewModels;
 
+//First--Comment Out Parallelize in MSTestSettings.cs file.
 namespace RingSoft.TaskLogix.Tests.TaskLists
 {
     [TestClass]
-    public class TaskListTests
+    public sealed class TaskListTests
     {
-        [TestMethod]
-        public void TestCurrentDateSaturday()
+        private static TestGlobals _globals;
+        private static DbMaintenanceTestGlobals<TaskMaintenanceViewModel, TestTaskMaintView> _maintViewModel;
+
+        static TaskListTests()
         {
-            var database = new TaskLogixTestDataRepository(new TestDataRegistry());
-            database.Initialize();
+            _globals = new TestGlobals();
+            _maintViewModel =
+                new DbMaintenanceTestGlobals<TaskMaintenanceViewModel, TestTaskMaintView>(_globals.DataRepository);
+        }
+
+        [ClassInitialize]
+        public static void Setup(TestContext testContext)
+        {
+            _globals.Initialize();
+            _maintViewModel.Initialize();
+        }
+
+        [TestMethod]
+        public void TestCurrentDayMonday_ThisWeek_Saturday()
+        {
+            _globals.DataRepository.ClearData();
+
+            _maintViewModel.ViewModel.NewCommand.Execute(null);
+            _maintViewModel.ViewModel.KeyAutoFillValue = new AutoFillValue(null, "Test");
+            _maintViewModel.ViewModel.DueDate = new DateTime(2025, 8, 9);
+            _maintViewModel.ViewModel.SaveCommand.Execute(null);
+
+            var context = SystemGlobals.DataRepository.GetDataContext();
+            Assert.IsNotNull(context);
+            var table = context.GetTable<TlTask>();
+
+            var viewModel = new TaskListViewModel();
+            viewModel.CurrentDate = new DateTime(2025, 8, 4);
+            viewModel.Initialize(TaskListTypes.ThisWeek);
+
+            Assert.AreEqual(1, viewModel.TaskList.FirstOrDefault().TaskId);
+            Assert.AreEqual(new DateTime(2025, 8, 6), viewModel.StartDate);
+            Assert.AreEqual(new DateTime(2025, 8, 9), viewModel.EndDate);
+        }
+
+        [TestMethod]
+        public void TestCurrentDateSaturday_Old()
+        {
+            _globals.DataRepository.ClearData();
 
             var viewModel = new TaskListViewModel();
             var tlTask = new TlTask
@@ -47,7 +89,7 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
 
             //------------------------------------------------------------------
 
-            database.ClearData();
+            _globals.DataRepository.ClearData();
             tlTask = new TlTask
             {
                 Id = 1,
@@ -87,7 +129,7 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
 
             //------------------------------------------------------------------
 
-            database.ClearData();
+            _globals.DataRepository.ClearData();
             tlTask = new TlTask
             {
                 Id = 1,
