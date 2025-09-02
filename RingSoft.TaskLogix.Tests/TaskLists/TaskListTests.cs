@@ -4,6 +4,7 @@ using RingSoft.DbMaintenance;
 using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library;
 using RingSoft.TaskLogix.Library.ViewModels;
+using System.Threading.Tasks;
 
 //First--Comment Out Parallelize in MSTestSettings.cs file.
 namespace RingSoft.TaskLogix.Tests.TaskLists
@@ -38,10 +39,6 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
             _maintViewModel.ViewModel.DueDate = new DateTime(2025, 8, 9);
             _maintViewModel.ViewModel.SaveCommand.Execute(null);
 
-            var context = SystemGlobals.DataRepository.GetDataContext();
-            Assert.IsNotNull(context);
-            var table = context.GetTable<TlTask>();
-
             var viewModel = new TaskListViewModel();
             viewModel.CurrentDate = new DateTime(2025, 8, 4);
             viewModel.Initialize(TaskListTypes.ThisWeek);
@@ -67,27 +64,16 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
         }
 
         [TestMethod]
-        public void TestCurrentDateSaturday_Old()
+        public void TestCurrentDayMonday_ThisMonth_Wednesday()
         {
             _globals.DataRepository.ClearData();
 
-            var viewModel = new TaskListViewModel();
-            var tlTask = new TlTask
-            {
-                Id = 1,
-                Subject = "Test",
-                DueDate = new DateTime(2025, 8, 9),
-            };
-            var context = SystemGlobals.DataRepository.GetDataContext();
+            _maintViewModel.ViewModel.NewCommand.Execute(null);
+            _maintViewModel.ViewModel.KeyAutoFillValue = new AutoFillValue(null, "Test");
+            _maintViewModel.ViewModel.DueDate = new DateTime(2025, 8, 20);
+            _maintViewModel.ViewModel.SaveCommand.Execute(null);
 
-            _globals.DataRepository.ClearData();
-            tlTask = new TlTask
-            {
-                Id = 1,
-                Subject = "Test",
-                DueDate = new DateTime(2025, 8, 20),
-            };
-            context.SaveEntity(tlTask, "");
+            var viewModel = new TaskListViewModel();
 
             viewModel.CurrentDate = new DateTime(2025, 8, 4);
             viewModel.Initialize(TaskListTypes.ThisMonth);
@@ -109,26 +95,39 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
             Assert.AreEqual(1, viewModel.TaskList.FirstOrDefault().TaskId);
             Assert.AreEqual(new DateTime(2025, 8, 10), viewModel.StartDate);
             Assert.AreEqual(new DateTime(2025, 8, 31), viewModel.EndDate);
+       }
 
+        [TestMethod]
+        public void TestCurrentDaySaturday_ThisMonth_Sunday()
+        {
+            _globals.DataRepository.ClearData();
+
+            _maintViewModel.ViewModel.NewCommand.Execute(null);
+            _maintViewModel.ViewModel.KeyAutoFillValue = new AutoFillValue(null, "Test");
+            _maintViewModel.ViewModel.DueDate = new DateTime(2025, 8, 31);
+            _maintViewModel.ViewModel.SaveCommand.Execute(null);
+
+            var viewModel = new TaskListViewModel();
             viewModel.CurrentDate = new DateTime(2025, 8, 30);
-            tlTask.DueDate = new DateTime(2025, 8, 31);
+
             viewModel.Initialize(TaskListTypes.ThisMonth);
 
             Assert.AreEqual(false, viewModel.TaskList.Any());
             Assert.AreEqual(null, viewModel.StartDate);
             Assert.AreEqual(null, viewModel.EndDate);
+        }
 
-            //------------------------------------------------------------------
-
+        [TestMethod]
+        public void TestCurrentDayFriday_NextMonth_Friday()
+        {
             _globals.DataRepository.ClearData();
-            tlTask = new TlTask
-            {
-                Id = 1,
-                Subject = "Test",
-                DueDate = new DateTime(2025, 9, 5),
-            };
-            context.SaveEntity(tlTask, "");
 
+            _maintViewModel.ViewModel.NewCommand.Execute(null);
+            _maintViewModel.ViewModel.KeyAutoFillValue = new AutoFillValue(null, "Test");
+            _maintViewModel.ViewModel.DueDate = new DateTime(2025, 9, 5);
+            _maintViewModel.ViewModel.SaveCommand.Execute(null);
+
+            var viewModel = new TaskListViewModel();
             viewModel.CurrentDate = new DateTime(2025, 8, 1);
             viewModel.Initialize(TaskListTypes.NextMonth);
 
@@ -142,15 +141,26 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
             Assert.AreEqual(false, viewModel.TaskList.Any());
             Assert.AreEqual(new DateTime(2025, 9, 7), viewModel.StartDate);
             Assert.AreEqual(new DateTime(2025, 9, 30), viewModel.EndDate);
+        }
 
+        [TestMethod]
+        public void TestCurrentDaySunday_NextMonth_Monday()
+        {
+            _globals.DataRepository.ClearData();
+
+            _maintViewModel.ViewModel.NewCommand.Execute(null);
+            _maintViewModel.ViewModel.KeyAutoFillValue = new AutoFillValue(null, "Test");
+            _maintViewModel.ViewModel.DueDate = new DateTime(2025, 9, 1);
+            _maintViewModel.ViewModel.SaveCommand.Execute(null);
+
+            var viewModel = new TaskListViewModel();
             viewModel.CurrentDate = new DateTime(2025, 8, 31);
-            tlTask.DueDate = new DateTime(2025, 9, 1);
+
             viewModel.Initialize(TaskListTypes.NextMonth);
 
             Assert.AreEqual(false, viewModel.TaskList.Any());
             Assert.AreEqual(new DateTime(2025, 9, 7), viewModel.StartDate);
             Assert.AreEqual(new DateTime(2025, 9, 30), viewModel.EndDate);
-
         }
     }
 }
