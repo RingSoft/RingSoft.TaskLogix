@@ -26,6 +26,10 @@ namespace RingSoft.TaskLogix.DataAccess
 
         public LookupDefinition<TaskRecurWeeklyLookup, TlTaskRecurWeekly> TaskRecurWeeklyLookupDefinition { get; set; }
 
+        public LookupDefinition<TaskRecurMonthlyLookup, TlTaskRecurMonthly> TaskRecurMonthlyLookupDefinition { get; set; }
+
+        public LookupDefinition<TaskRecurYearlyLookup, TlTaskRecurYearly> TaskRecurYearlyLookupDefinition { get; set; }
+
         public LookupDefinition<TaskHistoryLookup, TlTaskHistory> TaskHistoryLookupDefinition { get; set; }
 
         protected override void SetupTemplateLookupDefinitions()
@@ -76,6 +80,38 @@ namespace RingSoft.TaskLogix.DataAccess
 
             TaskRecurWeeklys.HasLookupDefinition(TaskRecurWeeklyLookupDefinition);
 
+            TaskRecurMonthlyLookupDefinition =
+                new LookupDefinition<TaskRecurMonthlyLookup, TlTaskRecurMonthly>(TaskRecurMonthlys);
+
+            TaskRecurMonthlyLookupDefinition.Include(p => p.Task)
+                .AddVisibleColumnDefinition(
+                    p => p.Task
+                    , "Task"
+                    , p => p.Subject, 50);
+
+            TaskRecurMonthlyLookupDefinition.AddVisibleColumnDefinition(
+                p => p.RecurType
+                , "Recur Type"
+                , p => p.RecurType, 20);
+
+            TaskRecurMonthlys.HasLookupDefinition(TaskRecurMonthlyLookupDefinition);
+
+            TaskRecurYearlyLookupDefinition =
+                new LookupDefinition<TaskRecurYearlyLookup, TlTaskRecurYearly>(TaskRecurYearlys);
+
+            TaskRecurYearlyLookupDefinition.Include(p => p.Task)
+                .AddVisibleColumnDefinition(
+                    p => p.Task
+                    , "Task"
+                    , p => p.Subject, 50);
+
+            TaskRecurYearlyLookupDefinition.AddVisibleColumnDefinition(
+                p => p.RecurType
+                , "Recur Type"
+                , p => p.RecurType, 20);
+
+            TaskRecurYearlys.HasLookupDefinition(TaskRecurYearlyLookupDefinition);
+
             this.TaskHistoryLookupDefinition = new LookupDefinition<TaskHistoryLookup, TlTaskHistory>(TaskHistory);
 
             TaskHistoryLookupDefinition.Include(p => p.Task)
@@ -105,6 +141,14 @@ namespace RingSoft.TaskLogix.DataAccess
         {
             Tasks.HasDescription("Tasks").HasRecordDescription("Task");
 
+            Tasks.PriorityLevel = 100;
+
+            TaskHistory.PriorityLevel = 200;
+            TaskRecurDailys.PriorityLevel = 200;
+            TaskRecurWeeklys.PriorityLevel = 200;
+            TaskRecurMonthlys.PriorityLevel = 200;
+            TaskRecurYearlys.PriorityLevel = 200;
+
             TaskHistory.GetFieldDefinition(p => p.CompletionDate)
                 .HasDateType(DbDateTypes.DateTime);
 
@@ -112,6 +156,15 @@ namespace RingSoft.TaskLogix.DataAccess
 
             TaskRecurDailys.GetFieldDefinition(p => p.RecurType)
                 .IsEnum<DailyRecurTypes>();
+
+            TaskRecurWeeklys.GetFieldDefinition(p => p.RecurType)
+                .IsEnum<WeeklyRecurTypes>();
+
+            TaskRecurMonthlys.GetFieldDefinition(p => p.RecurType)
+                .IsEnum<MonthlyRecurTypes>();
+
+            TaskRecurYearlys.GetFieldDefinition(p => p.RecurType)
+                .IsEnum<YearlylyRecurTypes>();
         }
     }
 }

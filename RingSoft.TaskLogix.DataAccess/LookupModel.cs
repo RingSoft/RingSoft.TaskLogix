@@ -22,6 +22,20 @@ namespace RingSoft.TaskLogix.DataAccess
         public byte RecurType { get; set; }
     }
 
+    public class TaskRecurMonthlyLookup
+    {
+        public string Task { get; set; }
+
+        public byte RecurType { get; set; }
+    }
+
+    public class TaskRecurYearlyLookup
+    {
+        public string Task { get; set; }
+
+        public byte RecurType { get; set; }
+    }
+
     public class TaskHistoryLookup
     {
         public string Task { get; set; }
