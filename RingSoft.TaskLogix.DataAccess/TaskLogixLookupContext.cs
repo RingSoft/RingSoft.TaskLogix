@@ -154,14 +154,29 @@ namespace RingSoft.TaskLogix.DataAccess
 
             TaskRecurDailys.HasDescription("Task Recur Dailys").HasRecordDescription("Recur Daily");
 
+            TaskRecurDailys.GetFieldDefinition(p => p.TaskId)
+                .DoOverrideIdentity();
+
             TaskRecurDailys.GetFieldDefinition(p => p.RecurType)
                 .IsEnum<DailyRecurTypes>();
+
+            TaskRecurDailys.GetFieldDefinition(p => p.TaskId)
+                .DoOverrideIdentity();
+
+            TaskRecurWeeklys.GetFieldDefinition(p => p.TaskId)
+                .DoOverrideIdentity();
 
             TaskRecurWeeklys.GetFieldDefinition(p => p.RecurType)
                 .IsEnum<WeeklyRecurTypes>();
 
+            TaskRecurMonthlys.GetFieldDefinition(p => p.TaskId)
+                .DoOverrideIdentity();
+
             TaskRecurMonthlys.GetFieldDefinition(p => p.RecurType)
                 .IsEnum<MonthlyRecurTypes>();
+
+            TaskRecurYearlys.GetFieldDefinition(p => p.TaskId)
+                .DoOverrideIdentity();
 
             TaskRecurYearlys.GetFieldDefinition(p => p.RecurType)
                 .IsEnum<YearlylyRecurTypes>();
