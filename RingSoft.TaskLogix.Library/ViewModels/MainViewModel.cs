@@ -181,6 +181,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                     }
                     if (balloonsToShow.Any())
                     {
+                        EnableTimer();
                         MainView.ShowBalloon(balloonsToShow);
                         MainView.ShowReminderTimer(reminders);
                     }
