@@ -84,7 +84,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             switch (RecurType)
             {
                 case WeeklyRecurTypes.EveryXWeeks:
-                    TaskProcessor.StartDate = GetNextDate(TaskProcessor.StartDate.AddDays(-1));
+                    TaskProcessor.StartDate = GetNextDate(TaskProcessor.StartDate.AddDays(-1), false);
                     break;
             }
         }
@@ -208,14 +208,14 @@ namespace RingSoft.TaskLogix.Library.Processors
             return startDate.AddDays(daysToAdd);
         }
 
-        internal DateTime GetNextDate(DateTime startDate)
+        internal DateTime GetNextDate(DateTime startDate, bool addWeeks = true)
         {
-            var daysToAdd = GetDaysToAdd(startDate);
+            var daysToAdd = GetDaysToAdd(startDate, addWeeks);
 
             return startDate.AddDays(daysToAdd);
         }
 
-        private int GetDaysToAdd(DateTime startDate)
+        private int GetDaysToAdd(DateTime startDate, bool addWeeks = true)
         {
             var nextWeekday = GetNextWeekDay(startDate);
             var result = 0;
@@ -223,7 +223,10 @@ namespace RingSoft.TaskLogix.Library.Processors
             {
                 result = (int)DayOfWeek.Saturday - (int)startDate.DayOfWeek;
                 result += nextWeekday + 1;
-                result += (7 * (RecurWeeks - 1));
+                if (addWeeks)
+                {
+                    result += (7 * (RecurWeeks - 1));
+                }
             }
             else
             {

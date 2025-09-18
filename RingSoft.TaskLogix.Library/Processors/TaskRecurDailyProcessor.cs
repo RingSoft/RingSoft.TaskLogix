@@ -109,7 +109,7 @@ namespace RingSoft.TaskLogix.Library.Processors
             taskProcessor.WeeklyProcessor.Friday = true;
             taskProcessor.WeeklyProcessor.Saturday = false;
 
-            return taskProcessor.WeeklyProcessor.GetNextDate(startDate);
+            return taskProcessor.WeeklyProcessor.GetNextDate(startDate, false);
         }
 
         public void SaveEntity(TlTaskRecurDaily entity)
