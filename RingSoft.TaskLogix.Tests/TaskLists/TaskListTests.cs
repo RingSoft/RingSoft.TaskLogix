@@ -182,5 +182,25 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
             Assert.AreEqual(new DateTime(2025, 11, 2), viewModel.StartDate);
             Assert.AreEqual(new DateTime(2025, 11, 30), viewModel.EndDate);
         }
+
+        [TestMethod]
+        public void TestCurrentDaySaturday_NextMonth_Sunday()
+        {
+            _globals.DataRepository.ClearData();
+
+            _maintViewModel.ViewModel.NewCommand.Execute(null);
+            _maintViewModel.ViewModel.KeyAutoFillValue = new AutoFillValue(null, "Test");
+            _maintViewModel.ViewModel.DueDate = new DateTime(2026, 2, 1);
+            _maintViewModel.ViewModel.SaveCommand.Execute(null);
+
+            var viewModel = new TaskListViewModel();
+            viewModel.CurrentDate = new DateTime(2026, 1, 31);
+
+            viewModel.Initialize(TaskListTypes.NextMonth);
+
+            Assert.AreEqual(false, viewModel.TaskList.Any());
+            Assert.AreEqual(new DateTime(2026, 2, 2), viewModel.StartDate);
+            Assert.AreEqual(new DateTime(2026, 2, 28), viewModel.EndDate);
+        }
     }
 }
