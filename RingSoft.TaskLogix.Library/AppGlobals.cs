@@ -10,11 +10,11 @@ namespace RingSoft.TaskLogix.Library
     public class AppGlobals : CustomTemplateAppGlobals
     {
         public override string AppTitle => "TaskLogix";
-        public override string AppCopyright => "©2025 by Peter Ringering";
+        public override string AppCopyright => $"©{DateTime.Today.Year} by Peter Ringering";
         public override string AppGuid => "c0cad4a3-57e1-474c-ac1f-7e9e04cdc9c3";
         public override string AppItem => "Task Data";
         public override string AppDemoName => "Demonstration Data";
-        public override int AppVersionId => 391;
+        public override int AppVersionId => 398;
         public override string DebugFolder => GetDebugFolder();
 
         public string GetDebugFolder()
