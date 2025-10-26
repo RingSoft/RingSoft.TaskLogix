@@ -271,7 +271,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             }
             else
             {
-                if (weekEndDate > date)
+                if (weekEndDate >= date)
                 {
                     date = weekEndDate.GetValueOrDefault().AddDays(1);
                 }
