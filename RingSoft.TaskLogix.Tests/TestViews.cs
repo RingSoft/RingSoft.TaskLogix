@@ -1,4 +1,5 @@
-﻿using RingSoft.CustomTemplate.Library.ViewModels;
+﻿using System.Collections.Generic;
+using RingSoft.CustomTemplate.Library.ViewModels;
 using RingSoft.DbLookup.ModelDefinition;
 using RingSoft.TaskLogix.Library;
 using RingSoft.TaskLogix.Library.ViewModels;

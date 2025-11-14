@@ -169,7 +169,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 doQuery = true;
             }
 
-            table = table.OrderBy(p => p.DueDate);
+            table = table.OrderBy(p => p.DueDate)
+                .ThenBy(p => p.ReminderDateTime);
 
             TaskList.Clear();
             if (doQuery)

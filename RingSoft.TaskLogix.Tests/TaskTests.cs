@@ -1,4 +1,5 @@
-﻿using RingSoft.TaskLogix.DataAccess.Model;
+﻿using System;
+using RingSoft.TaskLogix.DataAccess.Model;
 using RingSoft.TaskLogix.Library;
 
 namespace RingSoft.TaskLogix.Tests
