@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RingSoft.CustomTemplate.Library" Version="10.0.3" />
-    <PackageReference Include="RingSoft.CustomTemplate.MasterData" Version="10.0.3" />
+    <PackageReference Include="RingSoft.CustomTemplate.Library" Version="10.1.0" />
+    <PackageReference Include="RingSoft.CustomTemplate.MasterData" Version="10.1.0" />
   </ItemGroup>
 
 </Project>
