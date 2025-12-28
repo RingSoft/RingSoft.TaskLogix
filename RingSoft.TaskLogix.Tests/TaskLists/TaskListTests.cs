@@ -225,5 +225,42 @@ namespace RingSoft.TaskLogix.Tests.TaskLists
             Assert.AreEqual(new DateTime(2025, 11, 30), viewModel.EndDate);
         }
 
+        [TestMethod]
+        public void TestThisMonth_LastWeekDec2025_FirstWeekJan2026()
+        {
+            _globals.DataRepository.ClearData();
+
+            _maintViewModel.ViewModel.NewCommand.Execute(null);
+            _maintViewModel.ViewModel.KeyAutoFillValue = new AutoFillValue(null, "Test");
+            _maintViewModel.ViewModel.DueDate = new DateTime(2026, 1, 4);
+            _maintViewModel.ViewModel.SaveCommand.Execute(null);
+
+            var viewModel = new TaskListViewModel();
+            viewModel.CurrentDate = new DateTime(2025, 12, 28);
+
+            viewModel.Initialize(TaskListTypes.ThisMonth);
+            Assert.AreEqual(false, viewModel.TaskList.Any());
+            Assert.AreEqual(null, viewModel.StartDate);
+            Assert.AreEqual(null, viewModel.EndDate);
+        }
+
+        [TestMethod]
+        public void TestThisMonth_LastWeekDec2025_FirstWeekJan2026_CurrentDateJan1_2026()
+        {
+            _globals.DataRepository.ClearData();
+
+            _maintViewModel.ViewModel.NewCommand.Execute(null);
+            _maintViewModel.ViewModel.KeyAutoFillValue = new AutoFillValue(null, "Test");
+            _maintViewModel.ViewModel.DueDate = new DateTime(2026, 1, 4);
+            _maintViewModel.ViewModel.SaveCommand.Execute(null);
+
+            var viewModel = new TaskListViewModel();
+            viewModel.CurrentDate = new DateTime(2026, 1, 1);
+
+            viewModel.Initialize(TaskListTypes.ThisMonth);
+            Assert.AreEqual(true, viewModel.TaskList.Any());
+            Assert.AreEqual(new DateTime(2026, 1, 4), viewModel.StartDate);
+            Assert.AreEqual(new DateTime(2026, 1, 31), viewModel.EndDate);
+        }
     }
 }

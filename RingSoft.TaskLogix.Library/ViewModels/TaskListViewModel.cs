@@ -237,7 +237,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
             startDate = startDate.GetValueOrDefault().AddDays(1);
 
-            if (startDate.GetValueOrDefault().Month > CurrentDate.Month)
+            if (startDate.GetValueOrDefault().Month > CurrentDate.Month || startDate.GetValueOrDefault().Year > CurrentDate.Year)
             {
                 return null;
             }
