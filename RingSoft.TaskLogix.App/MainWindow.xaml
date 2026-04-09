@@ -26,6 +26,8 @@
                 </LinearGradientBrush>
             </StackPanel.Background>
 
+            <ac:DbMaintenanceButton x:Name="ExitButton"  Content="E_xit" Command="{Binding ExitCommand }" ImageSource="{StaticResource ExitImage}" Width="100" />
+
             <ac:DbMaintenanceButton x:Name="ChangeDbButton" Content="_Change Database" ImageSource="{StaticResource DatabaseImage}" Command="{Binding ChangeDatabaseCommand }"/>
 
             <ac:DbMaintenanceButton x:Name="TaskMaintButton" Content="_Manage Tasks" ImageSource="{StaticResource TaskImage}" Command="{Binding ManageTasksCommand }"/>

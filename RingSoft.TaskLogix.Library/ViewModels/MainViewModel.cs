@@ -17,6 +17,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
         bool CloseAllTabs();
 
+        void Close();
+
         void ShowTaskListPanel(bool show = true);
 
         void ShowBalloon(List<Reminder> reminders);
@@ -29,6 +31,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public RelayCommand ChangeDatabaseCommand { get; }
         public RelayCommand ManageTasksCommand { get; }
         public RelayCommand ShowAdvFindTabCommand { get; }
+        public RelayCommand ExitCommand { get; }
         public List<Reminder> BalloonsShown { get; }
         public List<TaskMaintenanceViewModel> TaskViewModels { get; } = new List<TaskMaintenanceViewModel>();
 
@@ -48,6 +51,11 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             ManageTasksCommand = new RelayCommand((() =>
             {
                 View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);
+            }));
+
+            ExitCommand = new RelayCommand((() =>
+            {
+                MainView.Close();
             }));
             ShowAdvFindTabCommand = new RelayCommand(ShowAdvFindTab);
             AppGlobals.MainViewModel = this;

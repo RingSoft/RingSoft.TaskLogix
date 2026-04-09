@@ -528,7 +528,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             if (result)
             {
                 AppGlobals.MainViewModel.MainView.ShowTaskListPanel();
-                AppGlobals.MainViewModel.HandleRemindersTimer();
+                //04/03/2026 - AppGlobals.MainViewModel.HandleRemindersTimer();
             }
             
             return result;

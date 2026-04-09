@@ -41,6 +41,22 @@ namespace RingSoft.TaskLogix.App
             InitializeComponent();
             LookupControlsGlobals.SetTabSwitcherWindow(this, TabControl);
             TabControl.SetDestionationAsFirstTab = false;
+
+            ExitButton.ToolTip.HeaderText = "Exit TaskLogix (Alt + X)";
+            ExitButton.ToolTip.DescriptionText =
+                "Exit the TaskLogix application.";
+
+            ChangeDbButton.ToolTip.HeaderText = "Change Database (Alt + C)";
+            ChangeDbButton.ToolTip.DescriptionText =
+                "Change the base database.";
+
+            TaskMaintButton.ToolTip.HeaderText = " Manage Tasks (Alt + M)";
+            TaskMaintButton.ToolTip.DescriptionText =
+                "Manage tasks.";
+
+            AdvancedFindButton.ToolTip.HeaderText = "Search Database (Alt + A)";
+            AdvancedFindButton.ToolTip.DescriptionText =
+                "Search database.";
         }
 
         protected override void OnActivated(EventArgs e)

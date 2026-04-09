@@ -77,6 +77,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
         public void Initialize(IReminderView view, List<Reminder> remindersList)
         {
             View = view;
+            ControlsGlobals.UserInterface.SetWindowCursor(WindowCursorTypes.Default);
             ProcessNewReminders(remindersList);
         }
 
