@@ -170,6 +170,15 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 _doReminder = value;
 
                 ReminderUiCommand.IsEnabled = value;
+                if (value)
+                {
+                    SnoozeUiCommand.Visibility = UiVisibilityTypes.Visible;
+                }
+                else
+                {
+                    SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
+                    SnoozeDateTime = null;
+                }
 
                 OnPropertyChanged();
             }
@@ -327,7 +336,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             var oldReminder = ReminderDateTime;
             ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day
                 , oldReminder.Hour, oldReminder.Minute, oldReminder.Second);
-
+            //SnoozeDateTime = ReminderDateTime.AddDays(1);
         }
 
         private void OnRecurrence()
@@ -426,14 +435,6 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 ReminderDateTime = entity.ReminderDateTime.GetValueOrDefault();
             }
 
-            if (entity.SnoozeDateTime == null)
-            {
-                SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
-            }
-            else
-            {
-                SnoozeUiCommand.Visibility = UiVisibilityTypes.Visible;
-            }
             SnoozeDateTime = entity.SnoozeDateTime;
             TaskProcessor.LoadProcessor(entity);
             RecurText = TaskProcessor.GetRecurrenceText();
@@ -624,14 +625,14 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             StartDate = DueDate = DateTime.Today;
             StatusType = TaskStatusTypes.NotStarted;
             PriorityType = TaskPriorityTypes.Normal;
+            ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, 7, 0, 0);
             PercentComplete = 0;
             DoReminder = true;
             ReminderUiCommand.IsEnabled = true;
-            ReminderDateTime = new DateTime(StartDate.Year, StartDate.Month, StartDate.Day, 7, 0, 0);
             Notes = null;
             TaskProcessor = new TaskProcessor();
             SnoozeDateTime = null;
-            SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
+            //SnoozeUiCommand.Visibility = UiVisibilityTypes.Collapsed;
             RecurText = "No Recurrence";
             _loading = false;
         }
