@@ -96,6 +96,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             _timer.Enabled = enable;
             if (enable)
             {
+                _seconds = DateTime.Now.Second;
                 _timer.Start();
             }
             else
