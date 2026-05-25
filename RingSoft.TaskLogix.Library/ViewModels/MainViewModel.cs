@@ -87,7 +87,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             View.ShowMaintenanceUserControl(AppGlobals.LookupContext.Tasks);
             BalloonsShown.Clear();
             HandleRemindersTimer();
-            EnableTimer();
+            //EnableTimer();
             return true;
         }
 
@@ -96,7 +96,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
             _timer.Enabled = enable;
             if (enable)
             {
-                _seconds = DateTime.Now.Second;
+                _seconds = GblMethods.NowDate().Second;
                 _timer.Start();
             }
             else
@@ -116,7 +116,7 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                 if (table != null)
                 {
                     var remindersInDb = table.Where(p => p.ReminderDateTime != null
-                                                         && p.ReminderDateTime < GblMethods.NowDate())
+                                                         && p.ReminderDateTime <= GblMethods.NowDate())
                         .OrderBy(p => p.ReminderDateTime);
 
                     if (remindersInDb.Any())
@@ -178,9 +178,8 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 
                     foreach (var reminder in reminders)
                     {
-                        var addBalloon = !BalloonsShown.Any(
-                            p => p.TaskId == reminder.TaskId
-                                 && p.ReminderDateTime == reminder.ReminderDateTime);
+                        var addBalloon = !BalloonsShown.Any(p => p.TaskId == reminder.TaskId
+                                                                 && p.ReminderDateTime == reminder.ReminderDateTime);
 
                         if (addBalloon)
                         {
@@ -188,15 +187,24 @@ namespace RingSoft.TaskLogix.Library.ViewModels
                             balloonsToShow.Add(reminder);
                         }
                     }
+
                     if (balloonsToShow.Any())
                     {
-                        EnableTimer();
                         MainView.ShowBalloon(balloonsToShow);
                         MainView.ShowReminderTimer(reminders);
                     }
+
+                    EnableTimer();
+                }
+                else
+                {
+                    EnableTimer();
                 }
             }
-            EnableTimer();
+            else
+            {
+                EnableTimer();
+            }
         }
 
         private void ShowAdvFindTab()
