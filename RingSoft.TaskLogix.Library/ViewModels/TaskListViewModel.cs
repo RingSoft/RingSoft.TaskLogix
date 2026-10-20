@@ -9,11 +9,17 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 {
     public enum TaskListTypes
     {
+        [Description("Due Today")]
         Today = 0,
+        [Description("Due Tomorrow")]
         Tomorrow = 1,
+        [Description("Due This Week")]
         ThisWeek = 2,
+        [Description("Due This Month")]
         ThisMonth = 3,
+        [Description("Due Next Month")]
         NextMonth = 4,
+        [Description("Older")]
         Older = 5,
     }
 

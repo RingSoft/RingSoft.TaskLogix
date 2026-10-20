@@ -2,7 +2,9 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using RingSoft.App.Library;
 using RingSoft.CustomTemplate.Library.ViewModels;
+using RingSoft.DataEntryControls.Engine;
 using RingSoft.DbLookup;
 using RingSoft.DbLookup.Controls.WPF;
 using RingSoft.TaskLogix.Library;
@@ -175,17 +177,29 @@ namespace RingSoft.TaskLogix.App
             TaskListPanel.UpdateLayout();
             if (show)
             {
-                for (int i = 0; i <= (int)TaskListTypes.Older; i++)
+                var procedure = RingSoftAppGlobals.CreateAppProcedure();
+                var trans = new EnumFieldTranslation();
+                trans.LoadFromEnum<TaskListTypes>();
+                procedure.DoAppProcedure += (sender, args) =>
                 {
-                    var type = (TaskListTypes)i;
-                    var listControl = new TaskListUserControl();
-                    listControl.LocalViewModel.Initialize(type, listControl);
-                    if (listControl.LocalViewModel.TaskList.Any())
+                    Dispatcher.Invoke(() =>
                     {
-                        TaskListPanel.Children.Add(listControl);
-                        TaskListPanel.UpdateLayout();
-                    }
-                }
+                        for (int i = 0; i <= (int)TaskListTypes.Older; i++)
+                        {
+                            var typeText = trans.TypeTranslations[i].TextValue;
+                            procedure.SplashWindow.SetProgress($"Loading {typeText} tasks... {i + 1}/{trans.TypeTranslations.Count}");
+                            var type = (TaskListTypes)i;
+                            var listControl = new TaskListUserControl();
+                            listControl.LocalViewModel.Initialize(type, listControl);
+                            if (listControl.LocalViewModel.TaskList.Any())
+                            {
+                                TaskListPanel.Children.Add(listControl);
+                                TaskListPanel.UpdateLayout();
+                            }
+                        }
+                    });
+                };
+                procedure.Start();
             }
         }
 
