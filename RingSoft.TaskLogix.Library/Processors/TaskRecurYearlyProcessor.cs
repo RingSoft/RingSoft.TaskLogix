@@ -22,12 +22,12 @@ namespace RingSoft.TaskLogix.Library.Processors
 
         public TaskRecurYearlyProcessor(TaskProcessor taskProcessor) : base(taskProcessor)
         {
-            var curMonth = (MonthsInYear)DateTime.Today.Month - 1;
+            var curMonth = (MonthsInYear)taskProcessor.StartDate.Month - 1;
             RecurType = YearlylyRecurTypes.EveryMonthDayX;
             EveryMonthType = curMonth;
-            MonthDay = DateTime.Today.Day;
-            WeekType = DateTime.Today.GetWeekType();
-            DayType = DateTime.Today.GetDayType();
+            MonthDay = taskProcessor.StartDate.Day;
+            WeekType = taskProcessor.StartDate.GetWeekType();
+            DayType = taskProcessor.StartDate.GetDayType();
             WeekMonthType = curMonth;
             RegenYearsAfterCompleted = 1;
         }

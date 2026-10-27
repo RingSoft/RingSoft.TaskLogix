@@ -23,10 +23,10 @@ namespace RingSoft.TaskLogix.Library.Processors
         public TaskRecurMonthlyProcessor(TaskProcessor taskProcessor) : base(taskProcessor)
         {
             RecurType = MonthlyRecurTypes.DayXOfEveryYMonths;
-            DayXOfEvery = DateTime.Today.Day;
+            DayXOfEvery = taskProcessor.StartDate.Day;
             OfEveryYMonths = 1;
-            WeekType = DateTime.Today.GetWeekType();
-            DayType = DateTime.Today.GetDayType();
+            WeekType = taskProcessor.StartDate.GetWeekType();
+            DayType = taskProcessor.StartDate.GetDayType();
             OfEveryWeekTypeMonths = 1;
             RegenMonthsAfterCompleted = 1;
         }

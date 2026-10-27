@@ -7,10 +7,10 @@ namespace RingSoft.TaskLogix.Library.ViewModels
 {
     public abstract class TaskRecurViewModelBase : INotifyPropertyChanged
     {
-        public virtual void Init()
+        public virtual void Init(DateTime startDate)
         {
             var newProcessor = new TaskProcessor();
-            newProcessor.StartDate = DateTime.Today;
+            newProcessor.StartDate = startDate;
             newProcessor.RecurType = GeTaskRecurType();
             LoadFromTaskProcessor(newProcessor);
         }
